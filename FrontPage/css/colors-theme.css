@@ -89,9 +89,9 @@ body table.booked-calendar .booked-appt-list .timeslot .timeslot-people button:h
     border-color: #A68B5B !important;
 }
 
-/* Services item hover - light background */
+/* Services item hover - light green background */
 .sc_services_item:hover {
-    background: rgba(139, 111, 71, 0.05) !important;
+    background: rgba(107, 142, 35, 0.12) !important;
 }
 
 /* Accents - Light Green */
@@ -105,7 +105,7 @@ body #booked-profile-page .booked-profile-appt-list .appt-block.approved .status
 }
 
 .sc_services_item:hover .sc_icon {
-    color: #8B6F47 !important;
+    color: #000000 !important;
     background: transparent !important;
 }
 
@@ -390,18 +390,24 @@ h1, h2, h3, h4, h5, h6 {
 
 .sc_services_item:hover {
     transform: translateY(-5px) !important;
-    box-shadow: 0 10px 25px rgba(139, 111, 71, 0.15) !important;
-    background: rgba(139, 111, 71, 0.03) !important;
+    box-shadow: 0 10px 25px rgba(107, 142, 35, 0.2) !important;
+    background: rgba(107, 142, 35, 0.12) !important;
 }
 
 .sc_services_item:hover .sc_icon {
-    color: #8B6F47 !important;
+    color: #000000 !important;
     background: transparent !important;
     transform: scale(1.08) !important;
 }
 
 .sc_services_item:hover .sc_services_item_title a {
-    color: var(--primary-brown, #8B6F47) !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
+}
+
+.sc_services_item:hover .sc_services_item_description p {
+    color: #222222 !important;
+    font-weight: 500 !important;
 }
 
 .sc_services_item .sc_icon {
