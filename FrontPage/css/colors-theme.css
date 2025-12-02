@@ -549,11 +549,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .roots_logo img {
-    height: 60px !important;
+    height: 80px !important;
     width: auto !important;
     display: block !important;
     transition: opacity 0.3s ease !important;
-    margin: -8px 0 !important; /* Negative margin to prevent header expansion */
+    margin: -12px 0 !important; /* Negative margin to prevent header expansion */
 }
 
 .roots_logo a:hover img {
