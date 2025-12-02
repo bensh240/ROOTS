@@ -257,31 +257,31 @@
                                                     </div>
                                                     <h2 class="sc_title sc_title_regular cu_mrg_4" style="text-align: right;">למה אנחנו הטובים ביותר</h2>
                                                     <div id="sc_skills_diagram_086" class="sc_skills sc_skills_bar sc_skills_horizontal" style="direction: rtl; text-align: right;">
-                                                        <div style="margin-bottom: 20px;">
+                                                        <div class="skill-item" data-percent="95" style="margin-bottom: 20px;">
                                                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; direction: rtl;">
                                                                 <span style="font-size: 16px; font-weight: 600; color: #333;">סיבולת ומקצועיות</span>
-                                                                <span style="font-size: 18px; font-weight: 700; color: #8B6F47;">95%</span>
+                                                                <span class="skill-percent" style="font-size: 18px; font-weight: 700; color: #8B6F47;">0%</span>
                                                             </div>
                                                             <div style="height: 8px; background: #f0f0f0; border-radius: 4px; position: relative; overflow: hidden;">
-                                                                <div style="position: absolute; right: 0; top: 0; height: 100%; width: 95%; background: linear-gradient(90deg, #8B6F47 0%, #6B8E23 100%); border-radius: 4px;"></div>
+                                                                <div class="skill-bar" style="position: absolute; right: 0; top: 0; height: 100%; width: 0%; background: linear-gradient(90deg, #8B6F47 0%, #6B8E23 100%); border-radius: 4px; transition: width 2s ease-out;"></div>
                                                             </div>
                                                         </div>
-                                                        <div style="margin-bottom: 20px;">
+                                                        <div class="skill-item" data-percent="99" style="margin-bottom: 20px;">
                                                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; direction: rtl;">
                                                                 <span style="font-size: 16px; font-weight: 600; color: #333;">ריכוז ותשומת לב</span>
-                                                                <span style="font-size: 18px; font-weight: 700; color: #8B6F47;">99%</span>
+                                                                <span class="skill-percent" style="font-size: 18px; font-weight: 700; color: #8B6F47;">0%</span>
                                                             </div>
                                                             <div style="height: 8px; background: #f0f0f0; border-radius: 4px; position: relative; overflow: hidden;">
-                                                                <div style="position: absolute; right: 0; top: 0; height: 100%; width: 99%; background: linear-gradient(90deg, #8B6F47 0%, #6B8E23 100%); border-radius: 4px;"></div>
+                                                                <div class="skill-bar" style="position: absolute; right: 0; top: 0; height: 100%; width: 0%; background: linear-gradient(90deg, #8B6F47 0%, #6B8E23 100%); border-radius: 4px; transition: width 2s ease-out;"></div>
                                                             </div>
                                                         </div>
-                                                        <div style="margin-bottom: 20px;">
+                                                        <div class="skill-item" data-percent="96" style="margin-bottom: 20px;">
                                                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; direction: rtl;">
                                                                 <span style="font-size: 16px; font-weight: 600; color: #333;">מיומנות ידיים</span>
-                                                                <span style="font-size: 18px; font-weight: 700; color: #8B6F47;">96%</span>
+                                                                <span class="skill-percent" style="font-size: 18px; font-weight: 700; color: #8B6F47;">0%</span>
                                                             </div>
                                                             <div style="height: 8px; background: #f0f0f0; border-radius: 4px; position: relative; overflow: hidden;">
-                                                                <div style="position: absolute; right: 0; top: 0; height: 100%; width: 96%; background: linear-gradient(90deg, #8B6F47 0%, #6B8E23 100%); border-radius: 4px;"></div>
+                                                                <div class="skill-bar" style="position: absolute; right: 0; top: 0; height: 100%; width: 0%; background: linear-gradient(90deg, #8B6F47 0%, #6B8E23 100%); border-radius: 4px; transition: width 2s ease-out;"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -502,6 +502,68 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+});
+
+// Skills bars animation
+document.addEventListener('DOMContentLoaded', function() {
+    const skillsContainer = document.querySelector('#sc_skills_diagram_086');
+    if (!skillsContainer) return;
+    
+    let animated = false;
+    
+    function animateSkills() {
+        if (animated) return;
+        animated = true;
+        
+        const skillItems = skillsContainer.querySelectorAll('.skill-item');
+        
+        skillItems.forEach(function(item, index) {
+            setTimeout(function() {
+                const targetPercent = parseInt(item.getAttribute('data-percent'));
+                const percentElement = item.querySelector('.skill-percent');
+                const barElement = item.querySelector('.skill-bar');
+                
+                // Animate the number
+                let current = 0;
+                const duration = 2000; // 2 seconds
+                const increment = targetPercent / (duration / 16); // 60fps
+                
+                const timer = setInterval(function() {
+                    current += increment;
+                    if (current >= targetPercent) {
+                        current = targetPercent;
+                        clearInterval(timer);
+                    }
+                    percentElement.textContent = Math.round(current) + '%';
+                }, 16);
+                
+                // Animate the bar
+                setTimeout(function() {
+                    barElement.style.width = targetPercent + '%';
+                }, 50);
+                
+            }, index * 300); // Stagger the animations
+        });
+    }
+    
+    // Check if element is in viewport
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + 200
+        );
+    }
+    
+    // Trigger animation when scrolling into view
+    function checkScroll() {
+        if (!animated && isInViewport(skillsContainer)) {
+            animateSkills();
+        }
+    }
+    
+    window.addEventListener('scroll', checkScroll);
+    checkScroll(); // Check on load
 });
 </script>
 </body>
