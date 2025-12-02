@@ -1,0 +1,1575 @@
+/* 
+ * Roots - Color Theme: Brown & Green
+ * צבעי המותג: חום וירוק
+ */
+
+:root {
+    --primary-brown: #8B6F47;
+    --primary-green: #6B8E23;
+    --light-brown: #A68B5B;
+    --light-green: #7A9B5C;
+    --dark-brown: #6B5435;
+    --dark-green: #556B2F;
+}
+
+/* ===========================
+   Hebrew Fonts - Professional & Readable
+   פונטים עבריים - מקצועי וקריא
+   =========================== */
+
+/* General Body and Text Fonts */
+body, p, div, span, a, li, td, th {
+    font-family: 'Assistant', sans-serif !important;
+    line-height: 1.7 !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings Fonts */
+h1, h2, h3, h4, h5, h6, .sc_item_title, .sc_section_title, .sc_services_item_title, .sc_team_item_title, .sc_title {
+    font-family: 'Alef', sans-serif !important;
+    letter-spacing: 0.3px !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Specific Heading Sizes */
+h1 { font-size: 42px !important; }
+h2 { font-size: 32px !important; }
+h3 { font-size: 26px !important; }
+h4 { font-size: 22px !important; }
+
+/* Menu Items Font Weight */
+.menu_main_nav > li > a {
+    font-weight: 600 !important;
+}
+
+/* ===========================
+   Primary Colors - Brown & Green
+   =========================== */
+
+/* Buttons & Links - Primary Brown */
+.sc_button_style_filled,
+.sc_services_item_readmore,
+body #booked-profile-page input[type=submit].button-primary,
+body table.booked-calendar input[type=submit].button-primary,
+body .booked-modal input[type=submit].button-primary,
+body table.booked-calendar .booked-appt-list .timeslot .timeslot-people button {
+    background: #8B6F47 !important;
+    border-color: #8B6F47 !important;
+}
+
+.sc_button_style_filled:hover,
+.sc_services_item_readmore:hover,
+body #booked-profile-page input[type=submit].button-primary:hover,
+body table.booked-calendar input[type=submit].button-primary:hover,
+body .booked-modal input[type=submit].button-primary:hover {
+    background: #6B5435 !important;
+    border-color: #6B5435 !important;
+}
+
+/* Headers & Highlights - Primary Green */
+body table.booked-calendar thead,
+body table.booked-calendar thead th,
+body #booked-profile-page .booked-profile-header,
+.sc_custom_1459502371704 {
+    background: #6B8E23 !important;
+    border-color: #6B8E23 !important;
+}
+
+/* Top Panel Background - Keep it light or transparent */
+.top_panel_top {
+    background: transparent !important;
+}
+
+/* Secondary Elements - Light Brown */
+.sc_custom_1459330954110,
+.sc_services_item:hover .sc_icon,
+body table.booked-calendar .booked-appt-list .timeslot .timeslot-people button:hover {
+    background: #A68B5B !important;
+    border-color: #A68B5B !important;
+}
+
+/* Accents - Light Green */
+body #booked-profile-page .booked-profile-appt-list .appt-block.approved .status-block {
+    background: #7A9B5C !important;
+}
+
+/* Icons & Special Elements */
+.sc_icon {
+    color: #8B6F47 !important;
+}
+
+.sc_services_item:hover .sc_icon {
+    color: #ffffff !important;
+}
+
+/* Links */
+a:hover,
+.menu_main_nav a:hover {
+    color: #6B8E23 !important;
+}
+
+/* Borders & Lines */
+.sc_line,
+.menu_main_nav > li {
+    border-color: #A68B5B !important;
+}
+
+/* Special Sections */
+.inverse_colors {
+    background-color: #6B8E23 !important;
+}
+
+.scheme_original {
+    color: #4a4a4a;
+}
+
+/* Titles & Headers */
+.sc_title,
+.sc_services_title,
+h1, h2, h3, h4, h5, h6 {
+    color: #6B5435 !important;
+}
+
+.inverse_colors h1,
+.inverse_colors h2,
+.inverse_colors h3,
+.inverse_colors h4,
+.inverse_colors h5,
+.inverse_colors h6,
+.inverse_colors .sc_title {
+    color: #ffffff !important;
+}
+
+/* Footer */
+.footer_wrap {
+    background-color: #f5f5f5;
+    padding: 25px 0 15px !important;
+}
+
+.footer_wrap .widget_area_inner {
+    padding: 0 !important;
+}
+
+.footer_wrap .widget {
+    margin-bottom: 10px !important;
+}
+
+.footer_wrap .widget_title {
+    color: #6B5435 !important;
+    font-size: 14px !important;
+    margin-bottom: 10px !important;
+}
+
+.footer_wrap .logo img {
+    max-height: 40px !important;
+    width: auto !important;
+}
+
+.footer_wrap .logo_descr {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+}
+
+.footer_wrap .textwidget,
+.footer_wrap .sc_list_style_iconed li {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 5px !important;
+}
+
+.copyright_wrap {
+    padding: 12px 0 !important;
+    font-size: 12px !important;
+}
+
+/* Top Panel - Black Text for Readability */
+.top_panel_title,
+.top_panel_top,
+.top_panel_top *,
+.menu_main_nav > li > a,
+.top_panel_fixed .menu_main_nav > li > a,
+.header_wrap .menu_main_nav a,
+.top_panel_wrap .menu_main_nav a {
+    color: #000000 !important;
+}
+
+.top_panel_fixed .menu_main_nav > li > a:hover,
+.top_panel_fixed .menu_main_nav > li.current-menu-item > a,
+.top_panel_fixed .menu_main_nav > li.current-menu-ancestor > a,
+.menu_main_nav > li > a:hover {
+    color: #8B6F47 !important;
+}
+
+/* Services Items */
+.sc_services_item_title a {
+    color: #6B5435 !important;
+}
+
+.sc_services_item_title a:hover {
+    color: #8B6F47 !important;
+}
+
+/* Price Tables */
+.sc_price_item.sc_price_item_active .sc_price_item_title,
+.sc_price_item:hover .sc_price_item_title {
+    background-color: #6B8E23 !important;
+}
+
+.sc_price_item_price {
+    color: #8B6F47 !important;
+}
+
+/* Call to Action */
+.sc_call_to_action {
+    background-color: #6B8E23 !important;
+}
+
+/* Testimonials */
+.sc_testimonials_item_author_data {
+    color: #8B6F47 !important;
+}
+
+/* Team Members */
+.sc_team_item_title a:hover {
+    color: #6B8E23 !important;
+}
+
+/* Slider Controls */
+.slider_prev:hover,
+.slider_next:hover,
+.sc_slider_prev:hover,
+.sc_slider_next:hover {
+    background-color: #8B6F47 !important;
+    border-color: #8B6F47 !important;
+}
+
+/* Revolution Slider */
+.tp-caption a,
+.tp-caption a:hover {
+    color: #6B8E23 !important;
+}
+
+/* Mobile Menu */
+.header_mobile .menu_button:hover {
+    color: #8B6F47 !important;
+}
+
+/* Search */
+.search_submit:hover {
+    background-color: #8B6F47 !important;
+}
+
+/* Breadcrumbs */
+.breadcrumbs a:hover {
+    color: #6B8E23 !important;
+}
+
+/* Credit Line */
+.copyright_wrap a {
+    color: #8B6F47 !important;
+}
+
+.copyright_wrap a:hover {
+    color: #6B5435 !important;
+}
+
+/* Custom Background Colors Override */
+.sc_custom_1459259915855,
+.sc_custom_1459343317996,
+.sc_custom_1459346050873,
+.sc_custom_1459503174388,
+.sc_custom_1459762742825 {
+    background-color: #f9f7f4 !important; /* Warm light background */
+}
+
+/* ===========================
+   Header & Top Panel Text - BLACK for Readability
+   =========================== */
+
+/* All text in top panel and header */
+.top_panel_wrap,
+.top_panel_wrap *,
+.header_wrap,
+.header_wrap *,
+.top_panel_top_contact_area,
+.top_panel_top_contact_area *,
+.top_panel_top_user_area,
+.top_panel_top_user_area *,
+.top_panel_middle,
+.top_panel_middle * {
+    color: #000000 !important;
+}
+
+/* Menu links - black by default */
+.menu_main_nav,
+.menu_main_nav li,
+.menu_main_nav li a,
+.menu_main_nav > li > a,
+.top_panel_navi .menu_main_nav > li > a {
+    color: #000000 !important;
+}
+
+/* Sub-menu */
+.sub-menu,
+.sub-menu li,
+.sub-menu li a {
+    color: #000000 !important;
+}
+
+/* Contact info in header */
+.top_panel_top_contact_area a,
+.top_panel_top_contact_area span,
+.top_panel_top_socials a {
+    color: #000000 !important;
+}
+
+/* Hover states - Brown */
+.menu_main_nav > li > a:hover,
+.menu_main_nav > li.current-menu-item > a,
+.menu_main_nav > li.current-menu-ancestor > a,
+.sub-menu li a:hover,
+.top_panel_top_contact_area a:hover {
+    color: #8B6F47 !important;
+}
+
+/* Mobile menu */
+.header_mobile,
+.header_mobile *,
+.header_mobile .menu_main_nav a,
+.side_wrap,
+.side_wrap * {
+    color: #000000 !important;
+}
+
+/* Logo area text */
+.logo_text {
+    color: #000000 !important;
+}
+
+/* Search icon */
+.search_wrap .search_field,
+.search_wrap .search_submit {
+    color: #000000 !important;
+}
+
+/* ===========================
+   Content Wrap - LTR
+   =========================== */
+.content_wrap.clearfix,
+.content_wrap {
+    direction: ltr !important;
+    text-align: left !important;
+}
+
+/* ===========================
+   PROMO IMAGE - Clickable
+   =========================== */
+.sc_promo_image[onclick] {
+    transition: all 0.3s ease !important;
+}
+
+.sc_promo_image[onclick]:hover {
+    transform: scale(1.02) !important;
+    opacity: 0.9 !important;
+}
+
+/* ===========================
+   SERVICES ITEMS - Clickable to Booking
+   =========================== */
+.sc_services_item {
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+}
+
+.sc_services_item:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 25px rgba(139, 111, 71, 0.15) !important;
+}
+
+.sc_services_item:hover .sc_icon {
+    color: var(--primary-brown, #8B6F47) !important;
+    transform: scale(1.1) !important;
+}
+
+.sc_services_item:hover .sc_services_item_title a {
+    color: var(--primary-brown, #8B6F47) !important;
+}
+
+.sc_services_item .sc_icon {
+    transition: all 0.3s ease !important;
+}
+
+/* ===========================
+   TOP BAR - Contact Info & Social Media (Full Width)
+   =========================== */
+.roots_top_bar_wrapper {
+    background: #f8f8f8 !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+    width: 100% !important;
+}
+
+.roots_top_bar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 8px 30px !important;
+    direction: ltr !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.roots_top_left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 30px !important;
+    flex: 0 0 auto !important;
+}
+
+.roots_top_bar .top_panel_top_contact_area {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    color: #4a4a4a !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+}
+
+.roots_top_bar .top_panel_top_contact_area span[class^="icon-"] {
+    color: var(--primary-brown, #8B6F47) !important;
+    font-size: 14px !important;
+}
+
+.roots_top_bar .top_panel_top_contact_area a {
+    color: #4a4a4a !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+.roots_top_bar .top_panel_top_contact_area a:hover {
+    color: var(--primary-brown, #8B6F47) !important;
+}
+
+/* Social Media - Right Side */
+.roots_top_right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex: 0 0 auto !important;
+}
+
+.roots_social_icons {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.roots_social_icons a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50% !important;
+    background: transparent !important;
+    color: #4a4a4a !important;
+    font-size: 15px !important;
+    text-decoration: none !important;
+}
+
+.roots_social_icons a span {
+    display: block !important;
+}
+
+/* WhatsApp icon fix */
+.icon-whatsapp:before {
+    content: "\e95b" !important;
+    font-family: 'fontello' !important;
+}
+
+/* ===========================
+   MODERN HEBREW HEADER - מודרני ומקצועי
+   =========================== */
+
+/* Header Background */
+.roots_modern_header {
+    background: #ffffff !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 999 !important;
+}
+
+/* Header Container */
+.roots_header_container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 20px 0 !important;
+    direction: rtl !important;
+    gap: 30px !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+
+/* CRITICAL: Ensure all header parent containers allow overflow */
+.top_panel_wrap,
+.top_panel_wrap_inner,
+.top_panel_middle,
+.content_wrap {
+    overflow: visible !important;
+}
+
+/* ===========================
+   LOGO - RIGHT SIDE (מימין)
+   =========================== */
+.roots_logo {
+    flex: 0 0 auto !important;
+    order: 1 !important;
+}
+
+.roots_logo a {
+    display: block !important;
+    line-height: 0 !important;
+}
+
+.roots_logo img {
+    height: 60px !important;
+    width: auto !important;
+    display: block !important;
+    transition: opacity 0.3s ease !important;
+    margin: -8px 0 !important; /* Negative margin to prevent header expansion */
+}
+
+.roots_logo a:hover img {
+    opacity: 0.8 !important;
+}
+
+/* ===========================
+   NAVIGATION - CENTER (אמצע)
+   =========================== */
+.roots_navigation {
+    flex: 1 1 auto !important;
+    order: 2 !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    margin-right: 40px !important;
+    overflow: visible !important;
+    position: static !important;
+}
+
+.roots_menu {
+    display: flex !important;
+    align-items: center !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 35px !important;
+    overflow: visible !important;
+    position: relative !important;
+    z-index: 10000 !important;
+}
+
+.roots_menu_item {
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.roots_menu_item > a {
+    display: block !important;
+    color: #2c2c2c !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    padding: 10px 0 !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    font-family: 'Assistant', sans-serif !important;
+}
+
+/* Hover Effect - Underline */
+.roots_menu_item > a::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 5px !important;
+    right: 0 !important;
+    width: 0 !important;
+    height: 2px !important;
+    background: var(--primary-brown, #8B6F47) !important;
+    transition: width 0.3s ease !important;
+}
+
+.roots_menu_item > a:hover,
+.roots_menu_item.roots_active > a {
+    color: var(--primary-brown, #8B6F47) !important;
+}
+
+.roots_menu_item > a:hover::after,
+.roots_menu_item.roots_active > a::after {
+    width: 100% !important;
+}
+
+/* Submenu - Simple and Working */
+.roots_submenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: auto;
+    background: #ffffff;
+    min-width: 220px;
+    padding: 15px 0;
+    margin-top: 10px;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    border: 1px solid #e5e5e5;
+    list-style: none;
+    margin-right: 0;
+    margin-left: 0;
+    z-index: 999999999;
+    
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+/* Show submenu on hover */
+.roots_menu_item:hover > .roots_submenu,
+.roots_has_submenu:hover > .roots_submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Keep submenu visible while hovering over it */
+.roots_submenu:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.roots_submenu li {
+    list-style: none !important;
+}
+
+.roots_submenu a {
+    display: block !important;
+    padding: 12px 25px !important;
+    color: #4a4a4a !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    text-decoration: none !important;
+    text-align: right !important;
+    transition: all 0.2s ease !important;
+    font-family: 'Assistant', sans-serif !important;
+}
+
+.roots_submenu a:hover {
+    background: #f8f8f8 !important;
+    color: var(--primary-brown, #8B6F47) !important;
+    padding-right: 30px !important;
+}
+
+/* ===========================
+   HEADER ACTIONS - LEFT SIDE (שמאל)
+   =========================== */
+.roots_header_actions {
+    flex: 0 0 auto !important;
+    order: 3 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+}
+
+/* CTA Button */
+.roots_cta_button {
+    background: var(--primary-brown, #8B6F47) !important;
+    color: #ffffff !important;
+    padding: 12px 28px !important;
+    border-radius: 25px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+    font-family: 'Assistant', sans-serif !important;
+    white-space: nowrap !important;
+    box-shadow: 0 4px 12px rgba(139, 111, 71, 0.2) !important;
+}
+
+.roots_cta_button:hover {
+    background: var(--dark-brown, #6B5435) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(139, 111, 71, 0.3) !important;
+}
+
+/* Search Toggle Button - Clean Icon Only */
+.roots_search_toggle {
+    background: transparent !important;
+    border: none !important;
+    padding: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-size: 20px !important;
+    color: #2c2c2c !important;
+}
+
+.roots_search_toggle:hover {
+    color: var(--primary-brown, #8B6F47) !important;
+    transform: scale(1.15) !important;
+}
+
+/* Search Form Popup */
+.roots_search_form {
+    position: absolute !important;
+    top: calc(100% + 20px) !important;
+    left: 0 !important;
+    background: #ffffff !important;
+    padding: 25px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
+    min-width: 350px !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateY(-15px) scale(0.95) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    z-index: 1001 !important;
+}
+
+.roots_search_form.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+.roots_search_form form {
+    display: flex !important;
+    gap: 10px !important;
+}
+
+.roots_search_input {
+    flex: 1 !important;
+    padding: 12px 18px !important;
+    border: 2px solid #e5e5e5 !important;
+    border-radius: 25px !important;
+    font-size: 15px !important;
+    font-family: 'Assistant', sans-serif !important;
+    transition: all 0.3s ease !important;
+    direction: rtl !important;
+}
+
+.roots_search_input:focus {
+    outline: none !important;
+    border-color: var(--primary-brown, #8B6F47) !important;
+    box-shadow: 0 0 0 3px rgba(139, 111, 71, 0.1) !important;
+}
+
+.roots_search_submit {
+    background: var(--primary-brown, #8B6F47) !important;
+    border: none !important;
+    border-radius: 50% !important;
+    width: 45px !important;
+    height: 45px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-size: 16px !important;
+}
+
+.roots_search_submit:hover {
+    background: var(--dark-brown, #6B5435) !important;
+    transform: scale(1.05) !important;
+}
+
+/* ===========================
+   RESPONSIVE DESIGN
+   =========================== */
+
+@media (max-width: 1024px) {
+    .roots_header_container {
+        gap: 20px !important;
+    }
+    
+    .roots_menu {
+        gap: 25px !important;
+    }
+    
+    .roots_menu_item > a {
+        font-size: 15px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .roots_header_container {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 15px !important;
+        padding: 20px 0 !important;
+    }
+    
+    .roots_logo {
+        order: 1 !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+    
+    .roots_navigation {
+        order: 2 !important;
+        width: 100% !important;
+    }
+    
+    .roots_menu {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 15px !important;
+    }
+    
+    .roots_search {
+        order: 3 !important;
+    }
+    
+    .roots_search_form {
+        right: auto !important;
+        left: 50% !important;
+        transform: translateX(-50%) translateY(-10px) !important;
+        min-width: 280px !important;
+    }
+    
+    .roots_search_toggle:hover + .roots_search_form,
+    .roots_search_form:hover {
+        transform: translateX(-50%) translateY(0) !important;
+    }
+}
+
+/* ===========================
+   Top Panel Contact Area - Better Spacing & Visibility
+   =========================== */
+.top_panel_top_contact_area {
+    display: inline-block !important;
+    margin-left: 20px !important;
+    margin-right: 5px !important;
+    padding: 5px 10px !important;
+    color: #000000 !important;
+    white-space: nowrap !important;
+}
+
+.top_panel_top_contact_area a {
+    color: #000000 !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+}
+
+.top_panel_top_contact_area a:hover {
+    color: #8B6F47 !important;
+}
+
+.top_panel_top .content_wrap {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+
+/* Fix z-index for top_panel_image - ensure it doesn't block dropdowns */
+.top_panel_image {
+    z-index: 1 !important;
+    position: relative !important;
+}
+
+.top_panel_image_hover {
+    z-index: 1 !important;
+    pointer-events: none !important;
+}
+
+.top_panel_image_header {
+    z-index: 2 !important;
+    position: relative !important;
+}
+
+/* Ensure header and menus are always on top */
+header.top_panel_wrap,
+.top_panel_wrap {
+    z-index: 99999 !important;
+    position: relative !important;
+}
+
+.roots_modern_header {
+    z-index: 999999 !important;
+    position: relative !important;
+    background: #ffffff !important;
+}
+
+/* Ensure submenu parent has proper positioning */
+.roots_menu_item.roots_has_submenu {
+    position: relative !important;
+}
+
+/* Ensure menu item allows submenu to position correctly */
+.roots_menu_item {
+    position: relative;
+}
+
+.roots_has_submenu {
+    position: relative;
+}
+
+/* Make sure all containers allow overflow */
+.roots_navigation,
+.roots_menu,
+.roots_header_container,
+.content_wrap,
+.top_panel_middle,
+.top_panel_wrap_inner,
+.top_panel_wrap {
+    overflow: visible;
+}
+
+/* Search Form Fix */
+.roots_search_form {
+    position: fixed !important;
+    top: 130px !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(-20px) !important;
+    background: #ffffff !important;
+    padding: 25px !important;
+    border-radius: 15px !important;
+    box-shadow: 0 15px 60px rgba(0,0,0,0.3) !important;
+    min-width: 400px !important;
+    max-width: 90vw !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: all 0.4s ease !important;
+    z-index: 999999999 !important;
+    border: 2px solid #e5e5e5 !important;
+}
+
+.roots_search_form.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateX(-50%) translateY(0) !important;
+}
+
+/* Search Overlay - backdrop */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999999998 !important;
+    pointer-events: none;
+}
+
+body.search-open::before {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Search Form - Dark Overlay */
+.roots_search_overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99999998 !important;
+}
+
+.roots_search_overlay.active {
+    display: block;
+}
+
+/* Ensure search doesn't overflow on mobile */
+@media (max-width: 768px) {
+    .roots_search_form {
+        min-width: 90vw !important;
+        width: 90vw !important;
+        padding: 20px !important;
+        top: 100px !important;
+    }
+    
+    .roots_search_form.active {
+        transform: translateX(-50%) translateY(0) !important;
+    }
+    
+    .roots_search_input {
+        font-size: 16px !important;
+        padding: 12px 15px !important;
+    }
+}
+
+/* Specific fix for booking page */
+body.booking .top_panel_image {
+    background-image: url('../images/BookedAppointments.jpg') !important;
+    z-index: 1 !important;
+}
+
+body.booking .top_panel_wrap,
+body.booking header.top_panel_wrap {
+    z-index: 99999 !important;
+}
+
+/* Breadcrumbs in black */
+body.booking .breadcrumbs,
+body.booking .breadcrumbs_item,
+body.booking .breadcrumbs_item.home,
+body.booking .breadcrumbs_item.current,
+body.booking .breadcrumbs a {
+    color: #000000 !important;
+}
+
+body.booking .top_panel_image_title {
+    color: #000000 !important;
+}
+
+/* Booking Page - Contact Cards Hover Effects */
+.post_content div[style*="grid-template-columns"] > div[style*="linear-gradient"] {
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.post_content div[style*="grid-template-columns"] > div[style*="linear-gradient"]:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.25) !important;
+}
+
+/* WhatsApp Button Hover */
+.post_content a[href*="wa.me"]:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 15px 40px rgba(37, 211, 102, 0.5) !important;
+}
+
+/* ===========================
+   MOBILE RESPONSIVE - FULL SITE
+   =========================== */
+
+/* Tablet - Up to 1024px */
+@media (max-width: 1024px) {
+    /* Top Bar */
+    .roots_top_bar {
+        padding: 6px 15px !important;
+    }
+    
+    .roots_top_bar .roots_contact_item {
+        font-size: 12px !important;
+    }
+    
+    .roots_top_bar .roots_social_icon {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 13px !important;
+    }
+    
+    /* Info Cards */
+    .roots_info_cards .column-1_3 {
+        width: 50% !important;
+        float: left !important;
+    }
+    
+    .roots_info_cards .column-1_3:last-child {
+        width: 100% !important;
+        margin-top: 20px !important;
+    }
+    
+    /* Call to Action Section */
+    .columns_wrap.sc_columns.columns_nofluid .column-1_4 {
+        width: 40% !important;
+    }
+    
+    .columns_wrap.sc_columns.columns_nofluid .column-3_4 {
+        width: 60% !important;
+    }
+}
+
+/* Mobile Large - Up to 768px */
+@media (max-width: 768px) {
+    /* Top Bar - Stack vertically */
+    .roots_top_bar {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        padding: 10px 15px !important;
+    }
+    
+    .roots_top_right,
+    .roots_top_left {
+        width: 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+    
+    .roots_top_bar .roots_contact_item {
+        margin: 0 8px !important;
+        font-size: 11px !important;
+    }
+    
+    /* Hide some contact items on mobile */
+    .roots_top_bar .roots_contact_item.open-hours {
+        display: none !important;
+    }
+    
+    /* Info Cards - Single column */
+    .roots_info_cards {
+        flex-direction: column !important;
+    }
+    
+    .roots_info_cards .column-1_3,
+    .roots_info_cards .column-1_3:last-child {
+        width: 100% !important;
+        float: none !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .roots_info_cards .column-1_3 > div {
+        min-height: auto !important;
+        padding: 25px 20px !important;
+    }
+    
+    /* Call to Action Section - Stack */
+    .columns_wrap.sc_columns.columns_nofluid .column-1_4,
+    .columns_wrap.sc_columns.columns_nofluid .column-3_4 {
+        width: 100% !important;
+        float: none !important;
+    }
+    
+    .columns_wrap.sc_columns.columns_nofluid .column-1_4 {
+        text-align: center !important;
+        margin-bottom: 30px !important;
+    }
+    
+    .columns_wrap.sc_columns.columns_nofluid .column-1_4 h2 {
+        text-align: center !important;
+    }
+    
+    .columns_wrap.sc_columns.columns_nofluid .column-1_4 ul {
+        text-align: center !important;
+        padding-right: 0 !important;
+    }
+    
+    .columns_wrap.sc_columns.columns_nofluid .column-1_4 .sc_button {
+        float: none !important;
+        display: inline-block !important;
+    }
+    
+    /* Promo Image */
+    .sc_promo_image {
+        min-height: 300px !important;
+    }
+    
+    /* Services Grid */
+    .sc_services_style_services-2 .column-1_2 {
+        width: 100% !important;
+        float: none !important;
+    }
+    
+    /* Slider Text */
+    .slider_wrap .tp-caption {
+        font-size: 90% !important;
+    }
+    
+    /* Services Section Title */
+    .sc_services_title.sc_item_title {
+        font-size: 24px !important;
+        padding: 0 15px !important;
+    }
+    
+    .sc_services_subtitle.sc_item_subtitle {
+        font-size: 14px !important;
+    }
+    
+    .sc_services_descr.sc_item_descr {
+        font-size: 14px !important;
+        padding: 0 15px !important;
+    }
+}
+
+/* Mobile Small - Up to 480px */
+@media (max-width: 480px) {
+    /* Top Bar */
+    .roots_top_bar {
+        padding: 8px 10px !important;
+    }
+    
+    .roots_top_bar .roots_contact_item {
+        font-size: 10px !important;
+        margin: 0 5px !important;
+    }
+    
+    /* Hide email on very small screens */
+    .roots_top_bar .roots_contact_item.email {
+        display: none !important;
+    }
+    
+    /* Social Icons */
+    .roots_top_bar .roots_social_icon {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 12px !important;
+    }
+    
+    /* Info Cards */
+    .roots_info_cards .column-1_3 > div {
+        padding: 20px 15px !important;
+    }
+    
+    .roots_info_cards .column-1_3 > div h5 {
+        font-size: 18px !important;
+    }
+    
+    .roots_info_cards .column-1_3 > div p {
+        font-size: 13px !important;
+    }
+    
+    /* Icon circles */
+    .roots_info_cards .column-1_3 > div > div:first-child {
+        width: 55px !important;
+        height: 55px !important;
+    }
+    
+    .roots_info_cards .column-1_3 > div > div:first-child span {
+        font-size: 24px !important;
+    }
+    
+    /* Call to Action */
+    .columns_wrap.sc_columns.columns_nofluid .column-1_4 h2 {
+        font-size: 26px !important;
+    }
+    
+    .columns_wrap.sc_columns.columns_nofluid .column-1_4 p {
+        font-size: 14px !important;
+    }
+    
+    /* Promo Block */
+    .sc_promo_block_inner {
+        padding: 20px !important;
+    }
+    
+    .sc_promo_block h2 {
+        font-size: 20px !important;
+    }
+    
+    /* Services Items */
+    .sc_services_item_title a {
+        font-size: 16px !important;
+    }
+    
+    .sc_services_item_description p {
+        font-size: 13px !important;
+    }
+    
+    /* Promo Image */
+    .sc_promo_image {
+        min-height: 250px !important;
+    }
+    
+    /* Button */
+    .sc_button {
+        padding: 12px 25px !important;
+        font-size: 13px !important;
+    }
+    
+    /* Footer Social */
+    .sc_socials.cu_block_3 .social_icons {
+        width: 36px !important;
+        height: 36px !important;
+    }
+    
+    /* Copyright text */
+    .cu_text_c {
+        font-size: 12px !important;
+        padding: 0 10px !important;
+    }
+    
+    /* Line separator */
+    .sc_line {
+        width: 150px !important;
+    }
+}
+
+/* Very Small Phones - Up to 360px */
+@media (max-width: 360px) {
+    .roots_top_bar .roots_contact_item {
+        display: none !important;
+    }
+    
+    .roots_top_bar .roots_contact_item.phone {
+        display: flex !important;
+    }
+    
+    .roots_top_bar .roots_social_icons {
+        display: flex !important;
+    }
+    
+    /* Services title */
+    .sc_services_title.sc_item_title {
+        font-size: 20px !important;
+    }
+    
+    /* Info cards even smaller */
+    .roots_info_cards .column-1_3 > div {
+        padding: 15px 10px !important;
+    }
+}
+
+/* Mobile Menu Improvements */
+@media (max-width: 1024px) {
+    .header_mobile {
+        display: block !important;
+    }
+    
+    .header_mobile .logo img {
+        max-height: 40px !important;
+        width: auto !important;
+    }
+    
+    .header_mobile .menu_button {
+        font-size: 24px !important;
+        color: #8B6F47 !important;
+    }
+    
+    .header_mobile .content_wrap {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 10px 15px !important;
+    }
+    
+    /* Side Menu */
+    .side_wrap {
+        background: #ffffff !important;
+        max-width: 300px !important;
+    }
+    
+    .side_wrap .menu_main_nav > li > a {
+        font-size: 16px !important;
+        padding: 12px 20px !important;
+        border-bottom: 1px solid #f0f0f0 !important;
+        color: #333 !important;
+    }
+    
+    .side_wrap .menu_main_nav > li > a:hover {
+        background: #f9f9f9 !important;
+        color: #8B6F47 !important;
+    }
+    
+    .side_wrap .close {
+        background: #8B6F47 !important;
+        color: white !important;
+        padding: 15px !important;
+        text-align: center !important;
+        font-weight: 600 !important;
+    }
+}
+
+/* Slider Mobile Fixes */
+@media (max-width: 768px) {
+    /* Slider container */
+    .slider_wrap .rev_slider_wrapper {
+        max-height: 500px !important;
+    }
+    
+    /* Footer brown line - full width on mobile */
+    .sc_line.sc_line_position_center_center {
+        width: 80% !important;
+        max-width: 300px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .slider_wrap .rev_slider_wrapper {
+        max-height: 400px !important;
+    }
+    
+    /* Footer brown line - even wider on small mobile */
+    .sc_line.sc_line_position_center_center {
+        width: 90% !important;
+        max-width: none !important;
+    }
+}
+
+/* Images - Desktop and Mobile */
+.sc_promo_image,
+.sc_promo_image.even,
+.sc_promo_image.odd {
+    background-size: cover !important;
+    background-position: center center !important;
+}
+
+/* Custom Promo Services - Desktop (התמונה ליד הטיפולים) */
+.sc_promo.custom_promo_services .sc_promo_inner {
+    display: flex !important;
+    min-height: 700px !important;
+    position: relative !important;
+}
+
+.sc_promo.custom_promo_services .sc_promo_image {
+    position: relative !important;
+    flex: 0 0 50% !important;
+    min-height: 700px !important;
+    width: 50% !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.sc_promo.custom_promo_services .sc_promo_block {
+    flex: 0 0 50% !important;
+    width: 50% !important;
+    position: relative !important;
+}
+
+/* Custom Promo 01 - Desktop (התמונה עם התאריך) */
+.sc_promo.custom_promo_01 .sc_promo_inner {
+    display: flex !important;
+    min-height: 550px !important;
+    position: relative !important;
+}
+
+.sc_promo.custom_promo_01 .sc_promo_image {
+    position: relative !important;
+    flex: 0 0 65% !important;
+    min-height: 550px !important;
+    width: 65% !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.sc_promo.custom_promo_01 .sc_promo_block {
+    position: relative !important;
+    flex: 0 0 35% !important;
+    width: 35% !important;
+}
+
+@media (max-width: 768px) {
+    .sc_promo.custom_promo_01 .sc_promo_image {
+        min-height: 280px !important;
+    }
+    
+    .sc_promo.custom_promo_services .sc_promo_image {
+        min-height: 300px !important;
+        position: relative !important;
+    }
+    
+    /* Stack promo sections on mobile */
+    .sc_promo.custom_promo_services .sc_promo_inner {
+        flex-direction: column !important;
+    }
+    
+    .sc_promo.custom_promo_services .sc_promo_image,
+    .sc_promo.custom_promo_services .sc_promo_block {
+        width: 100% !important;
+    }
+}
+
+/* ===========================
+   Z-Index Priority System - CRITICAL FIX
+   =========================== */
+   
+/* Force ALL page content to lower z-index */
+body > *:not(.top_panel_wrap):not(header) {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Z-INDEX FIX - Ensure submenu is always visible */
+/* Force page content to lower z-index */
+body.aboutus section.top_panel_image,
+body.aboutus .top_panel_image,
+body.aboutus .top_panel_image_header,
+body.aboutus .top_panel_image_hover,
+body.booking section.top_panel_image,
+body.booking .top_panel_image,
+body.booking .top_panel_image_header,
+body.booking .top_panel_image_hover,
+.slider_wrap,
+.rev_slider_wrapper {
+    z-index: 1 !important;
+}
+
+/* Header always on top */
+.top_panel_wrap,
+header.top_panel_wrap {
+    z-index: 999999 !important;
+    position: relative !important;
+}
+
+.roots_modern_header {
+    z-index: 999999 !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.top_panel_image,
+.top_panel_image_header,
+.top_panel_image_hover,
+section:not(.top_panel_wrap),
+.sc_section,
+.content,
+.page_content_wrap,
+.slider_wrap,
+.rev_slider_wrapper,
+.page_wrap,
+.content_wrap:not(.roots_modern_header .content_wrap),
+div[class*="sc_"],
+div[id*="rev_slider"] {
+    z-index: 1 !important;
+    position: relative !important;
+}
+
+/* Header components - layer by layer */
+.top_panel_wrap,
+header.top_panel_wrap {
+    z-index: 999999 !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.roots_modern_header {
+    z-index: 999999 !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.roots_navigation {
+    z-index: 9999999 !important;
+    position: static !important;
+    overflow: visible !important;
+}
+
+.roots_menu {
+    z-index: 9999999 !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+
+.roots_menu_item {
+    z-index: 9999999 !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+
+/* Submenu z-index already defined above */
+
+/* Search form */
+.roots_search_form {
+    z-index: 9999999999 !important;
+}
+
+body.search-open::before {
+    z-index: 9999999998 !important;
+}
+
+
