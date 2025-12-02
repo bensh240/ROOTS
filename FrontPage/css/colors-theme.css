@@ -1538,6 +1538,14 @@ body.booking .top_panel_image_title {
     }
 }
 
+/* Scroll to top button - centered */
+.scroll_to_top {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    bottom: 20px !important;
+}
+
 /* ===========================
    Z-Index Priority System - CRITICAL FIX
    =========================== */
