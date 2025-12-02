@@ -1544,6 +1544,11 @@ body.booking .top_panel_image_title {
     right: auto !important;
     transform: translateX(-50%) !important;
     bottom: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    line-height: 1 !important;
 }
 
 /* ===========================
