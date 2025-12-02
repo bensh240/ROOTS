@@ -497,6 +497,68 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Skills bars animation
+document.addEventListener('DOMContentLoaded', function() {
+    const skillsContainer = document.querySelector('.sc_skills');
+    if (!skillsContainer) return;
+    
+    // Function to animate skill bars
+    function animateSkills() {
+        const skillItems = skillsContainer.querySelectorAll('.sc_skills_total');
+        
+        skillItems.forEach(function(item) {
+            const stop = parseInt(item.getAttribute('data-stop'));
+            const duration = parseInt(item.getAttribute('data-duration'));
+            const ed = item.getAttribute('data-ed');
+            
+            // Get the corresponding count bar
+            const countBar = item.parentElement.querySelector('.sc_skills_count');
+            
+            // Animate the number
+            let current = 0;
+            const increment = stop / (duration / 16); // 60fps
+            
+            const timer = setInterval(function() {
+                current += increment;
+                if (current >= stop) {
+                    current = stop;
+                    clearInterval(timer);
+                }
+                item.textContent = Math.round(current) + ed;
+            }, 16);
+            
+            // Animate the bar width
+            if (countBar) {
+                countBar.style.transition = 'width ' + (duration / 1000) + 's ease-out';
+                countBar.style.width = stop + '%';
+            }
+        });
+    }
+    
+    // Check if element is in viewport
+    function isInViewport(element) {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+    
+    // Trigger animation when scrolling into view
+    let animated = false;
+    function checkScroll() {
+        if (!animated && isInViewport(skillsContainer)) {
+            animateSkills();
+            animated = true;
+        }
+    }
+    
+    window.addEventListener('scroll', checkScroll);
+    checkScroll(); // Check on load
+});
 </script>
 </body>
 
