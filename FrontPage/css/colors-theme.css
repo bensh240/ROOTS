@@ -84,10 +84,14 @@ body #booked-profile-page .booked-profile-header,
 
 /* Secondary Elements - Light Brown */
 .sc_custom_1459330954110,
-.sc_services_item:hover .sc_icon,
 body table.booked-calendar .booked-appt-list .timeslot .timeslot-people button:hover {
     background: #A68B5B !important;
     border-color: #A68B5B !important;
+}
+
+/* Services item hover - light background */
+.sc_services_item:hover {
+    background: rgba(139, 111, 71, 0.05) !important;
 }
 
 /* Accents - Light Green */
@@ -101,7 +105,8 @@ body #booked-profile-page .booked-profile-appt-list .appt-block.approved .status
 }
 
 .sc_services_item:hover .sc_icon {
-    color: #ffffff !important;
+    color: #8B6F47 !important;
+    background: transparent !important;
 }
 
 /* Links */
@@ -386,11 +391,13 @@ h1, h2, h3, h4, h5, h6 {
 .sc_services_item:hover {
     transform: translateY(-5px) !important;
     box-shadow: 0 10px 25px rgba(139, 111, 71, 0.15) !important;
+    background: rgba(139, 111, 71, 0.03) !important;
 }
 
 .sc_services_item:hover .sc_icon {
-    color: var(--primary-brown, #8B6F47) !important;
-    transform: scale(1.1) !important;
+    color: #8B6F47 !important;
+    background: transparent !important;
+    transform: scale(1.08) !important;
 }
 
 .sc_services_item:hover .sc_services_item_title a {
