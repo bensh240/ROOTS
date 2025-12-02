@@ -1409,17 +1409,22 @@ body.booking .top_panel_image_title {
     background-position: center center !important;
 }
 
+/* Main slider height control */
+.slider_wrap .rev_slider_wrapper {
+    max-height: 500px !important;
+}
+
 /* Custom Promo Services - Desktop (התמונה ליד הטיפולים) */
 .sc_promo.custom_promo_services .sc_promo_inner {
     display: flex !important;
-    min-height: 700px !important;
+    min-height: 450px !important;
     position: relative !important;
 }
 
 .sc_promo.custom_promo_services .sc_promo_image {
     position: relative !important;
     flex: 0 0 50% !important;
-    min-height: 700px !important;
+    min-height: 450px !important;
     width: 50% !important;
     background-size: cover !important;
     background-position: center !important;
@@ -1434,28 +1439,74 @@ body.booking .top_panel_image_title {
 /* Custom Promo 01 - Desktop (התמונה עם התאריך) */
 .sc_promo.custom_promo_01 .sc_promo_inner {
     display: flex !important;
-    min-height: 550px !important;
+    min-height: 450px !important;
+    max-height: 450px !important;
+    height: 450px !important;
     position: relative !important;
 }
 
 .sc_promo.custom_promo_01 .sc_promo_image {
     position: relative !important;
-    flex: 0 0 65% !important;
-    min-height: 550px !important;
-    width: 65% !important;
+    flex: 0 0 450px !important;
+    min-height: 450px !important;
+    max-height: 450px !important;
+    height: 450px !important;
+    width: 450px !important;
     background-size: cover !important;
     background-position: center !important;
 }
 
 .sc_promo.custom_promo_01 .sc_promo_block {
     position: relative !important;
-    flex: 0 0 35% !important;
-    width: 35% !important;
+    flex: 1 !important;
+    width: auto !important;
+    min-height: 450px !important;
+    max-height: 450px !important;
+    height: 450px !important;
+    overflow: hidden !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    /* Slider height for tablets */
+    .slider_wrap .rev_slider_wrapper {
+        max-height: 450px !important;
+    }
+    
+    .sc_promo.custom_promo_services .sc_promo_inner {
+        min-height: 400px !important;
+    }
+    
+    .sc_promo.custom_promo_services .sc_promo_image {
+        min-height: 400px !important;
+    }
 }
 
 @media (max-width: 768px) {
+    /* Slider height for mobile */
+    .slider_wrap .rev_slider_wrapper {
+        max-height: 400px !important;
+    }
+    
+    .sc_promo.custom_promo_01 .sc_promo_inner {
+        flex-direction: column-reverse !important;
+        min-height: auto !important;
+        max-height: none !important;
+        height: auto !important;
+    }
+    
     .sc_promo.custom_promo_01 .sc_promo_image {
-        min-height: 280px !important;
+        min-height: 300px !important;
+        max-height: 300px !important;
+        height: 300px !important;
+        width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+    
+    .sc_promo.custom_promo_01 .sc_promo_block {
+        min-height: auto !important;
+        max-height: none !important;
+        height: auto !important;
     }
     
     .sc_promo.custom_promo_services .sc_promo_image {
@@ -1466,11 +1517,19 @@ body.booking .top_panel_image_title {
     /* Stack promo sections on mobile */
     .sc_promo.custom_promo_services .sc_promo_inner {
         flex-direction: column !important;
+        min-height: auto !important;
     }
     
     .sc_promo.custom_promo_services .sc_promo_image,
     .sc_promo.custom_promo_services .sc_promo_block {
         width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Slider height for small mobile */
+    .slider_wrap .rev_slider_wrapper {
+        max-height: 350px !important;
     }
 }
 
