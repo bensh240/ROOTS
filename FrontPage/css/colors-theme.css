@@ -1412,23 +1412,48 @@ body.booking .top_panel_image_title {
 /* Custom Promo Services - Desktop (התמונה ליד הטיפולים) */
 .sc_promo.custom_promo_services .sc_promo_inner {
     display: flex !important;
-    min-height: 450px !important;
+    min-height: 400px !important;
     position: relative !important;
 }
 
 .sc_promo.custom_promo_services .sc_promo_image {
     position: relative !important;
-    flex: 0 0 50% !important;
-    min-height: 450px !important;
-    width: 50% !important;
+    flex: 0 0 45% !important;
+    min-height: 400px !important;
+    width: 45% !important;
     background-size: cover !important;
     background-position: center !important;
 }
 
 .sc_promo.custom_promo_services .sc_promo_block {
-    flex: 0 0 50% !important;
-    width: 50% !important;
+    flex: 0 0 55% !important;
+    width: 55% !important;
     position: relative !important;
+    padding: 40px 35px !important;
+}
+
+/* Reduce size of treatment type boxes */
+.sc_promo.custom_promo_services .sc_services_item {
+    padding: 20px 15px !important;
+    margin-bottom: 20px !important;
+}
+
+.sc_promo.custom_promo_services .sc_services_item .sc_icon {
+    font-size: 36px !important;
+    width: 60px !important;
+    height: 60px !important;
+    line-height: 60px !important;
+}
+
+.sc_promo.custom_promo_services .sc_services_item_title {
+    font-size: 18px !important;
+    margin-top: 12px !important;
+    margin-bottom: 8px !important;
+}
+
+.sc_promo.custom_promo_services .sc_services_item_description {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
 }
 
 /* Custom Promo 01 - Desktop (התמונה עם התאריך) */
