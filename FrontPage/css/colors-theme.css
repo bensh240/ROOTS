@@ -1409,11 +1409,6 @@ body.booking .top_panel_image_title {
     background-position: center center !important;
 }
 
-/* Main slider height control */
-.slider_wrap .rev_slider_wrapper {
-    max-height: 500px !important;
-}
-
 /* Custom Promo Services - Desktop (התמונה ליד הטיפולים) */
 .sc_promo.custom_promo_services .sc_promo_inner {
     display: flex !important;
@@ -1466,28 +1461,7 @@ body.booking .top_panel_image_title {
     overflow: hidden !important;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-    /* Slider height for tablets */
-    .slider_wrap .rev_slider_wrapper {
-        max-height: 450px !important;
-    }
-    
-    .sc_promo.custom_promo_services .sc_promo_inner {
-        min-height: 400px !important;
-    }
-    
-    .sc_promo.custom_promo_services .sc_promo_image {
-        min-height: 400px !important;
-    }
-}
-
 @media (max-width: 768px) {
-    /* Slider height for mobile */
-    .slider_wrap .rev_slider_wrapper {
-        max-height: 400px !important;
-    }
-    
     .sc_promo.custom_promo_01 .sc_promo_inner {
         flex-direction: column-reverse !important;
         min-height: auto !important;
@@ -1523,13 +1497,6 @@ body.booking .top_panel_image_title {
     .sc_promo.custom_promo_services .sc_promo_image,
     .sc_promo.custom_promo_services .sc_promo_block {
         width: 100% !important;
-    }
-}
-
-@media (max-width: 480px) {
-    /* Slider height for small mobile */
-    .slider_wrap .rev_slider_wrapper {
-        max-height: 350px !important;
     }
 }
 
