@@ -1538,47 +1538,6 @@ body.booking .top_panel_image_title {
     }
 }
 
-/* Skills bars RTL support */
-.sc_skills.sc_skills_horizontal .sc_skills_item {
-    position: relative;
-    height: 6px;
-    background: #f0f0f0;
-    border-radius: 3px;
-    overflow: hidden;
-    margin-bottom: 8px;
-}
-
-.sc_skills.sc_skills_horizontal .sc_skills_count {
-    position: absolute;
-    right: 0; /* RTL - start from right */
-    top: 0;
-    height: 100%;
-    width: 0;
-    background: linear-gradient(90deg, #8B6F47 0%, #6B8E23 100%);
-    border-radius: 3px;
-    transition: width 2s ease-out;
-}
-
-.sc_skills.sc_skills_horizontal .sc_skills_total {
-    position: absolute;
-    left: 10px; /* RTL - percentage on left */
-    top: -2px;
-    font-weight: 700;
-    color: #8B6F47;
-    font-size: 14px;
-}
-
-.sc_skills_info {
-    margin-bottom: 15px;
-}
-
-.sc_skills_label {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 8px;
-}
-
 /* ===========================
    Z-Index Priority System - CRITICAL FIX
    =========================== */
