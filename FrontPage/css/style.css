@@ -3070,11 +3070,7 @@ form.search_form .search_button:hover {
 .header_mobile .search_field:-ms-input-placeholder {
     color: #fff;
 }
-.header_mobile .contact_field .contact_icon,
-.header_mobile .top_panel_top_open_hours:before {
-    font-size: 16px;
-    margin-right: 15px;
-}
+
 .header_mobile .top_panel_top_open_hours:before {
     content: '\e808';
 }

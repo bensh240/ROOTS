@@ -1478,7 +1478,6 @@ body.booking .top_panel_image_title {
     .side_wrap .contact_field {
         text-align: right !important;
         direction: rtl !important;
-        display: flex !important;
         flex-direction: row-reverse !important;
         justify-content: flex-end !important;
         gap: 10px !important;
