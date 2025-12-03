@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span style="color: #6B8E23; font-size: 12px;"> ו</span>
                 <a href="#" style="color: #6B8E23; font-size: 12px; text-decoration: underline;">מדיניות פרטיות</a>
             </p>
-            <p style="margin: 0;">
-                <strong style="font-size: 12px; color: #333;">נבנה ע״י <a href="https://100x.co.il" target="_blank" style="color: #6B8E23; text-decoration: none;">100x.co.il</a></strong>
+            <p style="margin: 0; direction: rtl; font-size: 12px; color: #333;">
+                נבנה ע״י <a href="https://100x.co.il" target="_blank" style="color: #6B8E23; text-decoration: none; font-weight: bold;">100x.co.il</a>
             </p>
         </div>
     `;
