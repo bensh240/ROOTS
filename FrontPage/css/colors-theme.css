@@ -1876,3 +1876,108 @@ body.search-open::before {
     }
 }
 
+/* ========================================
+   Revolution Slider - Height & Image Fix
+   ======================================== */
+
+/* Reduce slider height */
+.slider_wrap.slider_engine_revo,
+.rev_slider_wrapper,
+#rev_slider_1_1_wrapper {
+    max-height: 500px !important;
+}
+
+.rev_slider,
+#rev_slider_1_1 {
+    max-height: 500px !important;
+}
+
+/* Fix image display - less zoom, better fit */
+.rev_slider .rev-slidebg,
+#rev_slider_1_1 .rev-slidebg {
+    background-size: cover !important;
+    background-position: center center !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+}
+
+/* Ensure slide containers respect height */
+.rev_slider ul li,
+#rev_slider_1_1 ul li {
+    max-height: 500px !important;
+}
+
+/* Mobile Responsive for Slider */
+@media (max-width: 992px) {
+    .slider_wrap.slider_engine_revo,
+    .rev_slider_wrapper,
+    #rev_slider_1_1_wrapper,
+    .rev_slider,
+    #rev_slider_1_1,
+    .rev_slider ul li,
+    #rev_slider_1_1 ul li {
+        max-height: 420px !important;
+    }
+    
+    /* Smaller text on tablets */
+    .rev_slider .tp-caption[data-fontsize],
+    #rev_slider_1_1 .tp-caption[data-fontsize] {
+        font-size: 90% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .slider_wrap.slider_engine_revo,
+    .rev_slider_wrapper,
+    #rev_slider_1_1_wrapper,
+    .rev_slider,
+    #rev_slider_1_1,
+    .rev_slider ul li,
+    #rev_slider_1_1 ul li {
+        max-height: 350px !important;
+    }
+    
+    /* Adjust image position for mobile */
+    .rev_slider .rev-slidebg,
+    #rev_slider_1_1 .rev-slidebg {
+        background-position: center 30% !important;
+    }
+    
+    /* Smaller fonts on mobile */
+    #rev_slider_1_1 .tp-caption.white,
+    #rev_slider_1_1 .tp-caption.black {
+        font-size: 36px !important;
+        line-height: 42px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .slider_wrap.slider_engine_revo,
+    .rev_slider_wrapper,
+    #rev_slider_1_1_wrapper,
+    .rev_slider,
+    #rev_slider_1_1,
+    .rev_slider ul li,
+    #rev_slider_1_1 ul li {
+        max-height: 300px !important;
+    }
+    
+    /* Even smaller on small phones */
+    #rev_slider_1_1 .tp-caption.white,
+    #rev_slider_1_1 .tp-caption.black {
+        font-size: 28px !important;
+        line-height: 34px !important;
+    }
+    
+    /* Hide logo on very small screens */
+    #slide-1-layer-logo {
+        display: none !important;
+    }
+    
+    /* Adjust button padding */
+    #rev_slider_1_1 .tp-caption[data-actions] {
+        padding: 10px 25px !important;
+        font-size: 13px !important;
+    }
+}
+
