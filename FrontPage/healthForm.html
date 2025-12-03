@@ -25,37 +25,9 @@
     <link rel='stylesheet' href='css/colors-theme.css' type='text/css' media='all' />
     <style>
         /* Health Form Custom Styles */
-        .health-form-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .health-form-container h1 {
-            text-align: center;
-            color: #6B5435;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-
-        .intro-text {
-            background-color: #fff3cd;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 30px;
-            border-right: 4px solid #8B6F47;
-        }
-
-        .intro-text p {
-            margin-bottom: 10px;
-            line-height: 1.8;
-        }
-
         .health-form .form-group {
             margin-bottom: 20px;
+            text-align: right;
         }
 
         .health-form label {
@@ -63,6 +35,7 @@
             margin-bottom: 8px;
             font-weight: 600;
             color: #6B5435;
+            font-size: 15px;
         }
 
         .health-form input[type="text"],
@@ -71,12 +44,22 @@
         .health-form input[type="number"],
         .health-form textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 14px 16px;
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
             font-size: 16px;
             font-family: inherit;
             direction: rtl;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background: #fafafa;
+        }
+
+        .health-form input:focus,
+        .health-form textarea:focus {
+            outline: none;
+            border-color: #8B6F47;
+            box-shadow: 0 0 0 3px rgba(139, 111, 71, 0.1);
+            background: white;
         }
 
         .health-form textarea {
@@ -86,68 +69,46 @@
 
         .radio-group {
             display: flex;
-            gap: 20px;
-            margin-top: 10px;
+            gap: 25px;
+            margin-top: 12px;
         }
 
         .radio-option {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            background: #f8f8f8;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option:hover {
+            background: #f0f0f0;
         }
 
         .radio-option input[type="radio"] {
             width: 20px;
             height: 20px;
             cursor: pointer;
+            accent-color: #8B6F47;
         }
 
         .radio-option label {
             margin: 0;
-            font-weight: normal;
+            font-weight: 500;
             cursor: pointer;
-        }
-
-        .terms {
-            background-color: #e7f3ff;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 30px 0;
-            border-right: 4px solid #6B8E23;
-        }
-
-        .terms p {
-            margin-bottom: 10px;
-            line-height: 1.8;
-        }
-
-        .health-form .submit-btn {
-            background-color: #8B6F47;
-            color: white;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s;
-        }
-
-        .health-form .submit-btn:hover {
-            background-color: #6B8E23;
-        }
-
-        .note {
-            font-size: 14px;
-            color: #666;
-            margin-top: 5px;
-            font-style: italic;
+            color: #555;
         }
 
         .details-field {
             margin-top: 15px;
             display: none;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border-right: 3px solid #8B6F47;
         }
 
         .details-field.show {
@@ -158,51 +119,41 @@
             min-height: 80px;
         }
 
-        .contact-info-form {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #e0e0e0;
-            color: #666;
-        }
-
-        .contact-info-form a {
-            color: #8B6F47;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .contact-info-form a:hover {
-            text-decoration: underline;
-        }
-
         .success-message {
-            background-color: #d4edda;
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(40, 167, 69, 0.05) 100%);
             color: #155724;
-            padding: 15px;
-            border-radius: 5px;
+            padding: 20px;
+            border-radius: 10px;
             margin-bottom: 20px;
             border-right: 4px solid #28a745;
             display: none;
+            font-size: 16px;
         }
 
         .error-message {
-            background-color: #f8d7da;
+            background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(220, 53, 69, 0.05) 100%);
             color: #721c24;
-            padding: 15px;
-            border-radius: 5px;
+            padding: 20px;
+            border-radius: 10px;
             margin-bottom: 20px;
             border-right: 4px solid #dc3545;
             display: none;
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #6B8E23 0%, #556e1c 100%) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(107, 142, 35, 0.4) !important;
         }
 
         @media (max-width: 768px) {
-            .health-form-container {
-                padding: 20px;
-                margin: 0 15px;
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
             }
-            .health-form-container h1 {
-                font-size: 22px;
+            .sc_section_title {
+                font-size: 28px !important;
             }
         }
     </style>
@@ -298,12 +249,11 @@
             </div>
         </header>
         <section class="top_panel_image">
-            <div class="top_panel_image_hover"></div>
             <div class="top_panel_image_header">
                 <div class="top_panel_image_icon icon-doc-text"></div>
                 <h1 class="top_panel_image_title">הצהרת בריאות</h1>
                 <div class="breadcrumbs">
-                    <a class="breadcrumbs_item home" href="index.html">דף הבית</a>
+                    <a class="breadcrumbs_item home" href="index.html">ראשי</a>
                     <span class="breadcrumbs_delimiter"></span>
                     <span class="breadcrumbs_item current">הצהרת בריאות</span>
                 </div>
@@ -314,46 +264,64 @@
                 <div class="content">
                     <article class="post_item post_item_single page">
                         <section class="post_content">
-                            <div class="sc_empty_space em_height_3">
-                                <span class="sc_empty_space_inner"></span>
-                            </div>
-                            
-                            <div class="health-form-container">
-                                <div class="intro-text">
-                                    <p>השאלות נשאלות לצורך התאמת הטיפול המתאים ביותר למטופל והנשאל אינו מחוייב להשיב עליהם אולם אם לא יינתנו תשובות מלאות וכנות לשאלות אזי האחריות להשלכות תהיינה על המטופל. הנני מצהיר בזאת כי אני מקבל את העיסוי הנ"ל מרצוני החופשי ועל כן מצהיר בזאת שכל הפרטים אשר מסרתי מלאים ונכונים.</p>
-                                    <p class="note">* לנוחיותכם מסומן על כל התשובות 'לא' אנא שנו ל'כן' במידת הצורך.</p>
-                                </div>
+                            <div class="sc_row row sc_row-fluid">
+                                <div class="column sc_column_container sc_col-sm-12">
+                                    <div class="sc_column-inner">
+                                        <div class="wrapper">
+                                            <div class="sc_section sc_section_block aligncenter max_width cu_width-970">
+                                                <div class="sc_section_inner">
+                                                    <h6 class="sc_section_subtitle sc_item_subtitle" style="color: #8B6F47; font-size: 16px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px;">לפני הטיפול</h6>
+                                                    <h2 class="sc_section_title sc_item_title" style="font-size: 42px; font-weight: bold; color: #333; margin-bottom: 20px;">הצהרת בריאות לטיפול</h2>
+                                                    <p style="font-size: 18px; color: #666; max-width: 700px; margin: 0 auto 50px; line-height: 1.8;">מילוי הטופס מאפשר לנו להתאים את הטיפול באופן מיטבי עבורך</p>
+                                                    
+                                                    <div class="sc_section_content_wrap">
+                                                        <!-- Info Card -->
+                                                        <div style="background: linear-gradient(135deg, rgba(139, 111, 71, 0.1) 0%, rgba(107, 142, 35, 0.1) 100%); padding: 30px; border-radius: 15px; margin-bottom: 40px; border-right: 4px solid #8B6F47;">
+                                                            <p style="font-size: 16px; color: #555; line-height: 1.8; margin: 0;">השאלות נשאלות לצורך התאמת הטיפול המתאים ביותר למטופל. הנשאל אינו מחוייב להשיב עליהם, אולם אם לא יינתנו תשובות מלאות וכנות לשאלות אזי האחריות להשלכות תהיינה על המטופל. הנני מצהיר בזאת כי אני מקבל את הטיפול מרצוני החופשי ושכל הפרטים אשר מסרתי מלאים ונכונים.</p>
+                                                            <p style="font-size: 14px; color: #8B6F47; margin-top: 15px; font-style: italic;">* לנוחיותכם מסומן על כל התשובות 'לא' - אנא שנו ל'כן' במידת הצורך.</p>
+                                                        </div>
 
-                                <form id="healthForm" class="health-form">
-                                    <div class="form-group">
-                                        <label for="fullName">שם מלא *</label>
-                                        <input type="text" id="fullName" name="fullName" required>
-                                    </div>
+                                <form id="healthForm" class="health-form" style="text-align: right;">
+                                                        <!-- Personal Details Section -->
+                                                        <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); margin-bottom: 30px;">
+                                                            <h3 style="color: #8B6F47; font-size: 22px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #f0f0f0;">פרטים אישיים</h3>
+                                                            
+                                                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                                                                <div class="form-group">
+                                                                    <label for="fullName">שם מלא *</label>
+                                                                    <input type="text" id="fullName" name="fullName" required>
+                                                                </div>
 
-                                    <div class="form-group">
-                                        <label for="phone">טלפון *</label>
-                                        <input type="tel" id="phone" name="phone" required>
-                                    </div>
+                                                                <div class="form-group">
+                                                                    <label for="phone">טלפון *</label>
+                                                                    <input type="tel" id="phone" name="phone" required>
+                                                                </div>
 
-                                    <div class="form-group">
-                                        <label for="email">אימייל *</label>
-                                        <input type="email" id="email" name="email" required>
-                                    </div>
+                                                                <div class="form-group">
+                                                                    <label for="email">אימייל *</label>
+                                                                    <input type="email" id="email" name="email" required>
+                                                                </div>
 
-                                    <div class="form-group">
-                                        <label for="idNumber">מספר ת.ז *</label>
-                                        <input type="text" id="idNumber" name="idNumber" required>
-                                    </div>
+                                                                <div class="form-group">
+                                                                    <label for="idNumber">מספר ת.ז *</label>
+                                                                    <input type="text" id="idNumber" name="idNumber" required>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="form-group" style="margin-top: 20px;">
+                                                                <label for="address">כתובת *</label>
+                                                                <input type="text" id="address" name="address" required>
+                                                            </div>
+                                                        </div>
 
-                                    <div class="form-group">
-                                        <label for="address">כתובת *</label>
-                                        <input type="text" id="address" name="address" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="pregnancy">האם הינך בהיריון? אם כן צייני באיזה שבוע, והאם ההיריון תקין? אם לא צייני בפירוט את הבעיות</label>
-                                        <textarea id="pregnancy" name="pregnancy" placeholder="לא רלוונטי / פרטים נוספים"></textarea>
-                                    </div>
+                                    <!-- Medical Questions Section -->
+                                                        <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); margin-bottom: 30px;">
+                                                            <h3 style="color: #6B8E23; font-size: 22px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #f0f0f0;">שאלות רפואיות</h3>
+                                                            
+                                                            <div class="form-group">
+                                                                <label for="pregnancy">האם הינך בהיריון? אם כן צייני באיזה שבוע, והאם ההיריון תקין? אם לא צייני בפירוט את הבעיות</label>
+                                                                <textarea id="pregnancy" name="pregnancy" placeholder="לא רלוונטי / פרטים נוספים"></textarea>
+                                                            </div>
 
                                     <div class="form-group">
                                         <label>האם הינך סובל/ת מאפילפסיה?</label>
@@ -616,25 +584,34 @@
                                         <label for="medications">האם הינך נוטל/ת תרופות נוספות באופן קבוע?</label>
                                         <textarea id="medications" name="medications" placeholder="לא / פרטי תרופות"></textarea>
                                     </div>
+                                                        </div>
 
-                                    <div class="terms">
-                                        <p><strong>תקנון:</strong></p>
-                                        <p>הנני מצהיר בזאת כי ידוע לי כי טיפול זה אינו מחליף טיפול רפואי. ובמקרה הצורך נועצתי עם רופא לפני קבלת הטיפול, איני מסתיר/ה מהמטפל כל מידע נוסף ו/או בעיה רפואית נוספת אשר לא הוזכרה בשאלון זה אשר עלולה באופן כלשהוא לסכן את בריאותי או את בריאות המטפל. המידע שמסרתי הינו מלא ונכון ומאושר על ידי, אני מודע/ת לכך שהטיפול שאקבל מבוסס על הצהרה זו.</p>
+                                                        <!-- Terms Section -->
+                                                        <div style="background: linear-gradient(135deg, rgba(107, 142, 35, 0.1) 0%, rgba(107, 142, 35, 0.05) 100%); padding: 30px; border-radius: 15px; margin-bottom: 30px; border-right: 4px solid #6B8E23;">
+                                                            <h4 style="color: #6B8E23; font-size: 18px; margin-bottom: 15px; font-weight: bold;">תקנון:</h4>
+                                                            <p style="font-size: 15px; color: #555; line-height: 1.8; margin: 0;">הנני מצהיר בזאת כי ידוע לי כי טיפול זה אינו מחליף טיפול רפואי. ובמקרה הצורך נועצתי עם רופא לפני קבלת הטיפול, איני מסתיר/ה מהמטפל כל מידע נוסף ו/או בעיה רפואית נוספת אשר לא הוזכרה בשאלון זה אשר עלולה באופן כלשהוא לסכן את בריאותי או את בריאות המטפל. המידע שמסרתי הינו מלא ונכון ומאושר על ידי, אני מודע/ת לכך שהטיפול שאקבל מבוסס על הצהרה זו.</p>
+                                                        </div>
+
+                                                        <div id="successMessage" class="success-message"></div>
+                                                        <div id="errorMessage" class="error-message"></div>
+
+                                                        <button type="submit" class="submit-btn" style="background: linear-gradient(135deg, #8B6F47 0%, #6d5838 100%); color: white; padding: 18px 50px; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer; width: 100%; transition: all 0.3s ease; box-shadow: 0 5px 20px rgba(139, 111, 71, 0.3);">שליחת ההצהרה</button>
+                                                    </form>
+
+                                                    <!-- Contact Info -->
+                                                    <div style="text-align: center; margin-top: 40px; padding-top: 30px; border-top: 2px solid #f0f0f0;">
+                                                        <p style="color: #888; font-size: 16px; margin-bottom: 10px;">לשאלות והבהרות:</p>
+                                                        <p style="color: #333; font-size: 18px; font-weight: 600; margin-bottom: 5px;">רות וקנין</p>
+                                                        <p style="margin: 0;"><a href="mailto:info@rutvaknin.co.il" style="color: #8B6F47; text-decoration: none; font-size: 16px;">info@rutvaknin.co.il</a></p>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-
-                                    <div id="successMessage" class="success-message"></div>
-                                    <div id="errorMessage" class="error-message"></div>
-
-                                    <button type="submit" class="submit-btn">שליחה</button>
-                                </form>
-
-                                <div class="contact-info-form">
-                                    <p>לשאלות והבהרות:</p>
-                                    <p><strong>רות וקנין</strong></p>
-                                    <p>אימייל: <a href="mailto:info@rutvaknin.co.il">info@rutvaknin.co.il</a></p>
                                 </div>
                             </div>
-
+                            
                             <div class="sc_empty_space em_height_3">
                                 <span class="sc_empty_space_inner"></span>
                             </div>
