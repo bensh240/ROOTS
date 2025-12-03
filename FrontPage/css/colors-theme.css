@@ -166,6 +166,15 @@ h1, h2, h3, h4, h5, h6 {
     color: #6B5435 !important;
 }
 
+/* White text on image overlay sections */
+div[style*="position: absolute"] h2,
+div[style*="position: absolute"] p,
+.image-overlay-text h2,
+.image-overlay-text p {
+    color: #ffffff !important;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5) !important;
+}
+
 .inverse_colors h1,
 .inverse_colors h2,
 .inverse_colors h3,

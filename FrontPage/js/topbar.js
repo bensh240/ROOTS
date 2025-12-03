@@ -1,11 +1,17 @@
-// Top Bar Component - Centralized for all pages
-// Edit this file to update the top bar across the entire site
+// ============================================
+// ROOTS Top Bar Component - Centralized
+// עדכון קובץ זה ישפיע על כל הדפים באתר
+// ============================================
 
 (function() {
     const topBarHTML = `
         <div class="roots_top_bar_wrapper">
-            <div class="content_wrap clearfix roots_top_bar">
-                <div class="roots_top_right">
+            <div class="content_wrap clearfix roots_top_bar" style="display: flex !important; justify-content: flex-start !important; direction: rtl !important;">
+                <div class="roots_top_content" style="display: flex; align-items: center; gap: 20px;">
+                    <div class="top_panel_top_contact_area">
+                        <span class="icon-location"></span>
+                        <span>השדרה האקדמית 2, קרית אונו</span>
+                    </div>
                     <div class="roots_social_icons">
                         <a href="https://instagram.com" target="_blank" title="Instagram">
                             <span class="icon-instagramm"></span>
@@ -15,41 +21,22 @@
                         </a>
                     </div>
                 </div>
-                <div class="roots_top_left">
-                    <div class="top_panel_top_contact_area">
-                        <span class="icon-mail-1"></span>
-                        <a href="mailto:info@rutvaknin.co.il">info@rutvaknin.co.il</a>
-                    </div>
-                    <div class="top_panel_top_contact_area">
-                        <span class="icon-phone-1"></span>
-                        <a href="tel:054-220-7200">054-220-7200</a>
-                    </div>
-                    <div class="top_panel_top_contact_area">
-                        <span class="icon-clock-1"></span>
-                        <span>א'-ה' 09:00 - 20:00</span>
-                    </div>
-                </div>
             </div>
         </div>
     `;
 
-    // Find the insertion point and inject the top bar
+    // Inject top bar when DOM is ready
     document.addEventListener('DOMContentLoaded', function() {
-        // Remove ALL existing top bars first
+        // Remove ALL existing top bars first to prevent duplicates
         const existingTopBars = document.querySelectorAll('.roots_top_bar_wrapper');
         existingTopBars.forEach(bar => bar.remove());
         
-        // Try to find the best insertion point
+        // Find the best insertion point
         let topPanelInner = document.querySelector('.top_panel_wrap_inner');
-        let topPanelTop = document.querySelector('.top_panel_top');
         
         if (topPanelInner) {
             // Insert at the beginning of top_panel_wrap_inner
             topPanelInner.insertAdjacentHTML('afterbegin', topBarHTML);
-        } else if (topPanelTop) {
-            // Insert inside top_panel_top
-            topPanelTop.innerHTML = topBarHTML;
         }
     });
 })();
-
