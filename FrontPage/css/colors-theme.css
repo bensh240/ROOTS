@@ -1507,6 +1507,50 @@ body.booking .top_panel_image_title {
     line-height: 1.6 !important;
 }
 
+/* Center the icon in service items */
+.sc_promo.custom_promo_services .sc_services_item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+.sc_promo.custom_promo_services .sc_services_item > a {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+.sc_promo.custom_promo_services .sc_services_item .sc_icon {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 auto 10px !important;
+}
+
+.sc_promo.custom_promo_services .sc_services_item_content {
+    width: 100% !important;
+    text-align: center !important;
+}
+
+.sc_promo.custom_promo_services .sc_services_item_title {
+    text-align: center !important;
+}
+
+.sc_promo.custom_promo_services .sc_services_item_title a {
+    display: block !important;
+    text-align: center !important;
+}
+
+.sc_promo.custom_promo_services .sc_services_item_description {
+    text-align: center !important;
+}
+
+.sc_promo.custom_promo_services .sc_services_item_description p {
+    text-align: center !important;
+}
+
 /* Custom Promo 01 - Desktop (התמונה עם התאריך) */
 .sc_promo.custom_promo_01 .sc_promo_inner {
     display: flex !important;
