@@ -1508,46 +1508,70 @@ body.booking .top_panel_image_title {
 }
 
 /* Center the icon in service items */
-.sc_promo.custom_promo_services .sc_services_item {
+.sc_promo_block .sc_services_item,
+.sc_promo.custom_promo_services .sc_services_item,
+.sc_services_style_services-2 .sc_services_item {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    justify-content: flex-start !important;
     text-align: center !important;
+    padding: 20px 15px !important;
 }
 
-.sc_promo.custom_promo_services .sc_services_item > a {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
+.sc_promo_block .sc_services_item > a,
+.sc_promo.custom_promo_services .sc_services_item > a,
+.sc_services_style_services-2 .sc_services_item > a {
+    display: block !important;
+    text-align: center !important;
     width: 100% !important;
 }
 
-.sc_promo.custom_promo_services .sc_services_item .sc_icon {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    margin: 0 auto 10px !important;
+.sc_promo_block .sc_services_item .sc_icon,
+.sc_promo.custom_promo_services .sc_services_item .sc_icon,
+.sc_services_style_services-2 .sc_services_item .sc_icon {
+    display: block !important;
+    text-align: center !important;
+    margin: 0 auto 15px auto !important;
+    float: none !important;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
 }
 
-.sc_promo.custom_promo_services .sc_services_item_content {
+.sc_promo_block .sc_services_item_content,
+.sc_promo.custom_promo_services .sc_services_item_content,
+.sc_services_style_services-2 .sc_services_item_content {
     width: 100% !important;
     text-align: center !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
 }
 
-.sc_promo.custom_promo_services .sc_services_item_title {
+.sc_promo_block .sc_services_item_title,
+.sc_promo.custom_promo_services .sc_services_item_title,
+.sc_services_style_services-2 .sc_services_item_title {
     text-align: center !important;
+    width: 100% !important;
 }
 
-.sc_promo.custom_promo_services .sc_services_item_title a {
+.sc_promo_block .sc_services_item_title a,
+.sc_promo.custom_promo_services .sc_services_item_title a,
+.sc_services_style_services-2 .sc_services_item_title a {
     display: block !important;
     text-align: center !important;
 }
 
-.sc_promo.custom_promo_services .sc_services_item_description {
+.sc_promo_block .sc_services_item_description,
+.sc_promo.custom_promo_services .sc_services_item_description,
+.sc_services_style_services-2 .sc_services_item_description {
     text-align: center !important;
+    width: 100% !important;
 }
 
-.sc_promo.custom_promo_services .sc_services_item_description p {
+.sc_promo_block .sc_services_item_description p,
+.sc_promo.custom_promo_services .sc_services_item_description p,
+.sc_services_style_services-2 .sc_services_item_description p {
     text-align: center !important;
 }
 
