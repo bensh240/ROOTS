@@ -2943,7 +2943,7 @@ form.search_form .search_button:hover {
     display: none;
 }
 .header_mobile .menu_main_nav>li>a>.open_child_menu {
-    right: 1em;
+    right: 14em;
     top: 1em;
 }
 .header_mobile .menu_main_nav>li ul>li>a>.open_child_menu {

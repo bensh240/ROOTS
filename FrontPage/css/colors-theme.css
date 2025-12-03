@@ -1399,10 +1399,19 @@ body.booking .top_panel_image_title {
         padding: 10px 15px !important;
     }
     
-    /* Side Menu */
-    .side_wrap {
+    /* Side Menu - Open from RIGHT */
+    .header_mobile .side_wrap {
         background: #ffffff !important;
         max-width: 300px !important;
+        left: auto !important;
+        right: -320px !important;
+        transition: right 0.3s linear !important;
+        -webkit-transition: right 0.3s linear !important;
+    }
+    
+    .header_mobile .side_wrap.open {
+        left: auto !important;
+        right: 0 !important;
     }
     
     .side_wrap .menu_main_nav > li > a {
@@ -1410,11 +1419,84 @@ body.booking .top_panel_image_title {
         padding: 12px 20px !important;
         border-bottom: 1px solid #f0f0f0 !important;
         color: #333 !important;
+        text-align: right !important;
     }
     
     .side_wrap .menu_main_nav > li > a:hover {
         background: #f9f9f9 !important;
         color: #8B6F47 !important;
+    }
+    
+/* Submenu (accordion) - align right */
+    .side_wrap .menu_main_nav .sub-menu,
+    .side_wrap .menu_main_nav ul.sub-menu {
+        text-align: right !important;
+        direction: rtl !important;
+        background: #8B7355 !important;
+    }
+    
+    .side_wrap .menu_main_nav .sub-menu li,
+    .side_wrap .menu_main_nav .sub-menu li a {
+        text-align: right !important;
+        direction: rtl !important;
+    }
+    
+    /* Uniform color for mobile menu */
+    .side_wrap,
+    .side_wrap .panel_top,
+    .side_wrap .panel_middle,
+    .side_wrap .panel_bottom,
+    .side_wrap .menu_main_nav > li,
+    .side_wrap .menu_main_nav > li > a,
+    .side_wrap .search_wrap {
+        background: #8B7355 !important;
+    }
+    
+    /* Text RIGHT, Arrows LEFT */
+    .side_wrap .menu_main_nav > li > a {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        direction: ltr !important;
+    }
+    
+    .side_wrap .menu_main_nav > li.menu-item-has-children > a:after {
+        order: -1 !important;
+        margin-right: 0 !important;
+        margin-left: 15px !important;
+    }
+    
+    /* All mobile menu content - RTL */
+    .side_wrap .panel_top,
+    .side_wrap .panel_middle,
+    .side_wrap .panel_bottom {
+        direction: rtl !important;
+        text-align: right !important;
+    }
+    
+    .side_wrap .contact_field {
+        text-align: right !important;
+        direction: rtl !important;
+        display: flex !important;
+        flex-direction: row-reverse !important;
+        justify-content: flex-end !important;
+        gap: 10px !important;
+    }
+    
+    .side_wrap .top_panel_top_open_hours {
+        text-align: right !important;
+        direction: rtl !important;
+    }
+    
+    /* Search in mobile - RTL */
+    .side_wrap .search_wrap {
+        direction: rtl !important;
+    }
+    
+    .side_wrap .search_field {
+        text-align: right !important;
+        direction: rtl !important;
     }
     
     .side_wrap .close {
@@ -1423,6 +1505,8 @@ body.booking .top_panel_image_title {
         padding: 15px !important;
         text-align: center !important;
         font-weight: 600 !important;
+        right: auto !important;
+        left: 20px !important;
     }
 }
 
@@ -1480,7 +1564,7 @@ body.booking .top_panel_image_title {
     flex: 0 0 55% !important;
     width: 55% !important;
     position: relative !important;
-    padding: 40px 35px !important;
+    padding: 40px 4px !important;
 }
 
 /* Reduce size of treatment type boxes */
@@ -1507,72 +1591,59 @@ body.booking .top_panel_image_title {
     line-height: 1.6 !important;
 }
 
-/* Center the icon in service items */
-.sc_promo_block .sc_services_item,
-.sc_promo.custom_promo_services .sc_services_item,
-.sc_services_style_services-2 .sc_services_item {
+/* Center the icon in service items - Using ID for highest specificity */
+#sc_services_350 .sc_services_item,
+#sc_services_350 .sc_services_item *,
+#sc_services_350 .sc_services_item *:after {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+#sc_services_350 .sc_services_item {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    text-align: center !important;
     padding: 20px 15px !important;
 }
 
-.sc_promo_block .sc_services_item > a,
-.sc_promo.custom_promo_services .sc_services_item > a,
-.sc_services_style_services-2 .sc_services_item > a {
-    display: block !important;
-    text-align: center !important;
+#sc_services_350 .sc_services_item > a {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
     width: 100% !important;
 }
 
-.sc_promo_block .sc_services_item .sc_icon,
-.sc_promo.custom_promo_services .sc_services_item .sc_icon,
-.sc_services_style_services-2 .sc_services_item .sc_icon {
-    display: block !important;
-    text-align: center !important;
+#sc_services_350 .sc_icon {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
     margin: 0 auto 15px auto !important;
     float: none !important;
-    position: relative !important;
-    left: auto !important;
-    right: auto !important;
 }
 
-.sc_promo_block .sc_services_item_content,
-.sc_promo.custom_promo_services .sc_services_item_content,
-.sc_services_style_services-2 .sc_services_item_content {
+#sc_services_350 .sc_services_item_content {
     width: 100% !important;
-    text-align: center !important;
-    margin-left: 0 !important;
-    padding-left: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
 }
 
-.sc_promo_block .sc_services_item_title,
-.sc_promo.custom_promo_services .sc_services_item_title,
-.sc_services_style_services-2 .sc_services_item_title {
-    text-align: center !important;
+#sc_services_350 .sc_services_item_title {
     width: 100% !important;
 }
 
-.sc_promo_block .sc_services_item_title a,
-.sc_promo.custom_promo_services .sc_services_item_title a,
-.sc_services_style_services-2 .sc_services_item_title a {
+#sc_services_350 .sc_services_item_title a {
     display: block !important;
-    text-align: center !important;
 }
 
-.sc_promo_block .sc_services_item_description,
-.sc_promo.custom_promo_services .sc_services_item_description,
-.sc_services_style_services-2 .sc_services_item_description {
-    text-align: center !important;
+#sc_services_350 .sc_services_item_description {
     width: 100% !important;
 }
 
-.sc_promo_block .sc_services_item_description p,
-.sc_promo.custom_promo_services .sc_services_item_description p,
-.sc_services_style_services-2 .sc_services_item_description p {
-    text-align: center !important;
+#sc_services_350 .sc_services_item_description p {
+    display: block !important;
 }
 
 /* Custom Promo 01 - Desktop (התמונה עם התאריך) */
