@@ -1842,4 +1842,37 @@ body.search-open::before {
     z-index: 9999999998 !important;
 }
 
+/* Booking page - Opening Hours responsive */
+@media (max-width: 768px) {
+    .booking-hours-img {
+        height: 280px !important;
+    }
+    .booking-hours-content {
+        padding: 15px !important;
+    }
+    .booking-hours-icon {
+        width: 50px !important;
+        height: 50px !important;
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+    }
+    .booking-hours-icon .icon-clock {
+        font-size: 24px !important;
+    }
+    .booking-hours-title {
+        font-size: 20px !important;
+        margin-bottom: 12px !important;
+    }
+    .booking-hours-box {
+        padding: 15px 20px !important;
+    }
+    .booking-hours-row {
+        font-size: 14px !important;
+        min-width: 200px !important;
+        margin: 8px 0 !important;
+    }
+    .booking-hours-row strong {
+        margin-left: 12px !important;
+    }
+}
 

@@ -4905,9 +4905,7 @@ body.sidebar_hide .sc_recent_news_style_news-announce .post_size_small {
 .sc_team_style_team-3 .sc_team_item {
     text-align: center;
 }
-.sc_team_style_team-3 .columns_wrap {
-    margin-right: -50px;
-}
+
 .sc_team_style_team-3 .columns_wrap>[class*="column-"] {
     padding-right: 50px;
 }
