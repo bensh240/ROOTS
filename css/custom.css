@@ -1117,3 +1117,33 @@ body table.booked-calendar .booked-appt-list .timeslot .timeslot-people button {
 .shortcodespg .sc_slider_swiper {
 	width:100%;
 }
+
+/* ================================== 
+   FIX: Show correct header on desktop vs mobile
+   ================================== */
+
+/* Hide mobile header on desktop (above 959px) */
+@media (min-width: 960px) {
+    .header_mobile {
+        display: none !important;
+    }
+    
+    /* Ensure modern header is visible */
+    .roots_modern_header,
+    .top_panel_middle {
+        display: block !important;
+        visibility: visible !important;
+    }
+}
+
+/* Show mobile header only on mobile/tablet (below 959px) */
+@media (max-width: 959px) {
+    .roots_modern_header,
+    .top_panel_middle.roots_modern_header {
+        display: none !important;
+    }
+    
+    .header_mobile {
+        display: block !important;
+    }
+}
