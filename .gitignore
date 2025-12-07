@@ -39,7 +39,7 @@ tmp/
 # Sensitive Configuration
 config.php
 
-# Dependencies
-vendor/
+# Dependencies (keeping vendor/ for easier deployment)
+# vendor/
 composer.lock
 
