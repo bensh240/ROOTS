@@ -1559,9 +1559,7 @@ label.required:after {
 .sidebar_outer .logo img {
     max-width: 210px;
 }
-.page_content_wrap {
-    padding: 6.8em 0;
-}
+
 .page_content_wrap.page_paddings_no,
 .body_style_fullscreen .page_content_wrap {
     padding: 0;
