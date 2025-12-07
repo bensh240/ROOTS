@@ -339,6 +339,11 @@
             }
         }
     </style>
+    
+    <!-- jsPDF Library for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Amiri font for better RTL/Hebrew support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 </head>
 
 <body class="healthform page body_filled theme_skin_less article_style_stretch scheme_original top_panel_show top_panel_above sidebar_hide sidebar_outer_hide preloader wpb-js-composer sc_responsive">
@@ -916,6 +921,131 @@
             }
         }
 
+        // Generate PDF from form data
+        function generatePDF(data) {
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                // Add RTL support - reverse text for Hebrew
+                const rtlText = (text) => {
+                    return text.split('').reverse().join('');
+                };
+                
+                // Set font
+                doc.setFont('helvetica');
+                doc.setFontSize(20);
+                doc.setTextColor(107, 84, 53); // #6B5435
+                
+                // Title
+                doc.text(rtlText('הצהרת בריאות - ROOTS'), 105, 20, { align: 'center' });
+                
+                // Date
+                doc.setFontSize(10);
+                doc.setTextColor(100, 100, 100);
+                doc.text(rtlText(`תאריך: ${new Date().toLocaleDateString('he-IL')}`), 105, 28, { align: 'center' });
+                
+                let yPos = 40;
+                
+                // Personal Details Section
+                doc.setFontSize(14);
+                doc.setTextColor(107, 142, 35); // #6B8E23
+                doc.text(rtlText('פרטים אישיים'), 105, yPos, { align: 'center' });
+                yPos += 10;
+                
+                doc.setFontSize(10);
+                doc.setTextColor(0, 0, 0);
+                
+                const personalFields = [
+                    ['fullName', 'שם מלא'],
+                    ['email', 'אימייל'],
+                    ['phone', 'טלפון'],
+                    ['idNumber', 'מספר ת.ז'],
+                    ['address', 'כתובת']
+                ];
+                
+                personalFields.forEach(([key, label]) => {
+                    if (data[key]) {
+                        doc.text(rtlText(`${label}: ${data[key]}`), 190, yPos, { align: 'right' });
+                        yPos += 6;
+                    }
+                });
+                
+                yPos += 5;
+                
+                // Medical Questions Section
+                doc.setFontSize(14);
+                doc.setTextColor(107, 142, 35);
+                doc.text(rtlText('שאלות רפואיות'), 105, yPos, { align: 'center' });
+                yPos += 10;
+                
+                doc.setFontSize(9);
+                doc.setTextColor(0, 0, 0);
+                
+                const medicalQuestions = [
+                    ['pregnancy', 'היריון'],
+                    ['epilepsy', 'אפילפסיה'],
+                    ['spine', 'בעיית שלד/עמוד שדרה'],
+                    ['fractures', 'שברים/נקעים'],
+                    ['surgeries', 'ניתוחים'],
+                    ['heartCondition', 'מחלת לב'],
+                    ['bloodPressure', 'לחץ דם'],
+                    ['diabetes', 'סוכרת'],
+                    ['bloodDisorders', 'הפרעות דם'],
+                    ['thrombosis', 'נטייה לקרישת דם'],
+                    ['cancer', 'מחלת סרטן'],
+                    ['skinConditions', 'מחלות עור'],
+                    ['varicoseVeins', 'דליות ורידים']
+                ];
+                
+                medicalQuestions.forEach(([key, label]) => {
+                    if (data[key] && data[key] !== 'no') {
+                        const value = data[key] === 'yes' ? 'כן' : data[key];
+                        const detailsKey = key + '_details';
+                        const details = data[detailsKey] ? ` - ${data[detailsKey]}` : '';
+                        
+                        const text = rtlText(`${label}: ${value}${details}`);
+                        const splitText = doc.splitTextToSize(text, 180);
+                        
+                        if (yPos > 270) {
+                            doc.addPage();
+                            yPos = 20;
+                        }
+                        
+                        doc.text(splitText, 190, yPos, { align: 'right' });
+                        yPos += 6 * splitText.length;
+                    }
+                });
+                
+                // Additional notes
+                if (data.additionalNotes && data.additionalNotes.trim()) {
+                    yPos += 5;
+                    if (yPos > 260) {
+                        doc.addPage();
+                        yPos = 20;
+                    }
+                    doc.setFontSize(10);
+                    doc.text(rtlText('הערות נוספות:'), 190, yPos, { align: 'right' });
+                    yPos += 6;
+                    doc.setFontSize(9);
+                    const noteText = rtlText(data.additionalNotes);
+                    const splitNotes = doc.splitTextToSize(noteText, 180);
+                    doc.text(splitNotes, 190, yPos, { align: 'right' });
+                }
+                
+                // Return PDF as base64
+                return doc.output('dataurlstring').split(',')[1];
+                
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                return null;
+            }
+        }
+
         // Check if all checkboxes are checked
         function checkFormValidity() {
             const confirmAccuracy = document.getElementById('confirmAccuracy');
@@ -985,15 +1115,32 @@
                 const saved = saveToLocalStorage(data);
                 
                 if (saved) {
-                    // Show sending message
-                    successMessage.textContent = 'שולח את ההצהרה...';
+                    // Show generating PDF message
+                    successMessage.textContent = 'מייצר PDF...';
                     successMessage.style.display = 'block';
                     
-                    // Send to server (use the original FormData)
-                    console.log('📤 Sending health form to server...');
+                    // Generate PDF
+                    const pdfBase64 = generatePDF(data);
+                    
+                    if (!pdfBase64) {
+                        throw new Error('שגיאה ביצירת קובץ PDF');
+                    }
+                    
+                    // Update message
+                    successMessage.textContent = 'שולח את ההצהרה...';
+                    
+                    // Build FormData with basic info + PDF
+                    const formData = new FormData();
+                    formData.append('fullName', data.fullName);
+                    formData.append('email', data.email);
+                    formData.append('phone', data.phone || '');
+                    formData.append('pdf', pdfBase64);
+                    formData.append('formData', JSON.stringify(data)); // Send all data for email body
+                    
+                    console.log('📤 Sending health form with PDF to server...');
                     fetch('send-health-form.php', {
                         method: 'POST',
-                        body: formDataForSending
+                        body: formData
                     })
                     .then(response => {
                         console.log('📥 Response status:', response.status, response.statusText);

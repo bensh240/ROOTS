@@ -17,14 +17,25 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Get form data (same as contact form)
-$data = $_POST;
+// Get form data
+$fullName = isset($_POST['fullName']) ? trim($_POST['fullName']) : '';
+$email = isset($_POST['email']) ? trim($_POST['email']) : '';
+$phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
+$pdfBase64 = isset($_POST['pdf']) ? $_POST['pdf'] : '';
+$formDataJson = isset($_POST['formData']) ? $_POST['formData'] : '';
 
-// Debug: Log received data (remove in production)
-error_log("Health Form - Received POST data: " . print_r($_POST, true));
+// Parse the full form data for email body
+$data = json_decode($formDataJson, true);
+if (!$data) {
+    $data = [];
+}
+
+// Debug: Log received data
+error_log("Health Form - Received from: {$fullName} ({$email})");
+error_log("Health Form - PDF received: " . (!empty($pdfBase64) ? 'Yes' : 'No'));
 
 // Validate required fields
-if (empty($data['fullName']) || empty($data['email'])) {
+if (empty($fullName) || empty($email)) {
     http_response_code(400);
     error_log("Health Form - Validation failed: fullName or email missing");
     echo json_encode(['success' => false, 'message' => 'נא למלא את כל השדות הנדרשים']);
@@ -32,28 +43,38 @@ if (empty($data['fullName']) || empty($data['email'])) {
 }
 
 // Validate email
-if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'כתובת מייל לא תקינה']);
     exit;
 }
 
+// Validate PDF
+if (empty($pdfBase64)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'שגיאה ביצירת קובץ PDF']);
+    exit;
+}
+
+// Decode PDF from base64
+$pdfContent = base64_decode($pdfBase64);
+
 // Build email content for company
-$emailSubject = 'הצהרת בריאות חדשה - ' . htmlspecialchars($data['fullName']);
-$emailBody = generateEmailBody($data, false);
+$emailSubject = 'הצהרת בריאות חדשה - ' . htmlspecialchars($fullName);
+$emailBody = generateSimpleEmailBody($fullName, $email, $phone, false);
 
 // Build email content for client
 $clientEmailSubject = 'העתק הצהרת בריאות - ROOTS';
-$clientEmailBody = generateEmailBody($data, true);
+$clientEmailBody = generateSimpleEmailBody($fullName, $email, $phone, true);
 
 $companySent = false;
 $clientSent = false;
 
-// Send email to company
-$companySent = sendEmail(SMTP_TO, $emailSubject, $emailBody, $data['email'], $data['fullName']);
+// Send email to company with PDF
+$companySent = sendEmailWithPDF(SMTP_TO, $emailSubject, $emailBody, $pdfContent, $fullName, $email, $fullName);
 
-// Send email to client  
-$clientSent = sendEmail($data['email'], $clientEmailSubject, $clientEmailBody);
+// Send email to client with PDF
+$clientSent = sendEmailWithPDF($email, $clientEmailSubject, $clientEmailBody, $pdfContent, $fullName);
 
 // Log results
 error_log("Health Form - Company email sent: " . ($companySent ? 'Yes' : 'No'));
@@ -78,77 +99,69 @@ if ($companySent && $clientSent) {
     ]);
 }
 
-// Function to generate email body
-function generateEmailBody($data, $isClient) {
+// Function to generate simple email body (PDF is attached)
+function generateSimpleEmailBody($fullName, $email, $phone, $isClient) {
     if ($isClient) {
-        $greeting = "שלום " . htmlspecialchars($data['fullName']) . ",";
-        $message = "תודה שמילאת את הצהרת הבריאות.<br>מצורף להלן עותק של ההצהרה שלך.";
+        $greeting = "שלום " . htmlspecialchars($fullName);
+        $message = "תודה שמילאת את הצהרת הבריאות.<br><br>מצורף להלן עותק של ההצהרה שלך בפורמט PDF.";
     } else {
         $greeting = "הצהרת בריאות חדשה התקבלה";
-        $message = "התקבלה הצהרת בריאות חדשה מ: <strong>" . htmlspecialchars($data['fullName']) . "</strong>";
+        $message = "התקבלה הצהרת בריאות חדשה מהלקוח/ה: <strong>" . htmlspecialchars($fullName) . "</strong><br><br>מצורף קובץ PDF עם פרטי ההצהרה המלאים.";
     }
+    
+    $phoneDisplay = !empty($phone) ? htmlspecialchars($phone) : 'לא צוין';
     
     return "
     <html dir='rtl'>
     <head>
         <meta charset='UTF-8'>
         <style>
-            body { font-family: Arial, sans-serif; direction: rtl; text-align: right; }
-            .container { max-width: 700px; margin: 0 auto; background: #f8f8f8; padding: 20px; }
-            .header { background: linear-gradient(135deg, #6B8E23 0%, #8BA73E 100%); color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
-            .content { background: white; padding: 30px; border-radius: 0 0 8px 8px; }
-            .section { margin-bottom: 25px; padding: 20px; background: #f9f9f9; border-radius: 8px; border-right: 4px solid #6B8E23; }
-            .section-title { font-size: 18px; font-weight: bold; color: #6B5435; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #e5e5e5; }
-            .field { margin-bottom: 12px; padding: 10px; background: white; border-radius: 5px; }
-            .label { font-weight: bold; color: #6B5435; margin-bottom: 5px; }
+            body { font-family: Arial, sans-serif; direction: rtl; text-align: right; background: #f5f5f5; }
+            .container { max-width: 600px; margin: 20px auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+            .header { background: linear-gradient(135deg, #6B8E23 0%, #8BA73E 100%); color: white; padding: 30px; text-align: center; }
+            .content { padding: 30px; }
+            .info-box { background: #f9f9f9; padding: 20px; border-radius: 8px; border-right: 4px solid #6B8E23; margin: 20px 0; }
+            .info-item { padding: 10px 0; border-bottom: 1px solid #eee; }
+            .info-item:last-child { border-bottom: none; }
+            .label { font-weight: bold; color: #6B5435; }
             .value { color: #333; margin-top: 5px; }
-            .footer { margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e5e5; text-align: center; color: #888; font-size: 12px; }
+            .pdf-icon { background: #ff6b6b; color: white; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0; }
+            .footer { background: #f5f5f5; padding: 20px; text-align: center; color: #888; font-size: 12px; }
         </style>
     </head>
     <body>
         <div class='container'>
             <div class='header'>
-                <h1 style='margin: 0; font-size: 24px;'>{$greeting}</h1>
+                <h1 style='margin: 0; font-size: 26px;'>{$greeting}</h1>
             </div>
             <div class='content'>
-                <p style='font-size: 16px; margin-bottom: 20px;'>{$message}</p>
+                <p style='font-size: 16px; line-height: 1.6;'>{$message}</p>
                 
-                <div class='section'>
-                    <div class='section-title'>פרטים אישיים</div>
-                    <div class='field'>
-                        <div class='label'>שם מלא:</div>
-                        <div class='value'>" . htmlspecialchars($data['fullName']) . "</div>
+                <div class='info-box'>
+                    <div class='info-item'>
+                        <div class='label'>שם:</div>
+                        <div class='value'>" . htmlspecialchars($fullName) . "</div>
                     </div>
-                    <div class='field'>
-                        <div class='label'>מספר ת.ז:</div>
-                        <div class='value'>" . htmlspecialchars($data['idNumber'] ?? '') . "</div>
-                    </div>
-                    <div class='field'>
+                    <div class='info-item'>
                         <div class='label'>אימייל:</div>
-                        <div class='value'>" . htmlspecialchars($data['email']) . "</div>
+                        <div class='value'>" . htmlspecialchars($email) . "</div>
                     </div>
-                    <div class='field'>
+                    <div class='info-item'>
                         <div class='label'>טלפון:</div>
-                        <div class='value'>" . htmlspecialchars($data['phone'] ?? '') . "</div>
+                        <div class='value'>{$phoneDisplay}</div>
                     </div>
-                    <div class='field'>
-                        <div class='label'>כתובת:</div>
-                        <div class='value'>" . htmlspecialchars($data['address'] ?? '') . "</div>
+                    <div class='info-item'>
+                        <div class='label'>תאריך:</div>
+                        <div class='value'>" . date('d/m/Y H:i:s') . "</div>
                     </div>
                 </div>
                 
-                <div class='section'>
-                    <div class='section-title'>מידע רפואי</div>
-                    " . generateMedicalQuestionsHTML($data) . "
-                </div>
-                
-                <div style='margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 8px; text-align: center;'>
-                    <p style='margin: 0; color: #2e7d32; font-weight: bold;'>תאריך שליחה: " . date('d/m/Y H:i:s') . "</p>
+                <div class='pdf-icon'>
+                    📄 קובץ PDF מצורף להודעה זו
                 </div>
             </div>
             <div class='footer'>
                 <p><strong>ROOTS - טיפולים הוליסטיים</strong><br>
-                השדרה האקדמית 2, קרית אונו<br>
                 054-220-7200 | info@rutvaknin.co.il</p>
             </div>
         </div>
@@ -157,47 +170,9 @@ function generateEmailBody($data, $isClient) {
     ";
 }
 
-// Function to generate medical questions HTML
-function generateMedicalQuestionsHTML($data) {
-    $questions = [
-        'pregnancy' => 'הריון',
-        'epilepsy' => 'אפילפסיה',
-        'heartDisease' => 'מחלות לב',
-        'cancer' => 'סרטן',
-        'bloodPressure' => 'לחץ דם',
-        'diabetes' => 'סוכרת',
-        'breathing' => 'בעיות נשימה',
-        'bloodThinners' => 'תרופות למיעוי דם',
-        'chronicPain' => 'כאבים כרוניים',
-        'surgeries' => 'ניתוחים',
-        'allergies' => 'אלרגיות',
-        'skinConditions' => 'מחלות עור',
-        'medications' => 'תרופות'
-    ];
-    
-    $html = '';
-    $hasData = false;
-    
-    foreach ($questions as $key => $label) {
-        if (isset($data[$key]) && !empty($data[$key]) && $data[$key] !== 'no') {
-            $html .= "<div class='field'>
-                <div class='label'>{$label}:</div>
-                <div class='value'>" . nl2br(htmlspecialchars($data[$key])) . "</div>
-            </div>";
-            $hasData = true;
-        }
-    }
-    
-    if (!$hasData) {
-        $html = "<div class='field'><em style='color: #888;'>אין מידע רפואי נוסף.</em></div>";
-    }
-    
-    return $html;
-}
-
-// Function to send email using PHPMailer
-function sendEmail($to, $subject, $body, $replyToEmail = null, $replyToName = null) {
-    $mail = null; // Initialize to avoid undefined variable error
+// Function to send email with PDF attachment
+function sendEmailWithPDF($to, $subject, $body, $pdfContent, $pdfFilename, $replyToEmail = null, $replyToName = null) {
+    $mail = null;
     
     try {
         $mail = new PHPMailer(true);
@@ -226,12 +201,14 @@ function sendEmail($to, $subject, $body, $replyToEmail = null, $replyToName = nu
         $mail->Subject = $subject;
         $mail->Body = $body;
         
+        // Attach PDF
+        $mail->addStringAttachment($pdfContent, $pdfFilename . '_health_form.pdf', 'base64', 'application/pdf');
+        
         $mail->send();
-        error_log("Health Form - Email sent successfully to: " . $to);
+        error_log("Health Form - Email with PDF sent successfully to: " . $to);
         return true;
     } catch (Exception $e) {
-        error_log("Health Form - Email failed to {$to}: " . $e->getMessage());
-        // Only access ErrorInfo if $mail was successfully created
+        error_log("Health Form - Email with PDF failed to {$to}: " . $e->getMessage());
         if ($mail !== null && isset($mail->ErrorInfo)) {
             error_log("Health Form - PHPMailer Error Info: " . $mail->ErrorInfo);
         }
@@ -239,3 +216,4 @@ function sendEmail($to, $subject, $body, $replyToEmail = null, $replyToName = nu
     }
 }
 ?>
+
