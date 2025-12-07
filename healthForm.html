@@ -965,12 +965,13 @@
                 return;
             }
             
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
+            // Get form data directly (like contact form)
+            const formDataForSending = new FormData(this);
             
-            const radioButtons = this.querySelectorAll('input[type="radio"]:checked');
-            radioButtons.forEach(radio => {
-                data[radio.name] = radio.value;
+            // Also create object for localStorage
+            const data = {};
+            formDataForSending.forEach((value, key) => {
+                data[key] = value;
             });
             
             const successMessage = document.getElementById('successMessage');
@@ -988,16 +989,10 @@
                     successMessage.textContent = 'שולח את ההצהרה...';
                     successMessage.style.display = 'block';
                     
-                    // Prepare FormData (same as contact form)
-                    const formData = new FormData();
-                    for (const key in data) {
-                        formData.append(key, data[key]);
-                    }
-                    
-                    // Send to server (same as contact form)
+                    // Send to server (use the original FormData)
                     fetch('send-health-form.php', {
                         method: 'POST',
-                        body: formData
+                        body: formDataForSending
                     })
                     .then(response => response.json())
                     .then(serverData => {

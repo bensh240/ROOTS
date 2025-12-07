@@ -20,9 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Get form data (same as contact form)
 $data = $_POST;
 
+// Debug: Log received data (remove in production)
+error_log("Health Form - Received POST data: " . print_r($_POST, true));
+
 // Validate required fields
 if (empty($data['fullName']) || empty($data['email'])) {
     http_response_code(400);
+    error_log("Health Form - Validation failed: fullName or email missing");
     echo json_encode(['success' => false, 'message' => 'נא למלא את כל השדות הנדרשים']);
     exit;
 }
@@ -46,18 +50,14 @@ $companySent = false;
 $clientSent = false;
 
 // Send email to company
-try {
-    $companySent = sendEmail(SMTP_TO, $emailSubject, $emailBody, $data['email'], $data['fullName']);
-} catch (Exception $e) {
-    error_log("Company email failed: " . $e->getMessage());
-}
+$companySent = sendEmail(SMTP_TO, $emailSubject, $emailBody, $data['email'], $data['fullName']);
 
-// Send email to client
-try {
-    $clientSent = sendEmail($data['email'], $clientEmailSubject, $clientEmailBody);
-} catch (Exception $e) {
-    error_log("Client email failed: " . $e->getMessage());
-}
+// Send email to client  
+$clientSent = sendEmail($data['email'], $clientEmailSubject, $clientEmailBody);
+
+// Log results
+error_log("Health Form - Company email sent: " . ($companySent ? 'Yes' : 'No'));
+error_log("Health Form - Client email sent: " . ($clientSent ? 'Yes' : 'No'));
 
 if ($companySent && $clientSent) {
     echo json_encode([
@@ -71,9 +71,10 @@ if ($companySent && $clientSent) {
     ]);
 } else {
     http_response_code(500);
+    error_log("Health Form - Both emails failed!");
     echo json_encode([
         'success' => false,
-        'message' => 'אירעה שגיאה בשליחת ההצהרה. אנא נסה שוב או צור איתנו קשר בטלפון.'
+        'message' => 'אירעה שגיאה בשליחת ההצהרה. אנא בדוק את חיבור האינטרנט ונסה שוב, או צור איתנו קשר בטלפון: 054-220-7200'
     ]);
 }
 
@@ -196,32 +197,40 @@ function generateMedicalQuestionsHTML($data) {
 
 // Function to send email using PHPMailer
 function sendEmail($to, $subject, $body, $replyToEmail = null, $replyToName = null) {
-    $mail = new PHPMailer(true);
-    
-    // Server settings
-    $mail->isSMTP();
-    $mail->Host = SMTP_HOST;
-    $mail->SMTPAuth = true;
-    $mail->Username = SMTP_USERNAME;
-    $mail->Password = SMTP_PASSWORD;
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-    $mail->Port = SMTP_PORT;
-    $mail->CharSet = 'UTF-8';
-    
-    // Recipients
-    $mail->setFrom(SMTP_FROM, 'ROOTS - הצהרת בריאות');
-    $mail->addAddress($to);
-    
-    if ($replyToEmail) {
-        $mail->addReplyTo($replyToEmail, $replyToName);
+    try {
+        $mail = new PHPMailer(true);
+        
+        // Server settings
+        $mail->SMTPDebug = SMTP_DEBUG ? 2 : 0;
+        $mail->isSMTP();
+        $mail->Host = SMTP_HOST;
+        $mail->SMTPAuth = true;
+        $mail->Username = SMTP_USERNAME;
+        $mail->Password = SMTP_PASSWORD;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = SMTP_PORT;
+        $mail->CharSet = 'UTF-8';
+        
+        // Recipients
+        $mail->setFrom(SMTP_FROM, 'ROOTS - הצהרת בריאות');
+        $mail->addAddress($to);
+        
+        if ($replyToEmail) {
+            $mail->addReplyTo($replyToEmail, $replyToName);
+        }
+        
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        
+        $mail->send();
+        error_log("Health Form - Email sent successfully to: " . $to);
+        return true;
+    } catch (Exception $e) {
+        error_log("Health Form - Email failed to {$to}: " . $e->getMessage());
+        error_log("Health Form - PHPMailer Error Info: " . $mail->ErrorInfo);
+        return false;
     }
-    
-    // Content
-    $mail->isHTML(true);
-    $mail->Subject = $subject;
-    $mail->Body = $body;
-    
-    $mail->send();
-    return true;
 }
 ?>
