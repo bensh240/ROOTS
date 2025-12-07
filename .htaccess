@@ -1,0 +1,30 @@
+# ROOTS Website Configuration
+
+# Set default index
+DirectoryIndex index.html
+
+# Enable Rewrite
+RewriteEngine On
+RewriteBase /
+
+# Remove .html extension from URLs
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^.]+)\.html\ HTTP
+RewriteRule ^([^.]+)\.html$ /$1 [R=301,L]
+
+# Serve .html files for clean URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+# Security - Disable directory browsing
+Options -Indexes +FollowSymLinks
+
+# Protect .htaccess
+<Files .htaccess>
+    Require all denied
+</Files>
+
+# Error pages
+ErrorDocument 404 /404.html
+ErrorDocument 403 /404.html
