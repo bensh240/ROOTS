@@ -990,16 +990,38 @@
                     successMessage.style.display = 'block';
                     
                     // Send to server (use the original FormData)
+                    console.log('📤 Sending health form to server...');
                     fetch('send-health-form.php', {
                         method: 'POST',
                         body: formDataForSending
                     })
-                    .then(response => response.json())
-                    .then(serverData => {
+                    .then(response => {
+                        console.log('📥 Response status:', response.status, response.statusText);
+                        console.log('📥 Response headers:', response.headers.get('content-type'));
+                        
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        
+                        return response.text(); // Get as text first to see what we got
+                    })
+                    .then(responseText => {
+                        console.log('📥 Raw response:', responseText);
+                        
+                        let serverData;
+                        try {
+                            serverData = JSON.parse(responseText);
+                        } catch (e) {
+                            console.error('❌ Failed to parse JSON:', e);
+                            console.error('Response text was:', responseText);
+                            throw new Error('שגיאה בפענוח תגובת השרת');
+                        }
+                        
                         // Scroll to top first
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                         
                         if (serverData.success) {
+                            console.log('✅ Success!');
                             successMessage.textContent = serverData.message;
                             successMessage.style.display = 'block';
                             errorMessage.style.display = 'none';
@@ -1012,17 +1034,18 @@
                             
                             checkFormValidity();
                         } else {
+                            console.log('⚠️ Server returned error:', serverData.message);
                             errorMessage.textContent = serverData.message;
                             errorMessage.style.display = 'block';
                             successMessage.style.display = 'none';
                         }
                     })
                     .catch(fetchError => {
-                        console.error('Error sending to server:', fetchError);
+                        console.error('❌ Fetch error:', fetchError);
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                         
                         // Show error message
-                        errorMessage.textContent = 'אירעה שגיאה בשליחת ההצהרה. הטופס נשמר מקומית, אבל לא נשלח למייל. אנא צור קשר בטלפון.';
+                        errorMessage.textContent = 'אירעה שגיאה בשליחת ההצהרה. הטופס נשמר מקומית, אבל לא נשלח למייל. שגיאה: ' + fetchError.message;
                         errorMessage.style.display = 'block';
                         successMessage.style.display = 'none';
                     });

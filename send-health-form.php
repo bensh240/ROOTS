@@ -201,7 +201,7 @@ function sendEmail($to, $subject, $body, $replyToEmail = null, $replyToName = nu
         $mail = new PHPMailer(true);
         
         // Server settings
-        $mail->SMTPDebug = SMTP_DEBUG ? 2 : 0;
+        $mail->SMTPDebug = (defined('SMTP_DEBUG') && SMTP_DEBUG) ? 2 : 0;
         $mail->isSMTP();
         $mail->Host = SMTP_HOST;
         $mail->SMTPAuth = true;
