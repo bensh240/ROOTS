@@ -1,13 +1,43 @@
 <?php
+// Suppress all errors except critical ones - we'll handle them as JSON
+error_reporting(E_ERROR | E_PARSE);
+ini_set('display_errors', '0');
+
+// Set JSON header FIRST
 header('Content-Type: application/json; charset=utf-8');
 
+// Error handler for any uncaught errors
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    error_log("PHP Error: $errstr in $errfile on line $errline");
+    echo json_encode([
+        'success' => false,
+        'message' => 'שגיאה פנימית בשרת. אנא צור קשר בטלפון: 054-220-7200',
+        'debug' => "Error: $errstr"
+    ]);
+    exit;
+});
+
 // Load configuration
+if (!file_exists(__DIR__ . '/config.php')) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'קובץ הגדרות חסר. אנא צור קשר בטלפון: 054-220-7200'
+    ]);
+    exit;
+}
 require_once(__DIR__ . '/config.php');
 
 // Load PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'ספריית PHPMailer חסרה. אנא צור קשר בטלפון: 054-220-7200'
+    ]);
+    exit;
+}
 require_once(__DIR__ . '/vendor/autoload.php');
 
 // Check if form was submitted
@@ -24,15 +54,18 @@ $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
 $pdfBase64 = isset($_POST['pdf']) ? $_POST['pdf'] : '';
 $formDataJson = isset($_POST['formData']) ? $_POST['formData'] : '';
 
+// Debug: Log what we received
+error_log("Health Form - POST keys: " . implode(', ', array_keys($_POST)));
+error_log("Health Form - fullName: " . ($fullName ? 'Yes' : 'No'));
+error_log("Health Form - email: " . ($email ? 'Yes' : 'No'));
+error_log("Health Form - PDF length: " . strlen($pdfBase64));
+
 // Parse the full form data for email body
 $data = json_decode($formDataJson, true);
 if (!$data) {
     $data = [];
+    error_log("Health Form - Warning: formData JSON parse failed");
 }
-
-// Debug: Log received data
-error_log("Health Form - Received from: {$fullName} ({$email})");
-error_log("Health Form - PDF received: " . (!empty($pdfBase64) ? 'Yes' : 'No'));
 
 // Validate required fields
 if (empty($fullName) || empty($email)) {

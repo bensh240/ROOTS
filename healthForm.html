@@ -924,12 +924,21 @@
         // Generate PDF from form data
         function generatePDF(data) {
             try {
+                console.log('🔧 Starting PDF generation...');
+                
+                if (!window.jspdf) {
+                    console.error('❌ jsPDF library not loaded');
+                    return null;
+                }
+                
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF({
                     orientation: 'portrait',
                     unit: 'mm',
                     format: 'a4'
                 });
+                
+                console.log('✓ jsPDF initialized');
                 
                 // Add RTL support - reverse text for Hebrew
                 const rtlText = (text) => {
@@ -1038,10 +1047,16 @@
                 }
                 
                 // Return PDF as base64
-                return doc.output('dataurlstring').split(',')[1];
+                console.log('✓ Generating PDF output...');
+                const pdfOutput = doc.output('dataurlstring');
+                const pdfBase64 = pdfOutput.split(',')[1];
+                console.log('✅ PDF generated successfully, size:', pdfBase64.length);
+                return pdfBase64;
                 
             } catch (error) {
-                console.error('Error generating PDF:', error);
+                console.error('❌ Error generating PDF:', error);
+                console.error('Stack trace:', error.stack);
+                alert('שגיאה ביצירת PDF: ' + error.message);
                 return null;
             }
         }
@@ -1119,25 +1134,36 @@
                     successMessage.textContent = 'מייצר PDF...';
                     successMessage.style.display = 'block';
                     
+                    // Check if jsPDF is loaded
+                    if (typeof window.jspdf === 'undefined') {
+                        throw new Error('ספריית PDF לא נטענה. אנא רענן את הדף ונסה שוב.');
+                    }
+                    
                     // Generate PDF
+                    console.log('🔄 Generating PDF...');
                     const pdfBase64 = generatePDF(data);
                     
                     if (!pdfBase64) {
-                        throw new Error('שגיאה ביצירת קובץ PDF');
+                        throw new Error('שגיאה ביצירת קובץ PDF. אנא נסה שוב.');
                     }
+                    
+                    console.log('✅ PDF generated, size:', pdfBase64.length, 'characters');
                     
                     // Update message
                     successMessage.textContent = 'שולח את ההצהרה...';
                     
                     // Build FormData with basic info + PDF
                     const formData = new FormData();
-                    formData.append('fullName', data.fullName);
-                    formData.append('email', data.email);
+                    formData.append('fullName', data.fullName || '');
+                    formData.append('email', data.email || '');
                     formData.append('phone', data.phone || '');
                     formData.append('pdf', pdfBase64);
                     formData.append('formData', JSON.stringify(data)); // Send all data for email body
                     
-                    console.log('📤 Sending health form with PDF to server...');
+                    console.log('📤 Sending to server with:');
+                    console.log('  - Name:', data.fullName);
+                    console.log('  - Email:', data.email);
+                    console.log('  - PDF size:', pdfBase64.length);
                     fetch('send-health-form.php', {
                         method: 'POST',
                         body: formData
@@ -1161,7 +1187,10 @@
                         } catch (e) {
                             console.error('❌ Failed to parse JSON:', e);
                             console.error('Response text was:', responseText);
-                            throw new Error('שגיאה בפענוח תגובת השרת');
+                            
+                            // Show the actual server response in error
+                            const preview = responseText.substring(0, 200);
+                            throw new Error(`שגיאה בשרת: ${preview}${responseText.length > 200 ? '...' : ''}`);
                         }
                         
                         // Scroll to top first
