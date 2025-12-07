@@ -197,6 +197,8 @@ function generateMedicalQuestionsHTML($data) {
 
 // Function to send email using PHPMailer
 function sendEmail($to, $subject, $body, $replyToEmail = null, $replyToName = null) {
+    $mail = null; // Initialize to avoid undefined variable error
+    
     try {
         $mail = new PHPMailer(true);
         
@@ -229,7 +231,10 @@ function sendEmail($to, $subject, $body, $replyToEmail = null, $replyToName = nu
         return true;
     } catch (Exception $e) {
         error_log("Health Form - Email failed to {$to}: " . $e->getMessage());
-        error_log("Health Form - PHPMailer Error Info: " . $mail->ErrorInfo);
+        // Only access ErrorInfo if $mail was successfully created
+        if ($mail !== null && isset($mail->ErrorInfo)) {
+            error_log("Health Form - PHPMailer Error Info: " . $mail->ErrorInfo);
+        }
         return false;
     }
 }

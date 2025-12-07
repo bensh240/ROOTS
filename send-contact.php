@@ -93,6 +93,8 @@ $emailBody = "
 ";
 
 // Send email using PHPMailer with SMTP
+$mail = null; // Initialize to avoid undefined variable error
+
 try {
     $mail = new PHPMailer(true);
     
@@ -128,7 +130,7 @@ try {
     echo json_encode([
         'success' => false,
         'message' => 'אירעה שגיאה בשליחת ההודעה. אנא נסה שוב או צור איתנו קשר בטלפון.',
-        'error' => (defined('SMTP_DEBUG') && SMTP_DEBUG) ? $mail->ErrorInfo : null
+        'error' => (defined('SMTP_DEBUG') && SMTP_DEBUG && $mail !== null && isset($mail->ErrorInfo)) ? $mail->ErrorInfo : null
     ]);
 }
 ?>
