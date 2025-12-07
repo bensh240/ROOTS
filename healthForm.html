@@ -447,6 +447,10 @@
                                                         </div>
 
                                 <form id="healthForm" class="health-form" style="text-align: right;">
+                                                        <!-- Message Display Area -->
+                                                        <div id="successMessage" class="success-message" style="margin-bottom: 20px;"></div>
+                                                        <div id="errorMessage" class="error-message" style="margin-bottom: 20px;"></div>
+                                                        
                                                         <!-- Personal Details Section -->
                                                         <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); margin-bottom: 30px;">
                                                             <h3 style="color: #8B6F47; font-size: 22px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #f0f0f0;">פרטים אישיים</h3>
@@ -757,9 +761,6 @@
                                                             <p style="font-size: 15px; color: #555; line-height: 1.8; margin: 0;">הנני מצהיר/ה בזאת כי ידוע לי כי טיפול זה אינו מחליף טיפול רפואי. ובמקרה הצורך נועצתי עם רופא/ה לפני קבלת הטיפול, איני מסתיר/ה מהמטפל/ת כל מידע נוסף ו/או בעיה רפואית נוספת אשר לא הוזכרה בשאלון זה אשר עלולה באופן כלשהוא לסכן את בריאותי או את בריאות המטפל/ת. המידע שמסרתי הינו מלא ונכון ומאושר על ידי, אני מודע/ת לכך שהטיפול שאקבל מבוסס על הצהרה זו.</p>
             </div>
 
-            <div id="successMessage" class="success-message"></div>
-            <div id="errorMessage" class="error-message"></div>
-
                                                         <!-- Confirmation Checkboxes -->
                                                         <div class="confirmation-box" style="background: #f8f8f8; padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 2px solid #e5e5e5; direction: rtl; text-align: right;">
                                                             <h4 style="color: #6B5435; font-size: 16px; margin-bottom: 20px; font-weight: bold; text-align: right;">
@@ -987,16 +988,22 @@
                     successMessage.textContent = 'שולח את ההצהרה...';
                     successMessage.style.display = 'block';
                     
-                    // Send to server
+                    // Prepare FormData (same as contact form)
+                    const formData = new FormData();
+                    for (const key in data) {
+                        formData.append(key, data[key]);
+                    }
+                    
+                    // Send to server (same as contact form)
                     fetch('send-health-form.php', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
+                        body: formData
                     })
                     .then(response => response.json())
                     .then(serverData => {
+                        // Scroll to top first
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        
                         if (serverData.success) {
                             successMessage.textContent = serverData.message;
                             successMessage.style.display = 'block';
@@ -1009,7 +1016,6 @@
                             });
                             
                             checkFormValidity();
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
                         } else {
                             errorMessage.textContent = serverData.message;
                             errorMessage.style.display = 'block';
@@ -1018,16 +1024,12 @@
                     })
                     .catch(fetchError => {
                         console.error('Error sending to server:', fetchError);
-                        // Show success anyway since it's saved locally
-                        successMessage.textContent = 'הטופס נשמר מקומית בהצלחה! (לא ניתן היה לשלוח מייל)';
-                        successMessage.style.display = 'block';
-                        
-                        this.reset();
-                        Object.keys(detailsMapping).forEach(fieldName => {
-                            toggleDetailsField(fieldName, false);
-                        });
-                        checkFormValidity();
                         window.scrollTo({ top: 0, behavior: 'smooth' });
+                        
+                        // Show error message
+                        errorMessage.textContent = 'אירעה שגיאה בשליחת ההצהרה. הטופס נשמר מקומית, אבל לא נשלח למייל. אנא צור קשר בטלפון.';
+                        errorMessage.style.display = 'block';
+                        successMessage.style.display = 'none';
                     });
                 } else {
                     throw new Error('שגיאה בשמירה');

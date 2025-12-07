@@ -17,12 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Get form data
-$data = json_decode(file_get_contents('php://input'), true);
-
-if (!$data) {
-    $data = $_POST;
-}
+// Get form data (same as contact form)
+$data = $_POST;
 
 // Validate required fields
 if (empty($data['fullName']) || empty($data['email'])) {

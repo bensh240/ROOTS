@@ -219,6 +219,9 @@
                                                         <h2 class="sc_title sc_title_regular cu_mrg_5" style="text-align: right;">יש לכם שאלות?</h2>
                                                         <div id="sc_form_629_wrap" class="sc_form_wrap" style="direction: rtl; text-align: right;">
                                                             <div id="sc_form_629" class="sc_form sc_form_style_form_3">
+                                                                <!-- Message Display Area -->
+                                                                <div class="result sc_infobox" style="margin-bottom: 20px;"></div>
+                                                                
                                                                 <form id="sc_form_629_form" data-formtype="form_3" method="post" action="send-contact.php">
                                                                     <div class="sc_form_info">
                                                                         <div class="sc_form_item sc_form_field label_over">
@@ -250,7 +253,6 @@
                                                                             </span>
                                                                         </button>
                                                                     </div>
-                                                                    <div class="result sc_infobox"></div>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -432,7 +434,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('sc_form_629_form');
-    const resultDiv = contactForm.querySelector('.result');
+    const resultDiv = document.getElementById('sc_form_629').querySelector('.result');
     
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
