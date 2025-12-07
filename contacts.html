@@ -219,7 +219,7 @@
                                                         <h2 class="sc_title sc_title_regular cu_mrg_5" style="text-align: right;">יש לכם שאלות?</h2>
                                                         <div id="sc_form_629_wrap" class="sc_form_wrap" style="direction: rtl; text-align: right;">
                                                             <div id="sc_form_629" class="sc_form sc_form_style_form_3">
-                                                                <form id="sc_form_629_form" data-formtype="form_3" method="post" action="includes/sendmail.php">
+                                                                <form id="sc_form_629_form" data-formtype="form_3" method="post" action="send-contact.php">
                                                                     <div class="sc_form_info">
                                                                         <div class="sc_form_item sc_form_field label_over">
                                                                             <label class="required" for="sc_form_username" style="text-align: right; display: block;">שם</label>
@@ -227,7 +227,11 @@
                                                                         </div>
                                                                         <div class="sc_form_item sc_form_field label_over">
                                                                             <label class="required" for="sc_form_email" style="text-align: right; display: block;">אימייל</label>
-                                                                            <input id="sc_form_email" type="text" name="email" placeholder="כתובת אימייל" style="text-align: right;">
+                                                                            <input id="sc_form_email" type="email" name="email" placeholder="כתובת אימייל" style="text-align: right;">
+                                                                        </div>
+                                                                        <div class="sc_form_item sc_form_field label_over">
+                                                                            <label for="sc_form_phone" style="text-align: right; display: block;">טלפון</label>
+                                                                            <input id="sc_form_phone" type="tel" name="phone" placeholder="מספר טלפון (אופציונלי)" style="text-align: right;">
                                                                         </div>
                                                                         <div class="sc_form_item sc_form_field label_over">
                                                                             <label class="required" for="sc_form_subj" style="text-align: right; display: block;">נושא</label>
@@ -419,6 +423,51 @@ document.addEventListener('DOMContentLoaded', function() {
                 searchForm.classList.remove('active');
                 document.body.classList.remove('search-open');
             }
+        });
+    }
+});
+</script>
+
+<!-- Contact Form Handler -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('sc_form_629_form');
+    const resultDiv = contactForm.querySelector('.result');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData();
+            formData.append('name', document.getElementById('sc_form_username').value);
+            formData.append('email', document.getElementById('sc_form_email').value);
+            formData.append('phone', document.getElementById('sc_form_phone')?.value || '');
+            formData.append('subject', document.getElementById('sc_form_subj').value);
+            formData.append('message', document.getElementById('sc_form_message').value);
+            
+            // Show loading
+            resultDiv.innerHTML = '<div style="background: #e3f2fd; color: #1976d2; padding: 15px; border-radius: 8px; text-align: center;">שולח הודעה...</div>';
+            resultDiv.style.display = 'block';
+            
+            // Send request
+            fetch('send-contact.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    resultDiv.innerHTML = '<div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #c3e6cb;">' + data.message + '</div>';
+                    contactForm.reset();
+                } else {
+                    resultDiv.innerHTML = '<div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #f5c6cb;">' + data.message + '</div>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultDiv.innerHTML = '<div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #f5c6cb;">אירעה שגיאה בשליחת ההודעה. אנא נסה שוב מאוחר יותר.</div>';
+            });
         });
     }
 });

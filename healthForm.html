@@ -979,20 +979,56 @@
             errorMessage.style.display = 'none';
             
             try {
+                // Save to localStorage first
                 const saved = saveToLocalStorage(data);
                 
                 if (saved) {
-            successMessage.textContent = 'הטופס נשמר בהצלחה! תודה על מילוי ההצהרה.';
+                    // Show sending message
+                    successMessage.textContent = 'שולח את ההצהרה...';
                     successMessage.style.display = 'block';
                     
-                    this.reset();
-                    
-                    Object.keys(detailsMapping).forEach(fieldName => {
-                        toggleDetailsField(fieldName, false);
+                    // Send to server
+                    fetch('send-health-form.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.json())
+                    .then(serverData => {
+                        if (serverData.success) {
+                            successMessage.textContent = serverData.message;
+                            successMessage.style.display = 'block';
+                            errorMessage.style.display = 'none';
+                            
+                            this.reset();
+                            
+                            Object.keys(detailsMapping).forEach(fieldName => {
+                                toggleDetailsField(fieldName, false);
+                            });
+                            
+                            checkFormValidity();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        } else {
+                            errorMessage.textContent = serverData.message;
+                            errorMessage.style.display = 'block';
+                            successMessage.style.display = 'none';
+                        }
+                    })
+                    .catch(fetchError => {
+                        console.error('Error sending to server:', fetchError);
+                        // Show success anyway since it's saved locally
+                        successMessage.textContent = 'הטופס נשמר מקומית בהצלחה! (לא ניתן היה לשלוח מייל)';
+                        successMessage.style.display = 'block';
+                        
+                        this.reset();
+                        Object.keys(detailsMapping).forEach(fieldName => {
+                            toggleDetailsField(fieldName, false);
+                        });
+                        checkFormValidity();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
                     });
-                    
-                    checkFormValidity();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
                     throw new Error('שגיאה בשמירה');
                 }

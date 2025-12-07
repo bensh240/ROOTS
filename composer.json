@@ -1,0 +1,15 @@
+{
+    "name": "roots/website",
+    "description": "ROOTS - Holistic Treatments Website",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "dompdf/dompdf": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Roots\\": "src/"
+        }
+    }
+}
+

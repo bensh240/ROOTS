@@ -36,3 +36,10 @@ node_modules/
 cache/
 tmp/
 
+# Sensitive Configuration
+config.php
+
+# Dependencies
+vendor/
+composer.lock
+
