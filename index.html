@@ -462,6 +462,28 @@
             .slide-desc { font-size: 16px; line-height: 1.4; }
             .roots-slide-logo img { height: 50px; }
         }
+
+        /* Info Cards Responsive */
+        @media (max-width: 768px) {
+            .roots_info_cards {
+                flex-direction: column !important;
+                gap: 20px !important;
+                padding: 0 15px !important;
+            }
+            
+            .roots_info_cards .column-1_3 {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 100% !important;
+                flex: 1 !important;
+            }
+            
+            .roots_info_cards .column-1_3 > div {
+                height: auto !important;
+                min-height: 280px !important;
+                padding: 30px 25px !important;
+            }
+        }
         </style>
 
         <script>
