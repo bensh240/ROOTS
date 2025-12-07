@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Script to install DomPDF for ROOTS project
+# Script to install DomPDF and PHPMailer for ROOTS project
 # Run this from Terminal: bash install-dompdf.sh
 
-echo "📦 Installing DomPDF for ROOTS..."
-echo "================================"
+echo "📦 Installing DomPDF and PHPMailer for ROOTS..."
+echo "================================================="
 
 # Navigate to project directory
 cd /Applications/MAMP/htdocs/roots
@@ -44,12 +44,39 @@ mkdir -p vendor/sabberworm/php-css-parser
 mv PHP-CSS-Parser-8.4.0/* vendor/sabberworm/php-css-parser/
 rm -rf PHP-CSS-Parser-8.4.0 css-parser.tar.gz
 
+echo "📥 Downloading PHPMailer..."
+curl -L https://github.com/PHPMailer/PHPMailer/archive/refs/tags/v6.8.1.tar.gz -o phpmailer.tar.gz
+tar -xzf phpmailer.tar.gz
+mkdir -p vendor/phpmailer/phpmailer
+mv PHPMailer-6.8.1/src/* vendor/phpmailer/phpmailer/
+mv PHPMailer-6.8.1/language vendor/phpmailer/phpmailer/
+rm -rf PHPMailer-6.8.1 phpmailer.tar.gz
+
 # Create autoload file
 echo "✓ Creating autoload file..."
 cat > vendor/autoload.php << 'EOL'
 <?php
-// Simple autoloader for DomPDF and dependencies
+// Simple autoloader for DomPDF, PHPMailer and dependencies
 
+// PHPMailer
+spl_autoload_register(function ($class) {
+    $prefix = 'PHPMailer\\PHPMailer\\';
+    $base_dir = __DIR__ . '/phpmailer/phpmailer/';
+    
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        return;
+    }
+    
+    $relative_class = substr($class, $len);
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+    
+    if (file_exists($file)) {
+        require $file;
+    }
+});
+
+// DomPDF
 spl_autoload_register(function ($class) {
     $prefix = 'Dompdf\\';
     $base_dir = __DIR__ . '/dompdf/dompdf/src/';

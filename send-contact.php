@@ -1,13 +1,14 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
-// Load configuration from external file (more secure)
+// Load configuration
 require_once(__DIR__ . '/config.php');
 
-// Override FROM_NAME for contact form
-if (!defined('SMTP_FROM_NAME')) {
-    define('SMTP_FROM_NAME', 'ROOTS - טופס יצירת קשר');
-}
+// Load PHPMailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require_once(__DIR__ . '/vendor/autoload.php');
 
 // Check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -91,28 +92,43 @@ $emailBody = "
 </html>
 ";
 
-// Send email using PHP mail() with SMTP
-ini_set('SMTP', SMTP_HOST);
-ini_set('smtp_port', SMTP_PORT);
-
-$headers = "From: " . SMTP_FROM_NAME . " <" . SMTP_FROM . ">\r\n";
-$headers .= "Reply-To: " . $email . "\r\n";
-$headers .= "MIME-Version: 1.0\r\n";
-$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-
-$mailSent = mail(SMTP_TO, $emailSubject, $emailBody, $headers);
-
-if ($mailSent) {
+// Send email using PHPMailer with SMTP
+try {
+    $mail = new PHPMailer(true);
+    
+    // Server settings
+    $mail->isSMTP();
+    $mail->Host = SMTP_HOST;
+    $mail->SMTPAuth = true;
+    $mail->Username = SMTP_USERNAME;
+    $mail->Password = SMTP_PASSWORD;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port = SMTP_PORT;
+    $mail->CharSet = 'UTF-8';
+    
+    // Recipients
+    $mail->setFrom(SMTP_FROM, 'ROOTS - טופס יצירת קשר');
+    $mail->addAddress(SMTP_TO);
+    $mail->addReplyTo($email, $name);
+    
+    // Content
+    $mail->isHTML(true);
+    $mail->Subject = $emailSubject;
+    $mail->Body = $emailBody;
+    
+    $mail->send();
+    
     echo json_encode([
         'success' => true,
         'message' => 'ההודעה נשלחה בהצלחה! נחזור אליך בהקדם.'
     ]);
-} else {
+    
+} catch (Exception $e) {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'message' => 'אירעה שגיאה בשליחת ההודעה. אנא נסה שוב או צור איתנו קשר בטלפון.'
+        'message' => 'אירעה שגיאה בשליחת ההודעה. אנא נסה שוב או צור איתנו קשר בטלפון.',
+        'error' => SMTP_DEBUG ? $mail->ErrorInfo : null
     ]);
 }
 ?>
-

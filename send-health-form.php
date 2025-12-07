@@ -1,13 +1,14 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
-// Load configuration from external file (more secure)
+// Load configuration
 require_once(__DIR__ . '/config.php');
 
-// Override FROM_NAME for health form
-if (!defined('SMTP_FROM_NAME')) {
-    define('SMTP_FROM_NAME', 'ROOTS - הצהרת בריאות');
-}
+// Load PHPMailer and DomPDF
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require_once(__DIR__ . '/vendor/autoload.php');
 
 // Check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -37,55 +38,87 @@ if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-// Generate PDF content
-$pdfContent = generateHealthFormPDF($data);
+// Generate PDF content (if possible)
+$pdfPath = null;
+$pdfFilename = null;
 
-// Save PDF temporarily
-$pdfFilename = 'health_declaration_' . date('Y-m-d_His') . '_' . uniqid() . '.pdf';
-$pdfPath = sys_get_temp_dir() . '/' . $pdfFilename;
-file_put_contents($pdfPath, $pdfContent);
+try {
+    $pdfContent = generateHealthFormPDF($data);
+    if ($pdfContent) {
+        $pdfFilename = 'health_declaration_' . date('Y-m-d_His') . '_' . uniqid() . '.pdf';
+        $pdfPath = sys_get_temp_dir() . '/' . $pdfFilename;
+        file_put_contents($pdfPath, $pdfContent);
+    }
+} catch (Exception $e) {
+    error_log("PDF generation failed: " . $e->getMessage());
+    // Continue without PDF
+}
+
+$companySent = false;
+$clientSent = false;
+$hasPDF = ($pdfPath !== null);
 
 // Send email to company
-$companySent = sendEmailWithAttachment(
-    SMTP_TO,
-    'הצהרת בריאות חדשה - ' . htmlspecialchars($data['fullName']),
-    generateEmailBody($data, false),
-    $pdfPath,
-    $pdfFilename
-);
+try {
+    $companySent = sendEmailWithAttachment(
+        SMTP_TO,
+        'הצהרת בריאות חדשה - ' . htmlspecialchars($data['fullName']),
+        generateEmailBody($data, false, $hasPDF),
+        $pdfPath,
+        $pdfFilename
+    );
+} catch (Exception $e) {
+    error_log("Company email failed: " . $e->getMessage());
+}
 
 // Send email to client
-$clientSent = sendEmailWithAttachment(
-    $data['email'],
-    'העתק הצהרת בריאות - ROOTS',
-    generateEmailBody($data, true),
-    $pdfPath,
-    $pdfFilename
-);
+try {
+    $clientSent = sendEmailWithAttachment(
+        $data['email'],
+        'העתק הצהרת בריאות - ROOTS',
+        generateEmailBody($data, true, $hasPDF),
+        $pdfPath,
+        $pdfFilename
+    );
+} catch (Exception $e) {
+    error_log("Client email failed: " . $e->getMessage());
+}
 
 // Delete temporary PDF
-unlink($pdfPath);
+if (file_exists($pdfPath)) {
+    unlink($pdfPath);
+}
 
 if ($companySent && $clientSent) {
+    $message = 'ההצהרה נשלחה בהצלחה! ';
+    $message .= $hasPDF ? 'קיבלת עותק PDF למייל.' : 'קיבלת אישור למייל.';
     echo json_encode([
         'success' => true,
-        'message' => 'ההצהרה נשלחה בהצלחה! קיבלת עותק למייל.'
+        'message' => $message
     ]);
 } elseif ($companySent) {
+    $message = 'ההצהרה נשלחה בהצלחה! ';
+    $message .= $hasPDF ? '(לא ניתן היה לשלוח עותק PDF למייל שלך)' : '(לא ניתן היה לשלוח אישור למייל שלך)';
     echo json_encode([
         'success' => true,
-        'message' => 'ההצהרה נשלחה בהצלחה! (לא ניתן היה לשלוח עותק למייל שלך)'
+        'message' => $message
     ]);
 } else {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'message' => 'אירעה שגיאה בשליחת ההצהרה. אנא נסה שוב.'
+        'message' => 'אירעה שגיאה בשליחת ההצהרה. אנא נסה שוב או צור איתנו קשר בטלפון.'
     ]);
 }
 
 // Function to generate PDF content
 function generateHealthFormPDF($data) {
+    // Check if DomPDF is available
+    if (!class_exists('\Dompdf\Dompdf')) {
+        error_log("DomPDF not installed - skipping PDF generation");
+        return null;
+    }
+    
     $html = "
     <!DOCTYPE html>
     <html dir='rtl'>
@@ -118,7 +151,7 @@ function generateHealthFormPDF($data) {
             </div>
             <div class='field'>
                 <div class='label'>מספר ת.ז:</div>
-                <div class='value'>" . htmlspecialchars($data['idNumber']) . "</div>
+                <div class='value'>" . htmlspecialchars($data['idNumber'] ?? '') . "</div>
             </div>
             <div class='field'>
                 <div class='label'>אימייל:</div>
@@ -126,11 +159,11 @@ function generateHealthFormPDF($data) {
             </div>
             <div class='field'>
                 <div class='label'>טלפון:</div>
-                <div class='value'>" . htmlspecialchars($data['phone']) . "</div>
+                <div class='value'>" . htmlspecialchars($data['phone'] ?? '') . "</div>
             </div>
             <div class='field'>
                 <div class='label'>כתובת:</div>
-                <div class='value'>" . htmlspecialchars($data['address']) . "</div>
+                <div class='value'>" . htmlspecialchars($data['address'] ?? '') . "</div>
             </div>
         </div>
         
@@ -147,10 +180,7 @@ function generateHealthFormPDF($data) {
     </html>
     ";
     
-    // Use DomPDF or similar library to convert HTML to PDF
-    // For now, return HTML (you'll need to install a PDF library)
-    require_once(__DIR__ . '/vendor/autoload.php'); // Composer autoload
-    
+    // Use DomPDF to convert HTML to PDF
     try {
         $dompdf = new \Dompdf\Dompdf(['enable_html5_parser' => true]);
         $dompdf->loadHtml($html);
@@ -158,8 +188,8 @@ function generateHealthFormPDF($data) {
         $dompdf->render();
         return $dompdf->output();
     } catch (Exception $e) {
-        // Fallback: return HTML if PDF generation fails
-        return $html;
+        error_log("PDF generation failed: " . $e->getMessage());
+        return null;
     }
 }
 
@@ -183,7 +213,7 @@ function generateMedicalQuestions($data) {
     
     $html = '';
     foreach ($questions as $key => $label) {
-        if (isset($data[$key]) && !empty($data[$key])) {
+        if (isset($data[$key]) && !empty($data[$key]) && $data[$key] !== 'no') {
             $html .= "<div class='field'>
                 <div class='label'>{$label}:</div>
                 <div class='value'>" . nl2br(htmlspecialchars($data[$key])) . "</div>
@@ -191,17 +221,35 @@ function generateMedicalQuestions($data) {
         }
     }
     
-    return $html;
+    return $html ?: "<p>אין מידע רפואי נוסף.</p>";
 }
 
 // Function to generate email body
-function generateEmailBody($data, $isClient) {
+function generateEmailBody($data, $isClient, $hasPDF = true) {
     if ($isClient) {
         $greeting = "שלום " . htmlspecialchars($data['fullName']) . ",";
-        $message = "תודה שמילאת את הצהרת הבריאות.<br>מצורף עותק של ההצהרה שלך.";
+        $message = "תודה שמילאת את הצהרת הבריאות.";
+        if ($hasPDF) {
+            $message .= "<br>מצורף עותק PDF של ההצהרה שלך.";
+        }
     } else {
         $greeting = "הצהרת בריאות חדשה התקבלה";
-        $message = "התקבלה הצהרת בריאות חדשה מ: <strong>" . htmlspecialchars($data['fullName']) . "</strong><br>מצורף קובץ PDF של ההצהרה.";
+        $message = "התקבלה הצהרת בריאות חדשה מ: <strong>" . htmlspecialchars($data['fullName']) . "</strong>";
+        if ($hasPDF) {
+            $message .= "<br>מצורף קובץ PDF של ההצהרה.";
+        }
+    }
+    
+    $detailsHtml = "";
+    if (!$hasPDF && !$isClient) {
+        // If no PDF and it's for the company, include form data in email
+        $detailsHtml = "
+        <div style='margin-top: 20px; padding: 20px; background: #f9f9f9; border-radius: 8px;'>
+            <h3 style='color: #6B5435; margin-bottom: 15px;'>פרטים מלאים:</h3>
+            <div style='margin-bottom: 10px;'><strong>מספר ת.ז:</strong> " . htmlspecialchars($data['idNumber'] ?? '') . "</div>
+            <div style='margin-bottom: 10px;'><strong>כתובת:</strong> " . htmlspecialchars($data['address'] ?? '') . "</div>
+            " . generateMedicalQuestionsHTML($data) . "
+        </div>";
     }
     
     return "
@@ -227,9 +275,10 @@ function generateEmailBody($data, $isClient) {
                 <ul style='text-align: right;'>
                     <li>שם: " . htmlspecialchars($data['fullName']) . "</li>
                     <li>אימייל: " . htmlspecialchars($data['email']) . "</li>
-                    <li>טלפון: " . htmlspecialchars($data['phone']) . "</li>
+                    <li>טלפון: " . htmlspecialchars($data['phone'] ?? '') . "</li>
                     <li>תאריך: " . date('d/m/Y H:i:s') . "</li>
                 </ul>
+                {$detailsHtml}
             </div>
             <div class='footer'>
                 <p>ROOTS - טיפולים הוליסטיים<br>
@@ -242,35 +291,71 @@ function generateEmailBody($data, $isClient) {
     ";
 }
 
-// Function to send email with attachment
-function sendEmailWithAttachment($to, $subject, $body, $attachmentPath, $attachmentName) {
-    $boundary = md5(time());
+// Helper function for email body
+function generateMedicalQuestionsHTML($data) {
+    $questions = [
+        'pregnancy' => 'הריון',
+        'epilepsy' => 'אפילפסיה',
+        'heartDisease' => 'מחלות לב',
+        'cancer' => 'סרטן',
+        'bloodPressure' => 'לחץ דם',
+        'diabetes' => 'סוכרת',
+        'breathing' => 'בעיות נשימה',
+        'bloodThinners' => 'תרופות למיעוי דם',
+        'chronicPain' => 'כאבים כרוניים',
+        'surgeries' => 'ניתוחים',
+        'allergies' => 'אלרגיות',
+        'skinConditions' => 'מחלות עור',
+        'medications' => 'תרופות'
+    ];
     
-    $headers = "From: " . SMTP_FROM_NAME . " <" . SMTP_FROM . ">\r\n";
-    $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-Type: multipart/mixed; boundary=\"{$boundary}\"\r\n";
+    $html = '<div style="margin-top: 15px;"><strong>מידע רפואי:</strong><ul>';
+    $hasData = false;
+    foreach ($questions as $key => $label) {
+        if (isset($data[$key]) && !empty($data[$key]) && $data[$key] !== 'no') {
+            $html .= "<li><strong>{$label}:</strong> " . nl2br(htmlspecialchars($data[$key])) . "</li>";
+            $hasData = true;
+        }
+    }
+    $html .= '</ul></div>';
     
-    $message = "--{$boundary}\r\n";
-    $message .= "Content-Type: text/html; charset=UTF-8\r\n";
-    $message .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-    $message .= $body . "\r\n\r\n";
+    return $hasData ? $html : '<div style="margin-top: 15px;"><em>אין מידע רפואי נוסף.</em></div>';
+}
+
+// Function to send email with attachment using PHPMailer
+function sendEmailWithAttachment($to, $subject, $body, $attachmentPath = null, $attachmentName = null) {
+    $mail = new PHPMailer(true);
     
-    // Attach PDF
-    if (file_exists($attachmentPath)) {
-        $fileContent = chunk_split(base64_encode(file_get_contents($attachmentPath)));
-        $message .= "--{$boundary}\r\n";
-        $message .= "Content-Type: application/pdf; name=\"{$attachmentName}\"\r\n";
-        $message .= "Content-Transfer-Encoding: base64\r\n";
-        $message .= "Content-Disposition: attachment; filename=\"{$attachmentName}\"\r\n\r\n";
-        $message .= $fileContent . "\r\n";
+    // Server settings
+    $mail->isSMTP();
+    $mail->Host = SMTP_HOST;
+    $mail->SMTPAuth = true;
+    $mail->Username = SMTP_USERNAME;
+    $mail->Password = SMTP_PASSWORD;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port = SMTP_PORT;
+    $mail->CharSet = 'UTF-8';
+    
+    // Debugging (if enabled)
+    if (defined('SMTP_DEBUG') && SMTP_DEBUG) {
+        $mail->SMTPDebug = 2;
     }
     
-    $message .= "--{$boundary}--";
+    // Recipients
+    $mail->setFrom(SMTP_FROM, 'ROOTS - הצהרת בריאות');
+    $mail->addAddress($to);
     
-    ini_set('SMTP', SMTP_HOST);
-    ini_set('smtp_port', SMTP_PORT);
+    // Content
+    $mail->isHTML(true);
+    $mail->Subject = $subject;
+    $mail->Body = $body;
     
-    return mail($to, $subject, $message, $headers);
+    // Attach PDF if available
+    if ($attachmentPath && file_exists($attachmentPath)) {
+        $mail->addAttachment($attachmentPath, $attachmentName);
+    }
+    
+    $mail->send();
+    return true;
 }
 ?>
-
