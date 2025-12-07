@@ -1066,7 +1066,7 @@ body.search-open::before {
 
 /* Specific fix for booking page */
 body.booking .top_panel_image {
-    background-image: url('../images/BookedAppointments.jpg') !important;
+    /* background-image: url('../images/BookedAppointments.jpg') !important; */
     z-index: 1 !important;
 }
 
