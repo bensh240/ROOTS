@@ -349,36 +349,44 @@
 <body class="healthform page body_filled theme_skin_less article_style_stretch scheme_original top_panel_show top_panel_above sidebar_hide sidebar_outer_hide preloader wpb-js-composer sc_responsive">
 <div id="page_preloader"></div>
     <!-- PDF Template (Hidden) -->
-    <div id="pdf-template" style="position: absolute; left: -9999px; top: 0; width: 210mm; background: white; padding: 20mm; box-sizing: border-box; font-family: 'Assistant', sans-serif; direction: rtl;">
+    <div id="pdf-template" style="position: absolute; left: -9999px; top: 0; width: 210mm; background: white; padding: 20mm; box-sizing: border-box; font-family: 'Assistant', sans-serif; direction: rtl; color: #000000 !important; -webkit-font-smoothing: antialiased;">
         <!-- Header -->
-        <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #6B8E23; padding-bottom: 20px;">
+        <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #000; padding-bottom: 20px;">
             <img src="images/logo2.jpeg" style="height: 60px; margin-bottom: 10px;">
-            <h1 style="color: #6B5435; margin: 0; font-size: 24pt;">הצהרת בריאות - ROOTS</h1>
-            <p style="color: #666; margin: 5px 0 0;">תאריך: <span id="pdf-date"></span></p>
+            <h1 style="color: #000 !important; margin: 0; font-size: 24pt; font-weight: bold;">הצהרת בריאות - ROOTS</h1>
+            <p style="color: #000 !important; margin: 5px 0 0;">תאריך: <span id="pdf-date"></span></p>
         </div>
 
         <!-- Personal Details -->
         <div style="margin-bottom: 25px;">
-            <h2 style="color: #6B8E23; font-size: 16pt; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 15px;">פרטים אישיים</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12pt;">
-                <div><strong>שם מלא:</strong> <span id="pdf-fullName"></span></div>
-                <div><strong>ת.ז:</strong> <span id="pdf-idNumber"></span></div>
-                <div><strong>טלפון:</strong> <span id="pdf-phone"></span></div>
-                <div><strong>אימייל:</strong> <span id="pdf-email"></span></div>
-                <div style="grid-column: span 2;"><strong>כתובת:</strong> <span id="pdf-address"></span></div>
+            <h2 style="color: #000 !important; font-size: 16pt; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 15px; font-weight: bold;">פרטים אישיים</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 11pt; color: #000 !important;">
+                <div><strong style="color: #000;">שם מלא:</strong> <span id="pdf-fullName"></span></div>
+                <div><strong style="color: #000;">ת.ז:</strong> <span id="pdf-idNumber"></span></div>
+                <div><strong style="color: #000;">טלפון:</strong> <span id="pdf-phone"></span></div>
+                <div><strong style="color: #000;">אימייל:</strong> <span id="pdf-email"></span></div>
+                <div style="grid-column: span 2;"><strong style="color: #000;">כתובת:</strong> <span id="pdf-address"></span></div>
             </div>
         </div>
 
         <!-- Medical Info -->
+        <div style="margin-bottom: 25px;">
+            <h2 style="color: #000 !important; font-size: 16pt; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 15px; font-weight: bold;">הצהרה רפואית</h2>
+            <div id="pdf-medical-content" style="font-size: 11pt; line-height: 1.5; color: #000 !important;">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+
+        <!-- Approvals (Checkboxes) -->
         <div>
-            <h2 style="color: #6B8E23; font-size: 16pt; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 15px;">הצהרה רפואית</h2>
-            <div id="pdf-medical-content" style="font-size: 11pt; line-height: 1.5;">
+            <h2 style="color: #000 !important; font-size: 16pt; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 15px; font-weight: bold;">אישורים והצהרות</h2>
+            <div id="pdf-approvals-content" style="font-size: 10pt; line-height: 1.4; color: #000 !important;">
                 <!-- Content injected via JS -->
             </div>
         </div>
         
         <!-- Footer -->
-        <div style="margin-top: 40px; border-top: 1px solid #ccc; padding-top: 10px; text-align: center; font-size: 10pt; color: #888;">
+        <div style="margin-top: 40px; border-top: 1px solid #000; padding-top: 10px; text-align: center; font-size: 10pt; color: #000 !important;">
             <p>הצהרה זו נחתמה דיגיטלית ואושרה על ידי הלקוח.</p>
             <p>ROOTS - טיפולים הוליסטיים | 054-220-7200</p>
         </div>
@@ -1009,7 +1017,7 @@
                         
                         const li = document.createElement('li');
                         li.style.marginBottom = '5px';
-                        li.innerHTML = `<span style="color:#6B5435; font-weight:bold;">${label}:</span> ${value}${details}`;
+                        li.innerHTML = `<span style="color:#000; font-weight:bold;">${label}:</span> ${value}${details}`;
                         ul.appendChild(li);
                     }
                 });
@@ -1024,17 +1032,41 @@
                 if (data.additionalNotes && data.additionalNotes.trim()) {
                     const notesDiv = document.createElement('div');
                     notesDiv.style.marginTop = '15px';
-                    notesDiv.innerHTML = `<strong style="color:#6B5435;">הערות נוספות:</strong><br>${data.additionalNotes}`;
+                    notesDiv.innerHTML = `<strong style="color:#000;">הערות נוספות:</strong><br>${data.additionalNotes}`;
                     medicalContainer.appendChild(notesDiv);
                 }
+
+                // Populate Approvals
+                const approvalsContainer = document.getElementById('pdf-approvals-content');
+                approvalsContainer.innerHTML = '';
+                
+                const approvalItems = [
+                    { text: 'אני מאשר/ת שכל המידע שמסרתי במסמך זה הינו נכון, מלא ומדויק למיטב ידיעתי.' },
+                    { text: 'אני מבין/ה כי הטיפול אינו מהווה תחליף לייעוץ רפואי או לטיפול רפואי קונבנציונלי.' },
+                    { text: 'אני מאשר/ת כי קראתי את הצהרת הפרטיות ואני מסכים/ה לשמירת הנתונים שלי במערכת.' },
+                    { text: 'אני לוקח/ת אחריות מלאה על בריאותי ומצהיר/ה כי התייעצתי עם רופא במידת הצורך לפני הטיפול.' }
+                ];
+                
+                approvalItems.forEach(item => {
+                    const div = document.createElement('div');
+                    div.style.marginBottom = '8px';
+                    div.style.display = 'flex';
+                    div.style.alignItems = 'flex-start';
+                    div.innerHTML = `
+                        <span style="font-size: 14px; margin-left: 8px; line-height: 1;">☑</span>
+                        <span>${item.text}</span>
+                    `;
+                    approvalsContainer.appendChild(div);
+                });
 
                 // 2. Render to Canvas
                 console.log('📸 Rendering HTML to Canvas...');
                 const element = document.getElementById('pdf-template');
                 const canvas = await html2canvas(element, {
-                    scale: 2, // Higher quality
+                    scale: 3, // Increased scale for sharper text
                     useCORS: true,
-                    logging: false
+                    logging: false,
+                    backgroundColor: '#ffffff'
                 });
                 
                 // 3. Create PDF
