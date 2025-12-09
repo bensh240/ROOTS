@@ -143,7 +143,7 @@ cPanel עם SMTP
 **Developer:** Ben Shaya  
 **GitHub:** [github.com/bensh240/ROOTS](https://github.com/bensh240/ROOTS)  
 **גרסה:** 2.0  
-**תאריך:** דצמבר 2024
+**תאריך:** דצמבר 2025
 
 ---
 
@@ -157,6 +157,6 @@ cPanel עם SMTP
 
 ---
 
-© 2024 ROOTS - כל הזכויות שמורות
+© 2025 ROOTS - כל הזכויות שמורות
 
 </div>
