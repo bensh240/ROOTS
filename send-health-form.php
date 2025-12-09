@@ -107,16 +107,20 @@ $clientSent = false;
 $companySent = sendEmailWithPDF(SMTP_TO, $emailSubject, $emailBody, $pdfContent, $fullName, $email, $fullName);
 
 // Send email to client with PDF
+error_log("Health Form - Attempting to send to client: " . $email);
 $clientSent = sendEmailWithPDF($email, $clientEmailSubject, $clientEmailBody, $pdfContent, $fullName);
 
 // Log results
 error_log("Health Form - Company email sent: " . ($companySent ? 'Yes' : 'No'));
 error_log("Health Form - Client email sent: " . ($clientSent ? 'Yes' : 'No'));
+if (!$clientSent) {
+    error_log("Health Form - Client email FAILED for: " . $email);
+}
 
 if ($companySent && $clientSent) {
     echo json_encode([
         'success' => true,
-        'message' => 'ההצהרה נשלחה בהצלחה! קיבלת אישור למייל.'
+        'message' => 'ההצהרה נשלחה בהצלחה! קיבלת אישור למייל. ⚠️ אם לא מצאת - בדוק בתיקיית הספאם/דואר זבל.'
     ]);
 } elseif ($companySent) {
     echo json_encode([
@@ -207,6 +211,10 @@ function generateSimpleEmailBody($fullName, $email, $phone, $isClient) {
 function sendEmailWithPDF($to, $subject, $body, $pdfContent, $pdfFilename, $replyToEmail = null, $replyToName = null) {
     $mail = null;
     
+    error_log("sendEmailWithPDF - Sending to: " . $to);
+    error_log("sendEmailWithPDF - Subject: " . $subject);
+    error_log("sendEmailWithPDF - PDF size: " . strlen($pdfContent));
+    
     try {
         $mail = new PHPMailer(true);
         
@@ -241,7 +249,9 @@ function sendEmailWithPDF($to, $subject, $body, $pdfContent, $pdfFilename, $repl
         error_log("Health Form - Email with PDF sent successfully to: " . $to);
         return true;
     } catch (Exception $e) {
-        error_log("Health Form - Email with PDF failed to {$to}: " . $e->getMessage());
+        error_log("Health Form - Email with PDF FAILED to {$to}");
+        error_log("Health Form - Exception message: " . $e->getMessage());
+        error_log("Health Form - Exception code: " . $e->getCode());
         if ($mail !== null && isset($mail->ErrorInfo)) {
             error_log("Health Form - PHPMailer Error Info: " . $mail->ErrorInfo);
         }

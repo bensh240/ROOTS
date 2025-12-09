@@ -26,6 +26,53 @@
     <link rel='stylesheet' href='css/custom.css' type='text/css' media='all' />
     <link rel='stylesheet' href='css/colors-theme.css' type='text/css' media='all' />
     <style>
+        /* Fix top margin - Step 1, 2, 3 & 4 */
+        .healthform .page_content_wrap {
+            padding-top: 0 !important;
+        }
+        
+        .healthform .post_content {
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+        }
+        
+        .healthform .sc_section {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        
+        .healthform .sc_section_subtitle {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        
+        .healthform .content_wrap {
+            padding-top: 0 !important;
+        }
+        
+        .healthform .content {
+            padding-top: 0 !important;
+        }
+        
+        .healthform .sc_row {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        
+        .healthform .sc_column-inner {
+            padding-top: 0 !important;
+        }
+        
+        .healthform .wrapper {
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+        }
+        
+        .healthform .sc_section_inner {
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+        }
+        
         /* Health Form Custom Styles */
         .health-form .form-group {
             margin-bottom: 20px;
@@ -341,14 +388,15 @@
     </style>
     
     <!-- jsPDF Library for PDF generation -->
+    <!-- jsPDF Library for PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- Amiri font for better RTL/Hebrew support -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <!-- html2canvas Library for rendering HTML to image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 
 <body class="healthform page body_filled theme_skin_less article_style_stretch scheme_original top_panel_show top_panel_above sidebar_hide sidebar_outer_hide preloader wpb-js-composer sc_responsive">
 <div id="page_preloader"></div>
-<div class="body_wrap">
+    <div class="body_wrap">
     <div class="page_wrap">
         <div class="top_panel_fixed_wrap"></div>
         <div class="header_mobile">
@@ -921,142 +969,186 @@
             }
         }
 
-        // Generate PDF from form data
-        function generatePDF(data) {
+        // Generate PDF from form data using html2canvas
+        async function generatePDF(data) {
+            let pdfTemplate = null;
+            
             try {
                 console.log('🔧 Starting PDF generation...');
+                console.log('📦 Checking libraries...');
+                console.log('  - jsPDF:', typeof window.jspdf);
+                console.log('  - html2canvas:', typeof window.html2canvas);
                 
-                if (!window.jspdf) {
-                    console.error('❌ jsPDF library not loaded');
+                if (!window.jspdf || !window.html2canvas) {
+                    console.error('❌ Libraries not loaded');
+                    console.error('  - jsPDF:', window.jspdf ? 'OK' : 'MISSING');
+                    console.error('  - html2canvas:', window.html2canvas ? 'OK' : 'MISSING');
                     return null;
                 }
                 
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF({
-                    orientation: 'portrait',
-                    unit: 'mm',
-                    format: 'a4'
-                });
+                console.log('✅ Libraries loaded successfully');
                 
-                console.log('✓ jsPDF initialized');
+                // 1. Create PDF Template dynamically
+                pdfTemplate = document.createElement('div');
+                pdfTemplate.id = 'pdf-template-temp';
+                pdfTemplate.style.cssText = 'position: fixed; left: -9999px; top: 0; width: 210mm; background: #ffffff !important; padding: 15mm 20mm; box-sizing: border-box; font-family: Assistant, sans-serif; direction: rtl; color: #000000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;';
                 
-                // Add RTL support - reverse text for Hebrew
-                const rtlText = (text) => {
-                    return text.split('').reverse().join('');
-                };
-                
-                // Set font
-                doc.setFont('helvetica');
-                doc.setFontSize(20);
-                doc.setTextColor(107, 84, 53); // #6B5435
-                
-                // Title
-                doc.text(rtlText('הצהרת בריאות - ROOTS'), 105, 20, { align: 'center' });
-                
-                // Date
-                doc.setFontSize(10);
-                doc.setTextColor(100, 100, 100);
-                doc.text(rtlText(`תאריך: ${new Date().toLocaleDateString('he-IL')}`), 105, 28, { align: 'center' });
-                
-                let yPos = 40;
-                
-                // Personal Details Section
-                doc.setFontSize(14);
-                doc.setTextColor(107, 142, 35); // #6B8E23
-                doc.text(rtlText('פרטים אישיים'), 105, yPos, { align: 'center' });
-                yPos += 10;
-                
-                doc.setFontSize(10);
-                doc.setTextColor(0, 0, 0);
-                
-                const personalFields = [
-                    ['fullName', 'שם מלא'],
-                    ['email', 'אימייל'],
-                    ['phone', 'טלפון'],
-                    ['idNumber', 'מספר ת.ז'],
-                    ['address', 'כתובת']
-                ];
-                
-                personalFields.forEach(([key, label]) => {
-                    if (data[key]) {
-                        doc.text(rtlText(`${label}: ${data[key]}`), 190, yPos, { align: 'right' });
-                        yPos += 6;
-                    }
-                });
-                
-                yPos += 5;
-                
-                // Medical Questions Section
-                doc.setFontSize(14);
-                doc.setTextColor(107, 142, 35);
-                doc.text(rtlText('שאלות רפואיות'), 105, yPos, { align: 'center' });
-                yPos += 10;
-                
-                doc.setFontSize(9);
-                doc.setTextColor(0, 0, 0);
-                
+                // Build medical content
                 const medicalQuestions = [
                     ['pregnancy', 'היריון'],
                     ['epilepsy', 'אפילפסיה'],
                     ['spine', 'בעיית שלד/עמוד שדרה'],
                     ['fractures', 'שברים/נקעים'],
-                    ['surgeries', 'ניתוחים'],
-                    ['heartCondition', 'מחלת לב'],
-                    ['bloodPressure', 'לחץ דם'],
+                    ['joints', 'כאבי/דלקות פרקים'],
+                    ['muscles', 'בעיות שרירים'],
+                    ['surgery', 'ניתוחים'],
+                    ['heart', 'מחלות לב/לחץ דם'],
                     ['diabetes', 'סוכרת'],
-                    ['bloodDisorders', 'הפרעות דם'],
-                    ['thrombosis', 'נטייה לקרישת דם'],
+                    ['allergy', 'אלרגיות'],
+                    ['migraine', 'מיגרנות'],
+                    ['depression', 'דיכאון'],
                     ['cancer', 'מחלת סרטן'],
-                    ['skinConditions', 'מחלות עור'],
-                    ['varicoseVeins', 'דליות ורידים']
+                    ['hiv', 'HIV/איידס'],
+                    ['hormonal', 'בעיות הורמונליות'],
+                    ['otherProblems', 'בעיות אחרות'],
+                    ['medications', 'תרופות']
                 ];
                 
+                let medicalContent = '';
+                
                 medicalQuestions.forEach(([key, label]) => {
-                    if (data[key] && data[key] !== 'no') {
-                        const value = data[key] === 'yes' ? 'כן' : data[key];
-                        const detailsKey = key + '_details';
-                        const details = data[detailsKey] ? ` - ${data[detailsKey]}` : '';
-                        
-                        const text = rtlText(`${label}: ${value}${details}`);
-                        const splitText = doc.splitTextToSize(text, 180);
-                        
-                        if (yPos > 270) {
-                            doc.addPage();
-                            yPos = 20;
+                    // Show all questions with their answers
+                    let value = 'לא'; // Default
+                    
+                    if (data[key]) {
+                        if (data[key] === 'yes') {
+                            value = 'כן';
+                        } else if (data[key] === 'no') {
+                            value = 'לא';
+                        } else {
+                            // For text fields like pregnancy, otherProblems, medications
+                            value = data[key];
                         }
-                        
-                        doc.text(splitText, 190, yPos, { align: 'right' });
-                        yPos += 6 * splitText.length;
                     }
+                    
+                    // Add details if exists
+                    const detailsKey = key + '_details';
+                    const details = data[detailsKey] ? ` - ${data[detailsKey]}` : '';
+                    
+                    medicalContent += `<div style="margin-bottom: 4px; color: #000000 !important;"><span style="color:#6B5435 !important; font-weight:bold;">${label}:</span> <span style="color: #000000 !important;">${value}${details}</span></div>`;
                 });
                 
-                // Additional notes
-                if (data.additionalNotes && data.additionalNotes.trim()) {
-                    yPos += 5;
-                    if (yPos > 260) {
-                        doc.addPage();
-                        yPos = 20;
+                // Build approvals content
+                const approvalItems = [
+                    'אני מאשר/ת שכל המידע שמסרתי במסמך זה הינו נכון, מלא ומדויק למיטב ידיעתי.',
+                    'אני מבין/ה כי הטיפול אינו מהווה תחליף לייעוץ רפואי או לטיפול רפואי קונבנציונלי.',
+                    'אני מאשר/ת כי קראתי את הצהרת הפרטיות ואני מסכים/ה לשמירת הנתונים שלי במערכת.',
+                    'אני לוקח/ת אחריות מלאה על בריאותי ומצהיר/ה כי התייעצתי עם רופא במידת הצורך לפני הטיפול.'
+                ];
+                
+                let approvalsContent = '';
+                approvalItems.forEach(text => {
+                    approvalsContent += `<div style="margin-bottom: 6px; display: flex; align-items: flex-start; color: #000000 !important;"><span style="font-size: 12px; margin-left: 6px; color: #000000 !important;">☑</span><span style="color: #000000 !important;">${text}</span></div>`;
+                });
+                
+                // Build HTML
+                pdfTemplate.innerHTML = `
+                    <div style="text-align: center; margin-bottom: 25px; border-bottom: 3px solid #6B8E23; padding-bottom: 18px;">
+                        <img src="images/logo2.jpeg" style="height: 70px; margin-bottom: 12px;">
+                        <h1 style="color: #6B5435 !important; margin: 0; font-size: 24pt; font-weight: bold;">הצהרת בריאות - ROOTS</h1>
+                        <p style="color: #000000 !important; margin: 8px 0 0; font-size: 10pt;">תאריך: ${new Date().toLocaleDateString('he-IL')}</p>
+                    </div>
+                    <div style="margin-bottom: 25px;">
+                        <h2 style="color: #6B8E23 !important; font-size: 15pt; border-bottom: 1px solid #ccc; padding-bottom: 6px; margin-bottom: 12px; font-weight: bold;">פרטים אישיים</h2>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 11pt; color: #000000 !important;">
+                            <div style="color: #000000 !important;"><strong style="color: #6B5435 !important;">שם מלא:</strong> <span style="color: #000000 !important;">${data.fullName || ''}</span></div>
+                            <div style="color: #000000 !important;"><strong style="color: #6B5435 !important;">ת.ז:</strong> <span style="color: #000000 !important;">${data.idNumber || ''}</span></div>
+                            <div style="color: #000000 !important;"><strong style="color: #6B5435 !important;">טלפון:</strong> <span style="color: #000000 !important;">${data.phone || ''}</span></div>
+                            <div style="color: #000000 !important;"><strong style="color: #6B5435 !important;">אימייל:</strong> <span style="color: #000000 !important;">${data.email || ''}</span></div>
+                            <div style="grid-column: span 2; color: #000000 !important;"><strong style="color: #6B5435 !important;">כתובת:</strong> <span style="color: #000000 !important;">${data.address || ''}</span></div>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 25px;">
+                        <h2 style="color: #6B8E23 !important; font-size: 15pt; border-bottom: 1px solid #ccc; padding-bottom: 6px; margin-bottom: 12px; font-weight: bold;">הצהרה רפואית</h2>
+                        <div style="font-size: 10pt; line-height: 1.5; color: #000000 !important;">${medicalContent}</div>
+                    </div>
+                    <div>
+                        <h2 style="color: #6B8E23 !important; font-size: 15pt; border-bottom: 1px solid #ccc; padding-bottom: 6px; margin-bottom: 12px; font-weight: bold;">אישורים והצהרות</h2>
+                        <div style="font-size: 9pt; line-height: 1.4; color: #000000 !important;">${approvalsContent}</div>
+                    </div>
+                    <div style="margin-top: 40px; border-top: 2px solid #6B8E23; padding-top: 12px; text-align: center; font-size: 10pt; color: #000000 !important; font-weight: bold;">
+                        <p style="margin-bottom: 4px; color: #000000 !important;">הצהרה זו נחתמה דיגיטלית ואושרה על ידי הלקוח.</p>
+                        <p style="color: #000000 !important;">ROOTS - טיפולים הוליסטיים | 054-220-7200</p>
+                    </div>
+                `;
+                
+                console.log('✅ Template HTML built successfully');
+                console.log('📌 Appending template to body...');
+                document.body.appendChild(pdfTemplate);
+                console.log('✅ Template appended to body');
+                
+                // 2. Render to Canvas
+                console.log('📸 Rendering HTML to Canvas with html2canvas...');
+                const canvas = await html2canvas(pdfTemplate, {
+                    scale: 3,
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: '#ffffff',
+                    removeContainer: false,
+                    windowWidth: 794, // A4 width in pixels at 96 DPI
+                    windowHeight: 1123 // A4 height in pixels at 96 DPI
+                });
+                
+                console.log('✅ Canvas created successfully');
+                console.log('  - Canvas width:', canvas.width);
+                console.log('  - Canvas height:', canvas.height);
+                
+                // 3. Create PDF
+                console.log('📄 Creating PDF from Canvas...');
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                const imgWidth = pdfWidth;
+                const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+                
+                pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
+                
+                // Handle multi-page if needed
+                if (imgHeight > pdfHeight) {
+                    let heightLeft = imgHeight - pdfHeight;
+                    let position = -pdfHeight;
+                    while (heightLeft > 0) {
+                        pdf.addPage();
+                        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+                        heightLeft -= pdfHeight;
+                        position -= pdfHeight;
                     }
-                    doc.setFontSize(10);
-                    doc.text(rtlText('הערות נוספות:'), 190, yPos, { align: 'right' });
-                    yPos += 6;
-                    doc.setFontSize(9);
-                    const noteText = rtlText(data.additionalNotes);
-                    const splitNotes = doc.splitTextToSize(noteText, 180);
-                    doc.text(splitNotes, 190, yPos, { align: 'right' });
                 }
                 
-                // Return PDF as base64
-                console.log('✓ Generating PDF output...');
-                const pdfOutput = doc.output('dataurlstring');
+                // 4. Remove template
+                document.body.removeChild(pdfTemplate);
+                
+                // 5. Return Base64
+                const pdfOutput = pdf.output('dataurlstring');
                 const pdfBase64 = pdfOutput.split(',')[1];
                 console.log('✅ PDF generated successfully, size:', pdfBase64.length);
                 return pdfBase64;
                 
             } catch (error) {
                 console.error('❌ Error generating PDF:', error);
+                console.error('Error message:', error.message);
                 console.error('Stack trace:', error.stack);
-                alert('שגיאה ביצירת PDF: ' + error.message);
+                console.error('Error at line:', error.lineNumber || 'unknown');
+                
+                // Cleanup on error
+                if (pdfTemplate && pdfTemplate.parentNode) {
+                    console.log('🧹 Cleaning up template...');
+                    document.body.removeChild(pdfTemplate);
+                }
+                
+                // Don't show alert, just return null and let the form handler show the error
                 return null;
             }
         }
@@ -1134,39 +1226,34 @@
                     successMessage.textContent = 'מייצר PDF...';
                     successMessage.style.display = 'block';
                     
-                    // Check if jsPDF is loaded
-                    if (typeof window.jspdf === 'undefined') {
-                        throw new Error('ספריית PDF לא נטענה. אנא רענן את הדף ונסה שוב.');
-                    }
-                    
-                    // Generate PDF
-                    console.log('🔄 Generating PDF...');
-                    const pdfBase64 = generatePDF(data);
-                    
-                    if (!pdfBase64) {
-                        throw new Error('שגיאה ביצירת קובץ PDF. אנא נסה שוב.');
-                    }
-                    
-                    console.log('✅ PDF generated, size:', pdfBase64.length, 'characters');
-                    
-                    // Update message
-                    successMessage.textContent = 'שולח את ההצהרה...';
-                    
-                    // Build FormData with basic info + PDF
-                    const formData = new FormData();
-                    formData.append('fullName', data.fullName || '');
-                    formData.append('email', data.email || '');
-                    formData.append('phone', data.phone || '');
-                    formData.append('pdf', pdfBase64);
-                    formData.append('formData', JSON.stringify(data)); // Send all data for email body
-                    
-                    console.log('📤 Sending to server with:');
-                    console.log('  - Name:', data.fullName);
-                    console.log('  - Email:', data.email);
-                    console.log('  - PDF size:', pdfBase64.length);
-                    fetch('send-health-form.php', {
-                        method: 'POST',
-                        body: formData
+                    // Generate PDF (async)
+                    generatePDF(data).then(pdfBase64 => {
+                        if (!pdfBase64) {
+                            throw new Error('שגיאה ביצירת קובץ PDF. אנא נסה שוב.');
+                        }
+                        
+                        console.log('✅ PDF generated, size:', pdfBase64.length, 'characters');
+                        
+                        // Update message
+                        successMessage.textContent = 'שולח את ההצהרה...';
+                        
+                        // Build FormData with basic info + PDF
+                        const formData = new FormData();
+                        formData.append('fullName', data.fullName || '');
+                        formData.append('email', data.email || '');
+                        formData.append('phone', data.phone || '');
+                        formData.append('pdf', pdfBase64);
+                        formData.append('formData', JSON.stringify(data)); // Send all data for email body
+                        
+                        console.log('📤 Sending to server with:');
+                        console.log('  - Name:', data.fullName);
+                        console.log('  - Email:', data.email);
+                        console.log('  - PDF size:', pdfBase64.length);
+                        
+                        return fetch('send-health-form.php', {
+                            method: 'POST',
+                            body: formData
+                        });
                     })
                     .then(response => {
                         console.log('📥 Response status:', response.status, response.statusText);
