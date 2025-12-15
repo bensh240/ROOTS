@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <a href="privacy-policy.html" style="color: #6B8E23; font-size: 12px; text-decoration: underline;">תנאי שימוש ומדיניות פרטיות</a>
             </p>
             <p style="margin: 0; direction: rtl; font-size: 12px; color: #333;">
-                נבנה ע״י <a href="https://100x.co.il" target="_blank" style="color: #6B8E23; text-decoration: none; font-weight: bold;">100x.co.il</a>
+                נבנה בשיתוף <a href="https://100x.co.il" target="_blank" style="color: #6B8E23; text-decoration: none; font-weight: bold;">100x.co.il</a>
             </p>
         </div>
     `;
