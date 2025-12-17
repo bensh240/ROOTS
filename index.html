@@ -480,7 +480,7 @@
         @media (max-width: 768px) {
             .roots_info_cards {
                 flex-direction: column !important;
-                gap: 20px !important;
+                gap: 0px !important;
                 padding: 0 15px !important;
             }
             
@@ -489,12 +489,21 @@
                 max-width: 100% !important;
                 min-width: 100% !important;
                 flex: 1 !important;
+                margin-bottom: 15px !important;
+            }
+            
+            .roots_info_cards .column-1_3:last-child {
+                margin-bottom: 0 !important;
             }
             
             .roots_info_cards .column-1_3 > div {
                 height: auto !important;
                 min-height: 280px !important;
                 padding: 30px 25px !important;
+            }
+            
+            .roots_info_cards .sc_empty_space {
+                display: none !important;
             }
         }
         </style>
