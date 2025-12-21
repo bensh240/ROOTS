@@ -199,19 +199,19 @@
 }
 
 .acc-reset-btn {
-    grid-column: span 2;
-    width: 100%;
-    padding: 10px;
-    background: var(--acc-secondary);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 5px;
-    transition: background 0.2s;
-    font-size: 13px;
-    text-align: center;
+    background: #fff5f5 !important;
+    border-color: #ffcccc !important;
+    color: #cc0000 !important;
+    grid-column: auto !important; /* Back to normal square */
+}
+
+.acc-reset-btn:hover {
+    background: #fee !important;
+    border-color: #fbb !important;
+}
+
+.acc-reset-btn svg {
+    fill: #cc0000 !important;
 }
 
 /* --- Accessibility Feature Classes --- */
