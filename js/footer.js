@@ -43,5 +43,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Insert footer at the very end, just before </body>
     document.body.insertAdjacentHTML('beforeend', footerHTML);
+
+    // Load Accessibility Script
+    if (!document.querySelector('script[src*="accessibility.js"]')) {
+        const accScript = document.createElement('script');
+        accScript.src = 'js/accessibility.js';
+        document.body.appendChild(accScript);
+    }
 });
 
