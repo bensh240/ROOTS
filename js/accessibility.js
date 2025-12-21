@@ -127,32 +127,54 @@
         }
 
         const headerActions = document.querySelector('.roots_header_actions');
+        const sideWrap = document.querySelector('.header_mobile .side_wrap');
+        const panelTop = document.querySelector('.header_mobile .side_wrap .panel_top');
         const mobileHeader = document.querySelector('.header_mobile .content_wrap');
 
-        if (headerActions) {
-            headerActions.insertAdjacentHTML('beforeend', widgetHTML);
-            console.log('♿ Injected into Desktop Header');
-            finalizeInit();
-        } else if (mobileHeader) {
-            mobileHeader.insertAdjacentHTML('beforeend', widgetHTML);
-            console.log('♿ Injected into Mobile Header');
-            finalizeInit();
-        } else {
-            // If still not found, try again in 500ms (up to 10 times)
-            if (!window.acc_retry_count) window.acc_retry_count = 0;
-            if (window.acc_retry_count < 10) {
-                window.acc_retry_count++;
-                setTimeout(init, 500);
-            } else {
-                // Last resort: Floating body injection
-                document.body.insertAdjacentHTML('beforeend', widgetHTML);
-                const btn = document.getElementById('acc-widget-btn');
-                if (btn) {
-                    btn.style.cssText = "position:fixed !important; top:100px !important; left:20px !important; z-index:2147483647 !important; display:flex !important;";
-                }
-                console.log('♿ Injected into Body (Fallback)');
+        // Check screen width
+        const isMobile = window.innerWidth <= 1024;
+        
+        if (isMobile) {
+            // Priority 1: Mobile Menu Dropdown
+            if (sideWrap) {
+                // Inject at the end of side_wrap to be at the bottom
+                sideWrap.insertAdjacentHTML('beforeend', widgetHTML);
+                console.log('♿ Injected into Mobile Menu (Bottom)');
                 finalizeInit();
+            } else if (mobileHeader) {
+                // Fallback: Mobile Top Bar (header)
+                mobileHeader.insertAdjacentHTML('beforeend', widgetHTML);
+                console.log('♿ Injected into Mobile Header');
+                finalizeInit();
+            } else {
+                retryInit();
             }
+        } else {
+            // Desktop
+            if (headerActions) {
+                headerActions.insertAdjacentHTML('beforeend', widgetHTML);
+                console.log('♿ Injected into Desktop Header');
+                finalizeInit();
+            } else {
+                retryInit();
+            }
+        }
+    }
+
+    function retryInit() {
+        if (!window.acc_retry_count) window.acc_retry_count = 0;
+        if (window.acc_retry_count < 15) {
+            window.acc_retry_count++;
+            setTimeout(init, 500);
+        } else {
+            // Final fallback: Body injection
+            document.body.insertAdjacentHTML('beforeend', widgetHTML);
+            const btn = document.getElementById('acc-widget-btn');
+            if (btn) {
+                btn.style.cssText = "position:fixed !important; top:100px !important; left:20px !important; z-index:2147483647 !important; display:flex !important;";
+            }
+            console.log('♿ Injected into Body (Final Fallback)');
+            finalizeInit();
         }
     }
 
