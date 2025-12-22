@@ -31,11 +31,23 @@
         const existingTopBars = document.querySelectorAll('.roots_top_bar_wrapper');
         existingTopBars.forEach(bar => bar.remove());
         
-        // Find the best insertion point
-        let topPanelInner = document.querySelector('.top_panel_wrap_inner');
+        const isMobile = window.innerWidth <= 1024;
         
-        if (topPanelInner) {
-            // Insert at the beginning of top_panel_wrap_inner
+        // Find insertion points
+        const headerMobile = document.querySelector('.header_mobile');
+        const topPanelInner = document.querySelector('.top_panel_wrap_inner');
+        
+        if (isMobile && headerMobile) {
+            // Mobile: Insert ONLY at the very top of the mobile header
+            headerMobile.insertAdjacentHTML('afterbegin', topBarHTML);
+            
+            // Fix positioning of absolute elements in mobile header
+            const contentWrap = headerMobile.querySelector('.content_wrap');
+            if (contentWrap) {
+                contentWrap.style.position = 'relative';
+            }
+        } else if (!isMobile && topPanelInner) {
+            // Desktop: Insert ONLY at the beginning of top_panel_wrap_inner
             topPanelInner.insertAdjacentHTML('afterbegin', topBarHTML);
         }
     });
