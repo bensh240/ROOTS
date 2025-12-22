@@ -3070,7 +3070,7 @@ form.search_form .search_button:hover {
 }
 
 .header_mobile .top_panel_top_open_hours:before {
-    content: '\e808';
+	content: '\e8bd';
 }
 .header_mobile .contact_field .contact_icon.icon-home:before {
     content: '\e833';

@@ -49,6 +49,55 @@ body table.booked-calendar .booked-appt-list .timeslot .timeslot-people button {
 
 
 
+/* Mobile Menu Button Fix */
+@media (max-width: 480px) {
+    .header_mobile .menu_button {
+        left: auto !important;
+        right: -30px !important;
+    }
+}
+
+/* Mobile Menu Contact Info Styles */
+.header_mobile .panel_middle {
+    font-size: 16px !important;
+    text-align: right !important;
+    padding: 20px 25px !important;
+    direction: rtl !important;
+}
+
+.header_mobile .contact_field, 
+.header_mobile .top_panel_top_open_hours {
+    padding: 10px 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    direction: rtl !important;
+}
+
+.header_mobile .contact_field .contact_icon,
+.header_mobile .top_panel_top_open_hours:before {
+    font-size: 24px !important;
+    margin-left: 15px !important; /* Spacing between icon (on the right) and text (on the left) */
+    margin-right: 0 !important;
+    width: 30px !important;
+    display: inline-block !important;
+    text-align: center !important;
+    flex-shrink: 0 !important;
+}
+
+.header_mobile .contact_field a,
+.header_mobile .top_panel_top_open_hours {
+    font-size: 17px !important;
+    text-decoration: none !important;
+    text-align: right !important;
+    line-height: 1.2 !important;
+}
+
+/* Specific fix for the clock pseudo-element to stay on the right */
+.header_mobile .top_panel_top_open_hours {
+    display: flex !important;
+}
+
 /*other*/
 
 

@@ -309,6 +309,27 @@ body.acc-big-cursor-white * {
         top: 80px;
     }
     
+    /* Top Bar Mobile Refinements */
+    .header_mobile .roots_top_bar {
+        padding: 6px 10px !important;
+        background: #ffffff !important; /* Force white background on mobile top bar */
+    }
+    
+    .header_mobile .roots_top_content {
+        gap: 10px !important;
+        width: 100%;
+        justify-content: space-between; /* Space out icons and address */
+    }
+
+    .header_mobile .top_panel_top_contact_area {
+        font-size: 11px !important;
+    }
+
+    .header_mobile .logo {
+        padding-top: 15px !important;
+        padding-bottom: 10px !important;
+    }
+    
     /* Accessibility button inside mobile menu */
     .side_wrap #acc-widget-btn {
         width: calc(100% - 40px) !important;
