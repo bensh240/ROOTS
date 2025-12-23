@@ -198,6 +198,108 @@
             box-shadow: 0 8px 25px rgba(107, 142, 35, 0.4) !important;
         }
 
+        /* Medical Table Styles */
+        .medical-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            margin-top: 10px;
+        }
+
+        .medical-table tr {
+            background: #fdfdfd;
+            transition: background 0.2s;
+        }
+
+        .medical-table tr:hover {
+            background: #f8f8f8;
+        }
+
+        .medical-table td {
+            padding: 12px 15px;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+
+        .medical-table td:first-child {
+            border-right: 1px solid #f0f0f0;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            width: 75%;
+            text-align: right;
+            font-weight: 500;
+            color: #444;
+        }
+
+        .medical-table td:last-child {
+            border-left: 1px solid #f0f0f0;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            width: 120px;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .medical-table .details-row {
+            display: none;
+        }
+
+        .medical-table .details-row.show {
+            display: table-row;
+        }
+
+        .medical-table .radio-group {
+            margin-top: 0;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .medical-table .radio-option {
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid #e0e0e0;
+        }
+
+        .medical-table .radio-option input[type="radio"]:checked + label {
+            color: #8B6F47;
+            font-weight: bold;
+        }
+
+        .medical-table .details-row td {
+            border-top: none;
+            padding-top: 0;
+            padding-bottom: 15px;
+        }
+
+        .medical-table .details-field {
+            margin-top: 5px;
+            background: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .medical-table td {
+                display: block;
+                width: 100% !important;
+                border: none !important;
+                text-align: right !important;
+                padding: 10px 15px;
+            }
+            .medical-table td:first-child {
+                padding-bottom: 0;
+            }
+            .medical-table .radio-group {
+                justify-content: flex-start;
+                margin-top: 10px;
+            }
+            .medical-table tr {
+                display: block;
+                margin-bottom: 15px;
+                border: 1px solid #eee;
+                border-radius: 10px;
+            }
+        }
+
         @media (max-width: 768px) {
             /* Form container adjustments */
             .content_wrap {
@@ -242,6 +344,12 @@
             .radio-group {
                 flex-direction: column;
                 gap: 10px;
+                align-items: flex-end;
+            }
+            
+            .radio-option {
+                width: 100%;
+                justify-content: flex-end;
             }
             
             /* Title adjustments */
@@ -564,274 +672,238 @@
                                                         </div>
 
                                     <!-- Medical Questions Section -->
-                                                        <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); margin-bottom: 30px;">
-                                                            <h3 style="color: #6B8E23; font-size: 22px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #f0f0f0;">שאלות רפואיות</h3>
+                                                        <div class="medical-sections-container">
+                                                            
+                                                            <!-- Section 1: היריון ובריאות כללית -->
+                                                            <div class="form-section">
+                                                                <div class="form-group">
+                                                                    <label for="pregnancy">האם הינך בהיריון? אם כן צייני שבוע ותקינות, אם לא צייני בפירוט בעיות רלוונטיות&rlm;</label>
+                                                                    <textarea id="pregnancy" name="pregnancy" placeholder="לא רלוונטי / פירוט נוסף..."></textarea>
+                                                                </div>
+                                                                
+                                                                <div class="question-block">
+                                                                    <label>האם הינך מקבל/ת טיפול רפואי בהווה? (מערבי, משלים או כל סוג אחר)</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option">
+                                                                            <input type="radio" id="treatment_yes" name="treatment" value="yes">
+                                                                            <label for="treatment_yes">כן</label>
+                                                                        </div>
+                                                                        <div class="radio-option">
+                                                                            <input type="radio" id="treatment_no" name="treatment" value="no" checked>
+                                                                            <label for="treatment_no">לא</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="details-field" id="treatment_details">
+                                                                        <textarea name="treatment_details" placeholder="פרטים על הטיפול הנוכחי..."></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
-            <div class="form-group">
-                <label for="pregnancy">האם הינך בהיריון? אם כן צייני באיזה שבוע, והאם ההיריון תקין? אם לא צייני בפירוט את הבעיות&rlm;</label>
-                <textarea id="pregnancy" name="pregnancy" placeholder="לא רלוונטי / פרטים נוספים"></textarea>
-            </div>
+                                                            <!-- Section 2: שלד, שרירים ופציעות -->
+                                                            <div class="form-section" style="border-right-color: #8B6F47;">
+                                                                <div class="question-block">
+                                                                    <label>האם ישנה בעיית שלד / עמוד שדרה / אורתופדיה?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="spine_yes" name="spine" value="yes"><label for="spine_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="spine_no" name="spine" value="no" checked><label for="spine_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="spine_details"><textarea name="spine_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label>האם הינך סובל/ת מאפילפסיה?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="epilepsy_yes" name="epilepsy" value="yes">
-                        <label for="epilepsy_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="epilepsy_no" name="epilepsy" value="no" checked>
-                        <label for="epilepsy_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="epilepsy_details">
-                    <label for="epilepsy_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="epilepsy_details_text" name="epilepsy_details" placeholder="פרטים נוספים על מצב האפילפסיה"></textarea>
-                </div>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>האם ישנם שברים / נקעים?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="fractures_yes" name="fractures" value="yes"><label for="fractures_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="fractures_no" name="fractures" value="no" checked><label for="fractures_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="fractures_details"><textarea name="fractures_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label>האם ישנה בעיית שלד/עמוד שדרה?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="spine_yes" name="spine" value="yes">
-                        <label for="spine_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="spine_no" name="spine" value="no" checked>
-                        <label for="spine_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="spine_details">
-                    <label for="spine_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="spine_details_text" name="spine_details" placeholder="פרטים נוספים על בעיית השלד/עמוד השדרה"></textarea>
-                </div>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>כאבי / דלקות פרקים?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="joints_yes" name="joints" value="yes"><label for="joints_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="joints_no" name="joints" value="no" checked><label for="joints_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="joints_details"><textarea name="joints_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label>האם ישנם שברים/נקעים?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="fractures_yes" name="fractures" value="yes">
-                        <label for="fractures_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="fractures_no" name="fractures" value="no" checked>
-                        <label for="fractures_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="fractures_details">
-                    <label for="fractures_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="fractures_details_text" name="fractures_details" placeholder="פרטים נוספים על שברים/נקעים"></textarea>
-                </div>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>בעיות שרירים: כאבים כרוניים / ניוון / דלקות שרירים?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="muscles_yes" name="muscles" value="yes"><label for="muscles_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="muscles_no" name="muscles" value="no" checked><label for="muscles_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="muscles_details"><textarea name="muscles_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label>כאבי/דלקות פרקים?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="joints_yes" name="joints" value="yes">
-                        <label for="joints_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="joints_no" name="joints" value="no" checked>
-                        <label for="joints_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="joints_details">
-                    <label for="joints_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="joints_details_text" name="joints_details" placeholder="פרטים נוספים על כאבי/דלקות פרקים"></textarea>
-                </div>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>האם עברת פציעה כלשהי (ספורט / אחר)?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="injury_yes" name="injury" value="yes"><label for="injury_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="injury_no" name="injury" value="no" checked><label for="injury_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="injury_details"><textarea name="injury_details" placeholder="פרטים על הפציעה..."></textarea></div>
+                                                                </div>
+                                                            </div>
 
-            <div class="form-group">
-                <label>בעיות שרירים: כאבים כרוניים/ניוון/דלקות שרירים?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="muscles_yes" name="muscles" value="yes">
-                        <label for="muscles_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="muscles_no" name="muscles" value="no" checked>
-                        <label for="muscles_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="muscles_details">
-                    <label for="muscles_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="muscles_details_text" name="muscles_details" placeholder="פרטים נוספים על בעיות שרירים"></textarea>
-                </div>
-            </div>
+                                                            <!-- Section 3: לב, נשימה ואירועים רפואיים -->
+                                                            <div class="form-section">
+                                                                <div class="question-block">
+                                                                    <label>האם הינך סובל/ת ממחלות לב / כלי דם / בעיות קרישה / לחץ דם גבוה?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="heart_yes" name="heart" value="yes"><label for="heart_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="heart_no" name="heart" value="no" checked><label for="heart_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="heart_details"><textarea name="heart_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label>האם בחצי שנה האחרונה עברת ניתוח כלשהוא?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="surgery_yes" name="surgery" value="yes">
-                        <label for="surgery_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="surgery_no" name="surgery" value="no" checked>
-                        <label for="surgery_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="surgery_details">
-                    <label for="surgery_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="surgery_details_text" name="surgery_details" placeholder="פרטים נוספים על הניתוח"></textarea>
-                </div>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>האם הינך סובל/ת ממחלות נשימה / אסתמה?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="respiratory_yes" name="respiratory" value="yes"><label for="respiratory_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="respiratory_no" name="respiratory" value="no" checked><label for="respiratory_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="respiratory_details"><textarea name="respiratory_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label>האם הינך סובל/ת ממחלות לב/לחץ דם גבוה?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="heart_yes" name="heart" value="yes">
-                        <label for="heart_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="heart_no" name="heart" value="no" checked>
-                        <label for="heart_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="heart_details">
-                    <label for="heart_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="heart_details_text" name="heart_details" placeholder="פרטים נוספים על מחלות לב/לחץ דם"></textarea>
-                </div>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>האם הינך סובל/ת מאפילפסיה / היסטוריית אירועים מוחיים?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="epilepsy_yes" name="epilepsy" value="yes"><label for="epilepsy_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="epilepsy_no" name="epilepsy" value="no" checked><label for="epilepsy_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="epilepsy_details"><textarea name="epilepsy_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label>האם הינך סובל/ת מסוכרת?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="diabetes_yes" name="diabetes" value="yes">
-                        <label for="diabetes_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="diabetes_no" name="diabetes" value="no" checked>
-                        <label for="diabetes_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="diabetes_details">
-                    <label for="diabetes_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="diabetes_details_text" name="diabetes_details" placeholder="פרטים נוספים על סוכרת"></textarea>
-                </div>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>האם בשלוש השנים האחרונות עברת ניתוח כלשהו?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="surgery_yes" name="surgery" value="yes"><label for="surgery_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="surgery_no" name="surgery" value="no" checked><label for="surgery_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="surgery_details"><textarea name="surgery_details" placeholder="פרטים על הניתוח..."></textarea></div>
+                                                                </div>
+                                                            </div>
 
-            <div class="form-group">
-                <label>האם ישנה אלרגיה כלשהיא?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="allergy_yes" name="allergy" value="yes">
-                        <label for="allergy_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="allergy_no" name="allergy" value="no" checked>
-                        <label for="allergy_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="allergy_details">
-                    <label for="allergy_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="allergy_details_text" name="allergy_details" placeholder="פרטים נוספים על האלרגיה"></textarea>
-                </div>
-            </div>
+                                                            <!-- Section 4: מחלות כרוניות ואלרגיות -->
+                                                            <div class="form-section" style="border-right-color: #8B6F47;">
+                                                                <div class="question-block">
+                                                                    <label>האם הינך סובל/ת ממחלות כבד / כליות / דרכי השתן?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="liver_kidney_yes" name="liver_kidney" value="yes"><label for="liver_kidney_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="liver_kidney_no" name="liver_kidney" value="no" checked><label for="liver_kidney_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="liver_kidney_details"><textarea name="liver_kidney_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label>האם הינך סובל/ת ממיגרנות?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="migraine_yes" name="migraine" value="yes">
-                        <label for="migraine_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="migraine_no" name="migraine" value="no" checked>
-                        <label for="migraine_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="migraine_details">
-                    <label for="migraine_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="migraine_details_text" name="migraine_details" placeholder="פרטים נוספים על מיגרנות"></textarea>
-                </div>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>האם הינך סובל/ת מבעיות עיכול?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="digestive_yes" name="digestive" value="yes"><label for="digestive_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="digestive_no" name="digestive" value="no" checked><label for="digestive_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="digestive_details"><textarea name="digestive_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label>האם הינך סובל/ת מדיכאון?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="depression_yes" name="depression" value="yes">
-                        <label for="depression_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="depression_no" name="depression" value="no" checked>
-                        <label for="depression_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="depression_details">
-                    <label for="depression_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="depression_details_text" name="depression_details" placeholder="פרטים נוספים על דיכאון"></textarea>
-                </div>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>האם הינך סובל/ת מסוכרת?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="diabetes_yes" name="diabetes" value="yes"><label for="diabetes_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="diabetes_no" name="diabetes" value="no" checked><label for="diabetes_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="diabetes_details"><textarea name="diabetes_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label>האם הינך סובל/ת או סבלת בעבר מסרטן?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="cancer_yes" name="cancer" value="yes">
-                        <label for="cancer_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="cancer_no" name="cancer" value="no" checked>
-                        <label for="cancer_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="cancer_details">
-                    <label for="cancer_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="cancer_details_text" name="cancer_details" placeholder="פרטים נוספים על סרטן"></textarea>
-                </div>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>האם ישנה אלרגיה כלשהיא?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="allergy_yes" name="allergy" value="yes"><label for="allergy_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="allergy_no" name="allergy" value="no" checked><label for="allergy_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="allergy_details"><textarea name="allergy_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                                        <label>האם הינך סובל\ת מ HIV\איידס?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="hiv_yes" name="hiv" value="yes">
-                        <label for="hiv_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="hiv_no" name="hiv" value="no" checked>
-                        <label for="hiv_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="hiv_details">
-                    <label for="hiv_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="hiv_details_text" name="hiv_details" placeholder="פרטים נוספים על HIV/איידס"></textarea>
-                </div>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>האם הינך סובל/ת ממחלות עור?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="skin_yes" name="skin" value="yes"><label for="skin_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="skin_no" name="skin" value="no" checked><label for="skin_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="skin_details"><textarea name="skin_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label>בעיות הורמונליות?&rlm;</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="hormonal_yes" name="hormonal" value="yes">
-                        <label for="hormonal_yes">כן</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="hormonal_no" name="hormonal" value="no" checked>
-                        <label for="hormonal_no">לא</label>
-                    </div>
-                </div>
-                <div class="details-field" id="hormonal_details">
-                    <label for="hormonal_details_text">אנא פרט/י:&rlm;</label>
-                    <textarea id="hormonal_details_text" name="hormonal_details" placeholder="פרטים נוספים על בעיות הורמונליות"></textarea>
-                </div>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>האם הינך סובל/ת מכאבי ראש / מיגרנות?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="migraine_yes" name="migraine" value="yes"><label for="migraine_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="migraine_no" name="migraine" value="no" checked><label for="migraine_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="migraine_details"><textarea name="migraine_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label for="otherProblems">האם ישנה בעיה נוספת ממנה הינך סובל/ת?&rlm;</label>
-                <textarea id="otherProblems" name="otherProblems" placeholder="לא / פרטים נוספים"></textarea>
-            </div>
+                                                                <div class="question-block">
+                                                                    <label>האם הינך סובל/ת או סבלת בעבר מסרטן / טיפולי כימותרפיה?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="cancer_yes" name="cancer" value="yes"><label for="cancer_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="cancer_no" name="cancer" value="no" checked><label for="cancer_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="cancer_details"><textarea name="cancer_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
 
-            <div class="form-group">
-                <label for="medications">האם הינך נוטל/ת תרופות נוספות באופן קבוע?&rlm;</label>
-                <textarea id="medications" name="medications" placeholder="לא / פרטי תרופות"></textarea>
+                                                                <div class="question-block">
+                                                                    <label>בעיות הורמונליות / חוסר איזון הורמונלי?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="hormonal_yes" name="hormonal" value="yes"><label for="hormonal_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="hormonal_no" name="hormonal" value="no" checked><label for="hormonal_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="hormonal_details"><textarea name="hormonal_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Section 5: אורח חיים ובריאות הנפש -->
+                                                            <div class="form-section">
+                                                                <div class="question-block">
+                                                                    <label>האם הינך סובל/ת מדיכאון?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="depression_yes" name="depression" value="yes"><label for="depression_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="depression_no" name="depression" value="no" checked><label for="depression_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="depression_details"><textarea name="depression_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
+
+                                                                <div class="question-block">
+                                                                    <label>האם הינך מעשנ/ת באופן קבוע?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="smoking_yes" name="smoking" value="yes"><label for="smoking_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="smoking_no" name="smoking" value="no" checked><label for="smoking_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="smoking_details"><textarea name="smoking_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
+
+                                                                <div class="question-block">
+                                                                    <label>האם הינך שותה אלכוהול באופן קבוע?</label>
+                                                                    <div class="radio-group">
+                                                                        <div class="radio-option"><input type="radio" id="alcohol_yes" name="alcohol" value="yes"><label for="alcohol_yes">כן</label></div>
+                                                                        <div class="radio-option"><input type="radio" id="alcohol_no" name="alcohol" value="no" checked><label for="alcohol_no">לא</label></div>
+                                                                    </div>
+                                                                    <div class="details-field" id="alcohol_details"><textarea name="alcohol_details" placeholder="פרטים נוספים..."></textarea></div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Section 6: סיכום ופירוט נוסף -->
+                                                            <div class="form-section" style="border-right-color: #8B6F47;">
+                                                                <div class="form-group">
+                                                                    <label for="otherProblems">פירוט לגבי תשובות חיוביות, ניתוחים, מחלות, שברים ונושאים אחרים שאינם מופיעים בשאלון:&rlm;</label>
+                                                                    <textarea id="otherProblems" name="otherProblems" placeholder="פרטים נוספים..."></textarea>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="medications">האם הינך נוטל/ת תרופות / תוספי תזונה באופן קבוע?&rlm;</label>
+                                                                    <textarea id="medications" name="medications" placeholder="לא / פרטי תרופות ותוספים"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                     </div>
             </div>
 
@@ -931,19 +1003,26 @@
 // Health Form JavaScript
         const detailsMapping = {
             'epilepsy': 'epilepsy_details',
+            'respiratory': 'respiratory_details',
             'spine': 'spine_details',
             'fractures': 'fractures_details',
             'joints': 'joints_details',
             'muscles': 'muscles_details',
+            'injury': 'injury_details',
             'surgery': 'surgery_details',
             'heart': 'heart_details',
+            'treatment': 'treatment_details',
+            'liver_kidney': 'liver_kidney_details',
+            'digestive': 'digestive_details',
             'diabetes': 'diabetes_details',
             'allergy': 'allergy_details',
+            'skin': 'skin_details',
             'migraine': 'migraine_details',
             'depression': 'depression_details',
             'cancer': 'cancer_details',
-            'hiv': 'hiv_details',
-            'hormonal': 'hormonal_details'
+            'hormonal': 'hormonal_details',
+            'smoking': 'smoking_details',
+            'alcohol': 'alcohol_details'
         };
 
         function toggleDetailsField(fieldName, show) {
@@ -1023,22 +1102,29 @@
                 // Build medical content
                 const medicalQuestions = [
                     ['pregnancy', 'היריון'],
-                    ['epilepsy', 'אפילפסיה'],
-                    ['spine', 'בעיית שלד/עמוד שדרה'],
-                    ['fractures', 'שברים/נקעים'],
-                    ['joints', 'כאבי/דלקות פרקים'],
+                    ['epilepsy', 'אפילפסיה / אירועים מוחיים'],
+                    ['respiratory', 'מחלות נשימה / אסתמה'],
+                    ['spine', 'שלד / עמוד שדרה / אורתופדיה'],
+                    ['fractures', 'שברים / נקעים'],
+                    ['joints', 'כאבי / דלקות פרקים'],
                     ['muscles', 'בעיות שרירים'],
-                    ['surgery', 'ניתוחים'],
-                    ['heart', 'מחלות לב/לחץ דם'],
+                    ['injury', 'פציעות ספורט / אחר'],
+                    ['surgery', 'ניתוחים (3 שנים אחרונות)'],
+                    ['heart', 'מחלות לב / כלי דם / קרישה / לחץ דם'],
+                    ['treatment', 'טיפול רפואי בהווה'],
+                    ['liver_kidney', 'מחלות כבד / כליות / דרכי השתן'],
+                    ['digestive', 'בעיות עיכול'],
                     ['diabetes', 'סוכרת'],
                     ['allergy', 'אלרגיות'],
-                    ['migraine', 'מיגרנות'],
+                    ['skin', 'מחלות עור'],
+                    ['migraine', 'כאבי ראש / מיגרנות'],
                     ['depression', 'דיכאון'],
-                    ['cancer', 'מחלת סרטן'],
-                    ['hiv', 'HIV/איידס'],
+                    ['cancer', 'סרטן / כימותרפיה'],
                     ['hormonal', 'בעיות הורמונליות'],
-                    ['otherProblems', 'בעיות אחרות'],
-                    ['medications', 'תרופות']
+                    ['smoking', 'עישון קבוע'],
+                    ['alcohol', 'אלכוהול קבוע'],
+                    ['otherProblems', 'פירוט תשובות חיוביות/אחר'],
+                    ['medications', 'תרופות ותוספי תזונה']
                 ];
                 
                 let medicalContent = '';
@@ -1307,9 +1393,6 @@
                             throw new Error(`שגיאה בשרת: ${preview}${responseText.length > 200 ? '...' : ''}`);
                         }
                         
-                        // Scroll to top first
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                        
                         if (serverData.success) {
                             console.log('✅ Success!');
                             successMessage.textContent = serverData.message;
@@ -1332,7 +1415,6 @@
                     })
                     .catch(fetchError => {
                         console.error('❌ Fetch error:', fetchError);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
                         
                         // Show error message
                         errorMessage.textContent = 'אירעה שגיאה בשליחת ההצהרה. הטופס נשמר מקומית, אבל לא נשלח למייל. שגיאה: ' + fetchError.message;
